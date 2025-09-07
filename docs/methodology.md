@@ -24,16 +24,14 @@ ensuring balanced visual layout - neither sparse nor overcrowded.
 Multiple format strategy allows for both essential collections and 
 comprehensive hieroglyphic cosmos installations.
 
-+------------------+---------------+-----------------------------------+
-| Star-Glyph Pairs | Print Size    | Usage Strategy                    |
-+------------------+---------------+-----------------------------------+
-|        26        | A4            | Baseline (Cygni Arcana)          |
-|     55-100       | A3            | Testing density range             |
-|       200        | A1            | Core astronomical hieroglyphs     |
-|       453        | A0            | Substantial collection            |
-|       906        | 2A0           | Major hieroglyphic corpus         |
-|      1812        | 4A0           | Complete museum installation      |
-+------------------+---------------+-----------------------------------+
+| Star-Glyph Pairs | Print Size | Usage Strategy                |
+| ---------------- | ---------- | ----------------------------- |
+| 26               | A4         | Baseline (Cygni Arcana)       |
+| 55-100           | A3         | Testing density range         |
+| 200              | A1         | Core astronomical hieroglyphs |
+| 453              | A0         | Substantial collection        |
+| 906              | 2A0        | Major hieroglyphic corpus     |
+| 1812             | 4A0        | Complete museum installation  |
 
 ## Strategic Approaches
 
