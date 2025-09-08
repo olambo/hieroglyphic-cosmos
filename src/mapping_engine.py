@@ -25,6 +25,11 @@ import math
 from collections import namedtuple
 from pathlib import Path
 
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+from pathlib import Path
+from PIL import UnidentifiedImageError
+
+
 plt.rcParams['font.family'] = ['Noto Sans Egyptian Hieroglyphs', 'DejaVu Sans']
 
 # Configuration
@@ -54,16 +59,16 @@ THEMES = {
 }
 
 STAR_HIEROGLYPHS = [
-    # Special cases
+    # Special cases - check gardiner for magic/heka
     {"name": "Dark Energy", "distance": 26000, "longitude": 0, "latitude": 0, "size": 30,
-     "hieroglyph": "𓊽", "egyptian_name": "Magic/Heka", "gardiner": "U6/A2",
+     "hieroglyph": "𓌻", "egyptian_name": "Magic/Heka", "gardiner": "U6/A2",
      "description": "Heart of the Underworld", "color": "#000000"},
 
     {"name": "Dark Matter", "distance": 25900, "longitude": 0, "latitude": 0, "size": 30,
      "hieroglyph": "𓊽", "egyptian_name": "Djed Pillar", "gardiner": "R11",
      "description": "Stability Unseen", "color": "#2F4F4F"},
 
-    {"name": "Milky Way Core", "distance": 26000, "longitude": 180, "latitude": 0, "size": 30,
+    {"name": "Milky Way Rotation", "distance": 26000, "longitude": 180, "latitude": 0, "size": 30,
      "hieroglyph": "𓇯", "egyptian_name": "Nut/Sky", "gardiner": "N1/C9/C23",
      "description": "Celestial Sky Goddess", "color": "#4B0082"},
 
@@ -267,41 +272,84 @@ def rank_y_plot(star_data, all_stars):
 
     return 0
 
+
+# markone
 def plot_star_hieroglyph(ax, star, all_stars, theme):
-    """Plot star with hieroglyphic symbol and Egyptian name"""
     coords = galactic_to_cartesian(star['distance'], star['longitude'], star['latitude'])
     x_pos = categorize_x_plot(coords.x_plot)
     y_pos = rank_y_plot(star, all_stars)
 
-    # Special handling for galactic center and Sol
+    # Plot star with sizes
+    size = 50 if star['name'] == "Sol" else 45 if star['name'] in ["Sirius", "Alpha Centauri"] else 40 if star['name'] in ["Dark Energy", "Dark Matter", "Milky Way Core"] else 35
+
+    # Special handling for different star types
     if star['name'] == "Sagittarius A*":
-        # Black hole with golden glow
-        ax.scatter(x_pos, y_pos, s=star['size'] * 12, c=theme['black_hole_glow'],
+        ax.scatter(x_pos, y_pos, s=size * 12, c=theme['black_hole_glow'],
                    marker='o', alpha=0.4, zorder=2)
-        ax.scatter(x_pos, y_pos, s=star['size'] * 10, facecolors='none',
+        ax.scatter(x_pos, y_pos, s=size * 10, facecolors='none',
                    edgecolors=theme['black_hole_edge'], linewidth=2, zorder=3)
-        ax.scatter(x_pos, y_pos, s=star['size'] * 6, c=theme['background'],
+        ax.scatter(x_pos, y_pos, s=size * 6, c=theme['background'],
                    marker='o', edgecolors=theme['black_hole_edge'], linewidth=1, zorder=4)
         edgecolor = theme['black_hole_edge']
     elif star['name'] == "Sol":
-        ax.scatter(x_pos, y_pos, s=star['size'] * 10, c=star['color'],
+        ax.scatter(x_pos, y_pos, s=size * 10, c=star['color'],
                    marker='o', edgecolors=theme['sol_edge'], linewidth=2, zorder=3, alpha=0.8)
         edgecolor = theme['sol_edge']
     else:
-        # Regular stars
         edgecolor = theme['star_edge']
-        ax.scatter(x_pos, y_pos, s=star['size'] * 10, c=star['color'],
+        ax.scatter(x_pos, y_pos, s=size * 10, c=star['color'],
                    marker='o', edgecolors=edgecolor, linewidth=1, zorder=3, alpha=0.8)
 
-    # Add hieroglyphic label with Egyptian name
-    label = f"{star['name']} ({star['distance']} ly) {star['hieroglyph']} {star['egyptian_name']}"
+    # Layout: [Star] → Glyph → "StarName (distance ly) • EgyptianName"
 
-    # Offset for label positioning
-    offset = 22 if star['name'] == 'Sagittarius A*' else 16
+    # Position 1: Glyph (with more space from star)
+    glyph_x = x_pos + 0.12
 
-    ax.annotate(label, (x_pos, y_pos), xytext=(offset, 0),
-                textcoords='offset points', va='center', ha='left',
-                fontsize=8, color=theme['text'])
+    # Try to load SVG glyph first, fallback to Unicode
+    glyph_path = PROJECT_ROOT / 'glyph' / f"{star['egyptian_name'].lower().replace(' ', '_').replace('/', '_')}.svg"
+
+    try:
+        if glyph_path.exists():
+            # Load PNG directly with matplotlib
+            img = plt.imread(str(glyph_path))
+
+            # Make white background transparent (assuming white = [1, 1, 1] in normalized RGB)
+            if img.shape[-1] == 3:  # RGB image, add alpha channel
+                import numpy as np
+                # Create alpha channel: transparent where white, opaque elsewhere
+                alpha = np.where(np.all(img > 0.95, axis=2), 0, 1)  # 0.95 to catch near-white
+                img = np.dstack((img, alpha))
+
+            # Make much smaller
+            imagebox = OffsetImage(img, zoom=0.01)
+            ab = AnnotationBbox(imagebox, (glyph_x, y_pos), xybox=(0, 0),
+                                xycoords='data', boxcoords="offset points", pad=0, frameon=False)
+            ax.add_artist(ab)
+
+            # Only debug for ankh to see what's happening
+            if star['name'] == "Sirius":
+                print(f"✓ Loaded ankh PNG: img shape={img.shape}, pos=({glyph_x}, {y_pos})")
+
+            label_x = glyph_x + 0.08  # Space after PNG
+        else:
+            raise FileNotFoundError
+    except (FileNotFoundError, ImportError, Exception) as e:
+        # Only show errors for files that should exist
+        if star['name'] == "Sirius":
+            print(f"Ankh failed: {e}")
+        # Fallback to Unicode glyph if PNG loading fails
+        ax.text(glyph_x, y_pos, star['hieroglyph'], ha='center', va='center',
+                fontsize=12, color=theme['text'], zorder=4)
+        label_x = glyph_x + 0.06  # Less space after Unicode
+
+    # Position 2: Combined text label with bullet separator
+    combined_label = f"{star['name']} ({star['distance']} ly) • {star['egyptian_name']}"
+    ax.text(label_x, y_pos, combined_label, ha='left', va='center',
+            fontsize=8, color=theme['text'], zorder=4)
+# markone
+
+
+
 
 def setup_hieroglyphic_plot(ax, theme):
     """Configure plot appearance with Egyptian astronomical theme"""
@@ -319,16 +367,6 @@ def setup_hieroglyphic_plot(ax, theme):
         else:
             ax.axvline(x=x_val, color=theme['grid'], alpha=0.45, linestyle='--', linewidth=0.45)
 
-    # Egyptian-themed labels
-    # ax.set_ylabel('(Duat ← → Per-Netjer) Stellar Distance to Galactic Center',
-    #               color=theme['text'], fontsize=10, fontfamily='sans-serif')
-
-    # ax.text(0, -0.685, 'Celestial Navigation of the Star-Boat',
-    #         color=theme['text'], fontsize=8, ha='center', va='top', fontfamily='sans-serif')
-
-    # ax.set_title('Hieroglyphic Cosmos — Egyptian Star Names Mapped by Galactic Position',
-    #              color=theme['text'], fontsize=12, fontweight='bold', fontfamily='sans-serif')
-
     # Curved arrow for cosmic navigation
     from matplotlib.patches import FancyArrowPatch
     arrow = FancyArrowPatch((-1.5, -0.60), (1.5, -0.60),
@@ -336,12 +374,6 @@ def setup_hieroglyphic_plot(ax, theme):
                             arrowstyle='<-', mutation_scale=20,
                             color='#FFD700', alpha=0.6, linewidth=1, linestyle='--')
     ax.add_patch(arrow)
-
-    # Egyptian directional markers
-    # ax.text(0, 0.76, "𓇳 Per-Netjer (Divine House)", ha='center', va='center',
-    #         fontsize=10, fontweight='bold', color='#FFD700', fontfamily='sans-serif')
-    # ax.text(0, -0.75, "𓊽 Duat (Underworld)", ha='center', va='center',
-    #         fontsize=10, fontweight='bold', color='#FFD700', fontfamily='sans-serif')
 
 def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size='A3'):
     """Create Egyptian hieroglyphic star map with configurable paper sizes"""
