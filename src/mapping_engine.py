@@ -25,6 +25,8 @@ import math
 from collections import namedtuple
 from pathlib import Path
 
+plt.rcParams['font.family'] = ['Noto Sans Egyptian Hieroglyphs', 'DejaVu Sans']
+
 # Configuration
 PROJECT_ROOT = Path(__file__).parent.parent
 OUTPUT_DIR = PROJECT_ROOT / 'generated'
@@ -98,7 +100,7 @@ STAR_HIEROGLYPHS = [
      "hieroglyph": "𓆄", "egyptian_name": "Crocodile/Sobek", "gardiner": "I3/I4",
      "description": "Nile Crocodile", "color": "#00CED1"},
 
-    {"name": "Altair", "distance": 17, "longitude": 47, "latitude": -8.9, "size": 25,
+    {"name": "Altair", "distance": 17, "longitude": 48, "latitude": -8.9, "size": 25,
      "hieroglyph": "𓅃", "egyptian_name": "Falcon/Horus", "gardiner": "G5",
      "description": "Winged Deity", "color": "#B0E0E6"},
 
@@ -118,7 +120,7 @@ STAR_HIEROGLYPHS = [
      "hieroglyph": "𓃢", "egyptian_name": "Jackal", "gardiner": "E16/E17",
      "description": "Faithful Guardian", "color": "#FFE4B5"},
 
-    {"name": "Aldebaran", "distance": 65, "longitude": 180, "latitude": -20, "size": 25,
+    {"name": "Aldebaran", "distance": 65, "longitude": 181, "latitude": -20, "size": 25,
      "hieroglyph": "𓃬", "egyptian_name": "Lion", "gardiner": "E1/E23",
      "description": "Eye of the Bull", "color": "#FF6347"},
 
@@ -146,7 +148,7 @@ STAR_HIEROGLYPHS = [
      "hieroglyph": "𓅃", "egyptian_name": "Vulture", "gardiner": "G1/G14",
      "description": "Underworld Bird", "color": "#8B0000"},
 
-    {"name": "Arcturus", "distance": 37, "longitude": 210, "latitude": 69, "size": 30,
+    {"name": "Arcturus", "distance": 37, "longitude": 15, "latitude": 69, "size": 30,
      "hieroglyph": "𓇓", "egyptian_name": "Was Scepter", "gardiner": "S39/S40",
      "description": "Power and Dominion", "color": "#FFA500"},
 
@@ -221,10 +223,12 @@ def categorize_x_plot(perpendicular_distance):
         return 0
     elif abs_distance < 12:
         return sign * 0.5
-    elif abs_distance < 90:
+    elif abs_distance < 50:
         return sign * 1
+    elif abs_distance < 160:
+        return sign * 1.7
     else:
-        return sign * 2
+        return sign * 2.3
 
 def rank_y_plot(star_data, all_stars):
     """Calculate y-position based on ordinal ranking (adapted from Cygni Arcana)"""
@@ -297,15 +301,15 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
 
     ax.annotate(label, (x_pos, y_pos), xytext=(offset, 0),
                 textcoords='offset points', va='center', ha='left',
-                fontsize=8, color=theme['text'], fontfamily='DejaVu Sans')
+                fontsize=8, color=theme['text'])
 
 def setup_hieroglyphic_plot(ax, theme):
     """Configure plot appearance with Egyptian astronomical theme"""
-    ax.set_xlim(-2.4, 3.8)  # Slightly wider for hieroglyphic labels
-    ax.set_ylim(-0.8, 0.8)
+    ax.set_xlim(-2.6, 3.2)  # Slightly wider for hieroglyphic labels
+    ax.set_ylim(-0.65, 0.65)
 
     # Grid lines
-    x_ticks = [-2, -1, -0.5, 0, 0.5, 1, 2]
+    x_ticks = [-2.3, -1.7, -1, -0.5, 0, 0.5, 1, 1.7, 2.3]
     ax.set_xticks([])
     ax.set_yticks([])
 
@@ -316,18 +320,18 @@ def setup_hieroglyphic_plot(ax, theme):
             ax.axvline(x=x_val, color=theme['grid'], alpha=0.45, linestyle='--', linewidth=0.45)
 
     # Egyptian-themed labels
-    ax.set_ylabel('(Duat ← → Per-Netjer) Stellar Distance to Galactic Center',
-                  color=theme['text'], fontsize=10, fontfamily='sans-serif')
+    # ax.set_ylabel('(Duat ← → Per-Netjer) Stellar Distance to Galactic Center',
+    #               color=theme['text'], fontsize=10, fontfamily='sans-serif')
 
-    ax.text(0, -0.685, 'Celestial Navigation of the Star-Boat',
-            color=theme['text'], fontsize=8, ha='center', va='top', fontfamily='sans-serif')
+    # ax.text(0, -0.685, 'Celestial Navigation of the Star-Boat',
+    #         color=theme['text'], fontsize=8, ha='center', va='top', fontfamily='sans-serif')
 
-    ax.set_title('Hieroglyphic Cosmos — Egyptian Star Names Mapped by Galactic Position',
-                 color=theme['text'], fontsize=12, fontweight='bold', fontfamily='sans-serif')
+    # ax.set_title('Hieroglyphic Cosmos — Egyptian Star Names Mapped by Galactic Position',
+    #              color=theme['text'], fontsize=12, fontweight='bold', fontfamily='sans-serif')
 
     # Curved arrow for cosmic navigation
     from matplotlib.patches import FancyArrowPatch
-    arrow = FancyArrowPatch((-1.5, -0.65), (1.5, -0.65),
+    arrow = FancyArrowPatch((-1.5, -0.60), (1.5, -0.60),
                             connectionstyle="arc3,rad=0.05",
                             arrowstyle='<-', mutation_scale=20,
                             color='#FFD700', alpha=0.6, linewidth=1, linestyle='--')
@@ -367,6 +371,7 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size='A3'):
     for spine in ax.spines.values():
         spine.set_visible(False)
 
+    # Force matplotlib to use the hieroglyphic font
     plt.tight_layout()
 
     # Save with descriptive filename
