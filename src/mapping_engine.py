@@ -275,15 +275,26 @@ def rank_y_plot(star_data, all_stars):
 
 # markone
 def plot_star_hieroglyph(ax, star, all_stars, theme):
+    """Enhanced star-hieroglyph plotting with better image handling and layout"""
     coords = galactic_to_cartesian(star['distance'], star['longitude'], star['latitude'])
     x_pos = categorize_x_plot(coords.x_plot)
     y_pos = rank_y_plot(star, all_stars)
 
-    # Plot star with sizes
-    size = 50 if star['name'] == "Sol" else 45 if star['name'] in ["Sirius", "Alpha Centauri"] else 40 if star['name'] in ["Dark Energy", "Dark Matter", "Milky Way Core"] else 35
+    # Dynamic sizing based on star importance and type
+    size_mapping = {
+        "Sol": 50,
+        "Sirius": 45,
+        "Alpha Centauri": 45,
+        "Dark Energy": 40,
+        "Dark Matter": 40,
+        "Milky Way Rotation": 40,
+        "Sagittarius A*": 35
+    }
+    size = size_mapping.get(star['name'], 35)
 
-    # Special handling for different star types
-    if star['name'] == "Sagittarius A*":
+    # Enhanced special handling for different star types
+    if star['name'] == "Sagittarius A*" or "Dark" in star['name']:
+        # Black hole / dark matter visualization
         ax.scatter(x_pos, y_pos, s=size * 12, c=theme['black_hole_glow'],
                    marker='o', alpha=0.4, zorder=2)
         ax.scatter(x_pos, y_pos, s=size * 10, facecolors='none',
@@ -292,60 +303,80 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
                    marker='o', edgecolors=theme['black_hole_edge'], linewidth=1, zorder=4)
         edgecolor = theme['black_hole_edge']
     elif star['name'] == "Sol":
+        # Solar disc with enhanced glow
+        ax.scatter(x_pos, y_pos, s=size * 12, c='#FFD700', alpha=0.3, zorder=2)
         ax.scatter(x_pos, y_pos, s=size * 10, c=star['color'],
-                   marker='o', edgecolors=theme['sol_edge'], linewidth=2, zorder=3, alpha=0.8)
+                   marker='o', edgecolors=theme['sol_edge'], linewidth=2, zorder=3, alpha=0.9)
         edgecolor = theme['sol_edge']
     else:
-        edgecolor = theme['star_edge']
+        # Regular stars with subtle glow
+        ax.scatter(x_pos, y_pos, s=size * 11, c=star['color'], alpha=0.2, zorder=2)
         ax.scatter(x_pos, y_pos, s=size * 10, c=star['color'],
-                   marker='o', edgecolors=edgecolor, linewidth=1, zorder=3, alpha=0.8)
+                   marker='o', edgecolors=theme['star_edge'], linewidth=1, zorder=3, alpha=0.8)
+        edgecolor = theme['star_edge']
 
-    # Layout: [Star] → Glyph → "StarName (distance ly) • EgyptianName"
-
-    # Position 1: Glyph (with more space from star)
+    # Improved hieroglyph positioning and handling
     glyph_x = x_pos + 0.12
+    glyph_loaded = False
+    file_type_used = "None"
 
-    # Try to load SVG glyph first, fallback to Unicode
-    glyph_path = PROJECT_ROOT / 'glyph' / f"{star['egyptian_name'].lower().replace(' ', '_').replace('/', '_')}.svg"
+    # Now only try to load PNG files
+    glyph_name = star['egyptian_name'].lower().replace(' ', '_').replace('/', '_')
+    glyph_path = PROJECT_ROOT / 'glyph' / f"{glyph_name}.png"
 
     try:
         if glyph_path.exists():
-            # Load PNG directly with matplotlib
             img = plt.imread(str(glyph_path))
+            file_type_used = "PNG"
 
-            # Make white background transparent (assuming white = [1, 1, 1] in normalized RGB)
-            if img.shape[-1] == 3:  # RGB image, add alpha channel
+            # Enhanced transparency handling
+            if len(img.shape) == 3 and img.shape[-1] == 3:  # RGB image, add alpha
                 import numpy as np
-                # Create alpha channel: transparent where white, opaque elsewhere
-                alpha = np.where(np.all(img > 0.95, axis=2), 0, 1)  # 0.95 to catch near-white
+                white_threshold = 0.95
+                is_background = np.all(img >= white_threshold, axis=2)
+                alpha = np.where(is_background, 0, 1)
                 img = np.dstack((img, alpha))
+                print(f"  Added transparency to PNG")
 
-            # Make much smaller
-            imagebox = OffsetImage(img, zoom=0.01)
+            # Much larger, adaptive zoom
+            base_zoom = 0.04 if star['name'] in ["Sol", "Sirius", "Alpha Centauri"] else 0.035
+
+            imagebox = OffsetImage(img, zoom=base_zoom)
             ab = AnnotationBbox(imagebox, (glyph_x, y_pos), xybox=(0, 0),
-                                xycoords='data', boxcoords="offset points", pad=0, frameon=False)
+                                xycoords='data', boxcoords="offset points",
+                                pad=0, frameon=False, zorder=5)
             ax.add_artist(ab)
 
-            # Only debug for ankh to see what's happening
-            if star['name'] == "Sirius":
-                print(f"✓ Loaded ankh PNG: img shape={img.shape}, pos=({glyph_x}, {y_pos})")
+            glyph_loaded = True
+            label_x = glyph_x + 0.12  # More spacing for larger glyphs
+            print(f"✓ PNG rendered for {star['name']} {star['hieroglyph']}   {glyph_name} at zoom {base_zoom}")
 
-            label_x = glyph_x + 0.08  # Space after PNG
-        else:
-            raise FileNotFoundError
-    except (FileNotFoundError, ImportError, Exception) as e:
-        # Only show errors for files that should exist
-        if star['name'] == "Sirius":
-            print(f"Ankh failed: {e}")
-        # Fallback to Unicode glyph if PNG loading fails
+    except Exception as e:
+        print(f"✗ Failed to load {glyph_path}: {e}")
+
+    # Fallback to Unicode hieroglyph if no image loaded
+    if not glyph_loaded:
+        print(f"→ Using Unicode fallback for {star['name']}: {star['hieroglyph']} {glyph_name}")
+        # Enhanced Unicode rendering with better positioning
+        font_size = 14 if star['name'] in ["Sol", "Sirius", "Alpha Centauri"] else 12
         ax.text(glyph_x, y_pos, star['hieroglyph'], ha='center', va='center',
-                fontsize=12, color=theme['text'], zorder=4)
-        label_x = glyph_x + 0.06  # Less space after Unicode
+                fontsize=font_size, color=theme['text'], zorder=5,
+                fontfamily=['Noto Sans Egyptian Hieroglyphs', 'DejaVu Sans'])
+        label_x = glyph_x + 0.06
 
-    # Position 2: Combined text label with bullet separator
-    combined_label = f"{star['name']} ({star['distance']} ly) • {star['egyptian_name']}"
+    # Enhanced label formatting with better typography
+    distance_str = f"{star['distance']}" if star['distance'] != int(star['distance']) else f"{int(star['distance'])}"
+    combined_label = f"{star['name']} ({distance_str} ly) • {star['egyptian_name']}"
+
+    # Adaptive font sizing based on label length and star importance
+    base_font_size = 9 if star['name'] in ["Sol", "Sirius", "Alpha Centauri"] else 8
+    font_size = max(6, base_font_size - len(combined_label) // 20)  # Scale down for long labels
+
     ax.text(label_x, y_pos, combined_label, ha='left', va='center',
-            fontsize=8, color=theme['text'], zorder=4)
+            fontsize=font_size, color=theme['text'], zorder=5,
+            fontweight='bold' if star['name'] in ["Sol", "Sirius"] else 'normal')
+
+    return glyph_loaded, file_type_used  # Return success status and file type used
 # markone
 
 
@@ -423,7 +454,4 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size='A3'):
 if __name__ == "__main__":
     # Create A3 versions for density testing (current 15 pairs)
     create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size='A3')
-    create_hieroglyphic_cosmos_plot(dark_mode=False, paper_size='A3')
-
-    # Optional: Create A4 for comparison with Cygni Arcana baseline
-    # create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size='A4')
+    # create_hieroglyphic_cosmos_plot(dark_mode=False, paper_size='A3')
