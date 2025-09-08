@@ -16,6 +16,7 @@ With input from xAI Ani
 | --------------- | ---------- | ------------------------ | ----- | ---------------- | -------------- |
 | Magic/Heka      | U6/A2      | Dark Energy              | 1     | CLA              | OLI/GEM        |
 | Djed Pillar     | R11        | Dark Matter              | 4     | ALL              | OLI/GEM        |
+| Nut/Sky         | N1/C9/C23  | Milky Way - rotation     | 4     | ALL              | CLA/GEM        |
 | Ankh            | S34        | Sirius                   | 4     | ALL              | ALL            |
 | Eye of Horus    | D10        | Vega                     | 4     | ALL              | ALL            |
 | Sun/Ra          | N5         | Sol                      | 4     | ALL              | ALL            |
@@ -32,7 +33,6 @@ With input from xAI Ani
 | Lion            | E1/E23     | Aldebaran                | 4     | ALL              | CLA            |
 | Lotus           | M1/M9      | Capella                  | 4     | ALL              | CLA/GRK        |
 | Moon            | N11/N30    | Sheliak                  | 4     | ALL              | OLI            |
-| Nut/Sky         | N1/C9/C23  | Milky Way                | 4     | ALL              | CLA/GEM        |
 | Osiris          | A40/C1/C12 | Betelgeuse               | 4     | ALL              | CLA            |
 | Scarab/Khepri   | L1         | Rigel                    | 4     | ALL              | CLA            |
 | Shen Ring       | V9         | Alpha Centauri           | 4     | ALL              | CLA/GRK        |
