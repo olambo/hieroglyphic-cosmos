@@ -86,9 +86,9 @@ STAR_HIEROGLYPHS = [
     },
     {
         "name": "Epsilon Indi",
-        "distance": 11.82, 
+        "distance": 11.82,
         "longitude": 330.0,
-        "latitude": -48.0, 
+        "latitude": -48.0,
         "size": 35,
         "hieroglyph": "𓍱",
         "egyptian_name": "Offering Table",
@@ -207,7 +207,7 @@ STAR_HIEROGLYPHS = [
     },
     {
         "name": "Milky Way Rotation",
-        "distance": 26000,
+        "distance": 29000,
         "longitude": 180,
         "latitude": 0,
         "size": 30,
