@@ -34,7 +34,7 @@ Perfect! Here's the table with separate markings for 1% and 5% tolerance:
 | Isis            | C2/C10/C20 | Canopus           | 1    | ALL   | O       | ✓      |
 | Jackal          | E16/E17    | Procyon           | 1    | ALL   | O       | ✓      |
 | Lion            | E1/E23     | Aldebaran         | 1    | ALL   | O       | ✓      |
-| Lotus           | M1/M9      | Capella           | 1    | ALL   | C/A     | ✓      |
+| Lotus           | M1/M9      | Sigma Draconis    | 1    | ALL   | C/A     | ✓      |
 | Moon            | N11/N30    | Sheliak           | 1    | ALL   | O       | ✓      |
 | Osiris          | A40/C1/C12 | Betelgeuse        | 1    | ALL   | O       | 5%     |
 | Scarab/Khepri   | L1         | Rigel             | 1    | ALL   | O       | 5%     |
@@ -45,7 +45,7 @@ Perfect! Here's the table with separate markings for 1% and 5% tolerance:
 | Star            | N14        | Bellatrix         | 1    | ALL   | C/A     | 5%     |
 | Ba Bird         | G29/G53    | Mira              | 1    | T/C/G | C       |        |
 | Bee             | L2         | Delta Cancri      | 1    | T/G/A | O       |        |
-| Crook           | S38/S42    | Alnilam           | 1    | T/G/A | C/T     |        |
+| Crook           | S38/S42    | Delta Pavonis     | 1    | T/G/A | C/T     |        |
 | Double Crown    | S4/S5      | Albireo           | 1    | T/G/A | O       | ✓      |
 | Feather/Maat    | H6         | Algol             | 1    | T/G/A | A       | ✓      |
 | Flail           | S45        | Mizar             | 1    | T/G/A | C       | ✓      |
@@ -58,13 +58,13 @@ Perfect! Here's the table with separate markings for 1% and 5% tolerance:
 | Pyramid         | O24        | Adhara            | 0    | C/A   | A       |        |
 | Obelisk         | O25        | Shaula            | 0    | C     | C/A     |        |
 | Shadow          | D63        | Scheat            | 0    | A     | A       |        |
-| Solar Barque    | P1/P4      | Nunki             | 0    | C     | C       |        |
-| Owl             | G17        | Alpheratz         | 0    | T/G/A | A       |        |
+| Solar Barque    | P1/P4      | Nunki             | 0    | C     | A       |        |
+| Owl             | G17        | Eta Cassiopeiae   | 0    | T/G/A | A       |        |
 | Papyrus         | M16/M17    | Castor            | 0    | T/C/A | O       |        |
 | Ram             | E10        | Hamal             | 0    | T/G/A | O       |        |
 | Red Crown       | S3         | Elnath            | 0    | T/G/A | O       |        |
 | Sekhmet/Lioness | E22/E23    | Almach            | 0    | T/C/G | O       | 5%     |
-| Seth/Set        | E20/C7     | Kaus Media        | 0    | C/G/A | O       |        |
+| Seth/Set        | E20/C7     | Beta Serpentis    | 0    | C/G/A | O       |        |
 | Throne          | Q1/Q3      | Rastaban          | 0    | T/G/A | O       |        |
 | Tyet/Isis Knot  | V36/V39    | Kochab            | 0    | C/G/A | O       |        |
 
@@ -165,3 +165,16 @@ Total passing at 5% or better: **29 stars out of 47**
 
 # Stellar Mappings choices 4
 No Consensus
+
+    {
+        "name": "Zeta Ophiuchi",
+        "distance": 46,
+        "longitude": 171.43,
+        "latitude": 23.58,
+        "size": 35,
+        "hieroglyph": "𓆤",
+        "egyptian_name": "Bee",
+        "gardiner": "L2",
+        "description": "Industrious Order",
+        "color": "#FFFFE0",
+    },
