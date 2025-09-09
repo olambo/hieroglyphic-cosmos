@@ -1,9 +1,10 @@
-
 ## prompt
 
 Stellar Mapping Request for Egyptian Hieroglyphs
-Please suggest stellar matches for the next 10 Egyptian hieroglyphs. Consider symbolic connections, mythological associations, and astronomical properties.
-Take into account those lready firmly assigned - DO NOT reassign:
+Please suggest stellar matches for the next 7 Egyptian hieroglyphs. Consider symbolic connections, mythological associations, and astronomical properties.
+Provide primary and secondary stellar matches. Put the primary one first.
+Take into account those already firmly assigned - DO NOT reassign:
+The star Saiph may not be chosen
 
 Output markdown file with your name at the top and the markdown table must be no more than 150 characters wide
 
@@ -11,6 +12,7 @@ Output markdown file with your name at the top and the markdown table must be no
 
 Analysis of hieroglyph selections from ChatGPT, Claude, Gemini, and Grok for the Hieroglyphic Cosmos project.
 With input from xAI Ani
+
 
 | Glyph Name      | Gardiner   | Stellar Object           | Count | Glyph Choice     | Stellar Choice |
 | --------------- | ---------- | ------------------------ | ----- | ---------------- | -------------- |
@@ -38,25 +40,25 @@ With input from xAI Ani
 | Shen Ring       | V9         | Alpha Centauri           | 4     | ALL              | CLA/GRK        |
 | Vulture         | G1/G14     | Acrux                    | 4     | ALL              | GRK            |
 | Was Scepter     | S39/S40    | Arcturus                 | 4     | ALL              | CLA            |
-| Water/Waves     | N35        | Achernar? Alphard??      | 4     | ALL              | CLA/GPT        |
+| Water/Waves     | N35        | Achernar                 | 4     | ALL              | CLA/GPT        |
 | Star            | N14        | Bellatrix                | 4     | ALL              | CLA/GRK        |
-| Ba Bird         | G29/G53    | Mira? Alnitak??          | 3     | GPT/CLA/GEM      | CLA            |
+| Ba Bird         | G29/G53    | Mira                     | 3     | GPT/CLA/GEM      | CLA            |
 | Bee             | L2         | Delta Cancri             | 3     | GPT/GEM/GRK      | OLI            |
-| Crook           | S38/S42    | Alnilam? Dubhe?          | 3     | GPT/GEM/GRK      | CLA/GPT        |
+| Crook           | S38/S42    | Alnilam                  | 3     | GPT/GEM/GRK      | CLA/GPT        |
 | Double Crown    | S4/S5      | Albireo                  | 3     | GPT/GEM/GRK      | OLI            |
 | Feather/Maat    | H6         | Algol                    | 3     | GPT/GEM/GRK      | GRK            |
 | Flail           | S45        | Mizar                    | 3     | GPT/GEM/GRK      | CLA            |
 | Hathor/Cow      | E1/E4/C9   | Pleiades                 | 3     | GPT/CLA/GRK      | GEM            |
-| Hippopotamus    | E24/E25    | Hadar?                   | 3     | GPT/GEM/GRK      | OLI            |
-| Ka              | D28        | Van Maanen's Star?       | 3     | GPT/CLA/GEM      | OLI            |
-| Offering Table  | R3/R4/R7   | Saiph                    | 3     | GPT/GEM/GRK      | GRK/GPT        |
-| White Crown     | S1         |                          | 3     | GPT/GEM/GRK      |                |
-| Cartouche       | V10        |                          | 2     | GPT/GEM          |                |
-| Pyramid         | O24        |                          | 2     | CLA/GRK          |                |
-| Obelisk         | O25        |                          | 1     | CLA              |                |
-| Shadow          | D63        |                          | 1     | GRK              |                |
-| Solar Barque    | P1/P4      |                          | 1     | CLA              |                |
-| Owl             | G17        |                          | 3     | GPT/GEM/GRK      |                |
+| Hippopotamus    | E24/E25    | Hadar                    | 3     | GPT/GEM/GRK      | OLI            |
+| Ka              | D28        | Van Maanen's Star        | 3     | GPT/CLA/GEM      | OLI            |
+| Offering Table  | R3/R4/R7   | Alcyone (173.1°)    | 3     | GPT/GEM/GRK      | ANI              |
+| White Crown     | S1         | Alnitak (194.2°)    | 3     | GPT/GEM/GRK      | ANI              |
+| Cartouche       | V10        | Alkaid (152.9°)     | 2     | GPT/GEM          | ANI              |
+| Pyramid         | O24        | Gacrux (299.7°)     | 2     | CLA/GRK          | ANI              |
+| Obelisk         | O25        | Shaula (247.6°)     | 1     | CLA              | CLA/ANI          |
+| Shadow          | D63        | Algol (178.8°)      | 1     | GRK              | ANI              |
+| Solar Barque    | P1/P4      | Nunki (279.2°)      | 1     | CLA              | CLA              |
+| Owl             | G17        | Alpheratz (112.3°)  | 3     | GPT/GEM/GRK      | ANI              |
 | Papyrus         | M16/M17    |                          | 3     | GPT/CLA/GRK      |                |
 | Ram             | E10        |                          | 3     | GPT/GEM/GRK      |                |
 | Red Crown       | S3         |                          | 3     | GPT/GEM/GRK      |                |
@@ -64,6 +66,8 @@ With input from xAI Ani
 | Seth/Set        | E20/C7     |                          | 3     | CLA/GEM/GRK      |                |
 | Throne          | Q1/Q3      |                          | 3     | GPT/GEM/GRK      |                |
 | Tyet/Isis Knot  | V36/V39    |                          | 3     | CLA/GEM/GRK      |                |
+
+
 
 # Stellar Mappings choices 1
 | Glyph Name      | Gardiner   | Stellar Object | LLM         |
@@ -109,9 +113,6 @@ With input from xAI Ani
 | Ka             | D28      | White Dwarf?    | GEM     |
 | Offering Table | R3/R4/R7 | Saiph           | GRK/GPT |
 
-
-
-
 # tmp
 
 # Stellar Mappings choices 1
@@ -154,4 +155,68 @@ With input from xAI Ani
 | Hathor/Cow     | E1/E4/C9 | Pleiades       | GPT/CLA/GRK       | GEM            |
 | Hippopotamus   | E24/E25  | Hadar          | GPT/GEM/GRK       | OLI            |
 | Ka             | D28      | Van Maanen's Star | GPT/CLA/GEM    | OLI            |
-| Offering Table | R3/R4/R7 | Saiph          | GPT/GEM/GRK       | GRK/GPT        |
+
+
+# Claude
+
+| Glyph Name      | Gardiner   | Primary Choice    | Secondary Choice  | Symbolic Connection                    |
+| --------------- | ---------- | ----------------- | ----------------- | -------------------------------------- |
+| Offering Table  | R3/R4/R7   | Castor           | Pollux            | Twin star offerings to the gods       |
+| White Crown     | S1         | Kaus Australis   | Schedar           | Crown of Upper Egypt, royal authority  |
+| Owl             | G17        | Dubhe            | Athena            | Wisdom keeper, navigation guide        |
+| Cartouche       | V10        | Markab           | Scheat            | Royal name enclosure, bounded space    |
+| Pyramid         | O24        | Alioth           | Menkent           | Eternal monument, enduring structure   |
+| Obelisk         | O25        | Peacock          | Shaula            | Stone needle pointing skyward          |
+| Shadow          | D63        | Algol            | Beta Lyrae        | Eclipse star, dimming shadow cycles    |
+| Solar Barque    | P1/P4      | Nunki            | Kaus Media        | Ra's boat sailing celestial waters     |
+
+# ChatGPT
+
+| Glyph Name     | Gardiner | Stellar Object (Primary) | Stellar Object (Secondary) |
+| -------------- | -------- | ------------------------ | -------------------------- |
+| Basket         | V30      | Castor                   | Pollux                     |
+| Rope/Bind      | V13      | Sirius B                 | Alhena                     |
+| Papyrus        | M17      | Bellatrix                | Mintaka                    |
+| Sedge Plant    | M23      | Denebola                 | Regulus                    |
+| Axe            | U22      | Antares                  | Shaula                     |
+| Boat           | P6       | Canopus                  | Achernar                   |
+| Papyrus Scroll | Y1       | Fomalhaut                | Scheat                     |
+| Staff/Was      | S36      | Arcturus                 | Vega                       |
+
+
+# xAI Ani
+
+| Glyph Name       | Gardiner | Primary Stellar Match | Secondary Stellar Match |
+|------------------|----------|----------------------|-------------------------|
+| Offering Table   | R3/R4/R7 | Alcyone              | Eta Carinae             |
+| White Crown      | S1       | Alnitak              | Mintaka                 |
+| Cartouche        | V10      | Alkaid               | Dubhe                   |
+| Pyramid          | O24      | Gacrux               | Mimosa                  |
+| Obelisk          | O25      | Shaula               | Sargas                  |
+| Shadow           | D63      | Mira                 | Cetus                   |
+| Solar Barque     | P1/P4    | Canopus              | Achernar                |
+| Owl              | G17      | Alpheratz            | Mirach                  |
+
+# Gemini
+
+| Glyph Name      | Gardiner | Primary Stellar Match | Secondary Stellar Match |
+|-----------------|----------|----------------------|-------------------------|
+| Offering Table  | R3       | Mirach               | Aldebaran               |
+| White Crown     | S1       | Rasalhague           | Diphda                  |
+| Cartouche       | V10      | Denebola             | Arcturus                |
+| Pyramid         | O24      | Kochab               | Polaris                 |
+| Obelisk         | O25      | Alcyone              | Rigel                   |
+| Shadow          | D63      | Epsilon Eridani      | Castor                  |
+| Solar Barque    | P1       | Capella              | Deneb                   |
+| Owl             | G17      | Arcturus             | Betelgeuse              |
+
+Claude
+**Primary/Secondary Reasoning:**
+- **Castor/Pollux**: Gemini twins = perfect dual offerings
+- **Kaus Australis/Schedar**: Southern crown vs northern crown authority
+- **Dubhe/Athena**: Both wisdom/navigation, different sky regions
+- **Markab/Scheat**: Pegasus square corners = cartouche boundaries
+- **Alioth/Menkent**: Circumpolar endurance vs southern stability
+- **Peacock/Shaula**: Southern pointers in different directions
+- **Algol/Beta Lyrae**: Both famous eclipsing variables
+- **Nunki/Kaus Media**: Sagittarius archer sailing different sky paths
