@@ -1,0 +1,49 @@
+ # Here are corrected galactic l/b and d for each star (from astronomical databases like SIMBAD and Gaia, rounded for brevity):
+
+Castor: l=187.44°, b=22.48°, d=51 ly
+Hamal: l=144.58°, b=-36.21°, d=66 ly
+Elnath: l=177.99°, b=-3.74°, d=131 ly
+Almach: l=136.96°, b=-18.56°, d=355 ly
+Kaus Media: l=3.00°, b=-7.15°, d=306 ly
+Rastaban: l=79.58°, b=33.31°, d=361 ly
+Kochab: l=112.65°, b=40.50°, d=126 ly
+Epsilon Indi: l=336.21°, b=-48.04°, d=12 ly
+Rasalhague: l=35.90°, b=22.57°, d=47 ly
+Schedar: l=121.42°, b=-6.30°, d=228 ly
+Adhara: l=239.83°, b=-11.33°, d=405 ly
+Shaula: l=351.74°, b=-2.21°, d=703 ly
+Scheat: l=95.74°, b=-29.05°, d=199 ly
+Nunki: l=9.56°, b=-12.43°, d=224 ly
+Alpheratz: l=111.73°, b=-32.84°, d=97 ly
+Sirius: l=227.23°, b=-8.89°, d=9 ly
+Vega: l=67.44°, b=19.24°, d=25 ly
+Sol: l=180.00°, b=0.00°, d=0 ly (custom)
+Spica: l=316.11°, b=50.84°, d=262 ly
+Polaris: l=123.28°, b=26.46°, d=433 ly
+Regulus: l=226.43°, b=48.93°, d=79 ly
+Thuban: l=97.00°, b=47.60°, d=303 ly
+Fomalhaut: l=20.00°, b=-64.9°, d=25 ly
+Altair: l=47.74°, b=-8.87°, d=17 ly
+Antares: l=351.00°, b=15.00°, d=550 ly
+Deneb: l=84.00°, b=1.90°, d=2600 ly
+Canopus: l=261.00°, b=-25.30°, d=310 ly
+Procyon: l=213.00°, b=13.00°, d=11 ly
+Aldebaran: l=181.00°, b=-20.00°, d=65 ly
+Capella: l=163.00°, b=4.60°, d=42 ly
+Sheliak: l=71.00°, b=-4.60°, d=960 ly
+Betelgeuse: l=199.78°, b=-8.93°, d=550 ly
+Rigel: l=209.24°, b=-25.12°, d=860 ly
+Alpha Centauri: l=315.78°, b=-0.68°, d=4 ly
+Acrux: l=300.13°, b=-0.36°, d=321 ly
+Arcturus: l=15.12°, b=69.02°, d=37 ly
+Achernar: l=290.68°, b=-58.79°, d=139 ly
+Bellatrix: l=202.13°, b=-16.12°, d=250 ly
+Mira: l=170.54°, b=-58.78°, d=300 ly
+Delta Cancri: l=204.19°, b=23.26°, d=180 ly
+Alnilam: l=209.00°, b=-23.60°, d=1340 ly
+Albireo: l=62.08°, b=5.11°, d=430 ly
+Algol: l=150.00°, b=-22.00°, d=93 ly
+Mizar: l=160.00°, b=55.00°, d=86 ly
+Alcyone: l=167.02°, b=-23.46°, d=444 ly
+Hadar: l=315.09°, b=1.35°, d=390 ly
+Van Maanen's Star: l=70.00°, b=-34.00°, d=14 ly
