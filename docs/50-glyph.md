@@ -61,7 +61,7 @@ With input from xAI Ani
 | Papyrus         | M16/M17    | Castor            | 0    | T/C/A | O       |
 | Ram             | E10        | Hamal             | 0    | T/G/A | O       |
 | Red Crown       | S3         | Elnath            | 0    | T/G/A | O       |
-| Sekhmet/Lioness | E22/E23    | 70 Aquilae        | 0    | T/C/G | O       |
+| Sekhmet/Lioness | E22/E23    | Almach            | 0    | T/C/G | O       |
 | Seth/Set        | E20/C7     | Kaus Media        | 0    | C/G/A | O       |
 | Throne          | Q1/Q3      | Rastaban          | 0    | T/G/A | O       |
 | Tyet/Isis Knot  | V36/V39    | Kochab            | 0    | C/G/A | O       |
