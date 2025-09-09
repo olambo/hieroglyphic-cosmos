@@ -13,59 +13,67 @@ Output markdown file with your name at the top and the markdown table must be no
 Analysis of hieroglyph selections from ChatGPT, Claude, Gemini, and Grok for the Hieroglyphic Cosmos project.
 With input from xAI Ani
 
-| Glyph Name      | Gardiner   | Stellar Object    | Conf | Glyph | Stellar |
-| --------------- | ---------- | ----------------- | ---- | ----- | ------- |
-| Magic/Heka      | U6/A2      | Dark Energy       | 3    | C     | O/G     |
-| Djed Pillar     | R11        | Dark Matter       | 3    | ALL   | O/G     |
-| Nut/Sky         | N1/C9/C23  | Milky Way         | 3    | ALL   | C/G     |
-| Ankh            | S34        | Sirius            | 1    | ALL   | ALL     |
-| Eye of Horus    | D10        | Vega              | 1    | ALL   | ALL     |
-| Sun/Ra          | N5         | Sol               | 1    | ALL   | ALL     |
-| Horizon/Akhet   | N27        | Spica             | 1    | ALL   | ALL     |
-| Anubis          | E16/E17    | Polaris           | 1    | ALL   | C/A     |
-| Bastet/Cat      | B1/E13     | Regulus           | 1    | ALL   | C/A     |
-| Cobra/Uraeus    | I10/I12    | Thuban            | 1    | ALL   | G       |
-| Crocodile/Sobek | I3/I4      | Fomalhaut         | 1    | ALL   | C       |
-| Falcon/Horus    | G5         | Altair            | 1    | ALL   | C/A     |
-| Heart           | F34        | Antares           | 1    | ALL   | C/A/T   |
-| Ibis/Thoth      | G26/C3     | Deneb             | 1    | ALL   | O       |
-| Isis            | C2/C10/C20 | Canopus           | 1    | ALL   | O       |
-| Jackal          | E16/E17    | Procyon           | 1    | ALL   | O       |
-| Lion            | E1/E23     | Aldebaran         | 1    | ALL   | O       |
-| Lotus           | M1/M9      | Capella           | 1    | ALL   | C/A     |
-| Moon            | N11/N30    | Sheliak           | 1    | ALL   | O       |
-| Osiris          | A40/C1/C12 | Betelgeuse        | 1    | ALL   | O       |
-| Scarab/Khepri   | L1         | Rigel             | 1    | ALL   | O       |
-| Shen Ring       | V9         | Alpha Centauri    | 1    | ALL   | C/A     |
-| Vulture         | G1/G14     | Acrux             | 1    | ALL   | A       |
-| Was Scepter     | S39/S40    | Arcturus          | 1    | ALL   | C       |
-| Water/Waves     | N35        | Achernar          | 1    | ALL   | C/T     |
-| Star            | N14        | Bellatrix         | 1    | ALL   | C/A     |
-| Ba Bird         | G29/G53    | Mira              | 1    | T/C/G | C       |
-| Bee             | L2         | Delta Cancri      | 1    | T/G/A | O       |
-| Crook           | S38/S42    | Alnilam           | 1    | T/G/A | C/T     |
-| Double Crown    | S4/S5      | Albireo           | 1    | T/G/A | O       |
-| Feather/Maat    | H6         | Algol             | 1    | T/G/A | A       |
-| Flail           | S45        | Mizar             | 1    | T/G/A | C       |
-| Hathor/Cow      | E1/E4/C9   | Pleiades          | 1    | T/C/A | G       |
-| Hippopotamus    | E24/E25    | Hadar             | 1    | T/G/A | O       |
-| Ka              | D28        | Van Maanen's Star | 1    | T/C/G | O       |
-| Offering Table  | R3/R4/R7   | Epsilon Indi      | 0    | T/G/A | A       |
-| White Crown     | S1         | Rasalhague        | 0    | T/G/A | A       |
-| Cartouche       | V10        | Schedar           | 0    | T/G   | A       |
-| Pyramid         | O24        | Adhara            | 0    | C/A   | A       |
-| Obelisk         | O25        | Shaula            | 0    | C     | C/A     |
-| Shadow          | D63        | Scheat            | 0    | A     | A       |
-| Solar Barque    | P1/P4      | Nunki             | 0    | C     | C       |
-| Owl             | G17        | Alpheratz         | 0    | T/G/A | A       |
-| Papyrus         | M16/M17    | Castor            | 0    | T/C/A | O       |
-| Ram             | E10        | Hamal             | 0    | T/G/A | O       |
-| Red Crown       | S3         | Elnath            | 0    | T/G/A | O       |
-| Sekhmet/Lioness | E22/E23    | Almach            | 0    | T/C/G | O       |
-| Seth/Set        | E20/C7     | Kaus Media        | 0    | C/G/A | O       |
-| Throne          | Q1/Q3      | Rastaban          | 0    | T/G/A | O       |
-| Tyet/Isis Knot  | V36/V39    | Kochab            | 0    | C/G/A | O       |
+Perfect! Here's the table with separate markings for 1% and 5% tolerance:
 
+| Glyph Name      | Gardiner   | Stellar Object    | Conf | Glyph | Stellar | Coords |
+| --------------- | ---------- | ----------------- | ---- | ----- | ------- | ------ |
+| Magic/Heka      | U6/A2      | Dark Energy       | 3    | C     | O/G     | n/a    |
+| Djed Pillar     | R11        | Dark Matter       | 3    | ALL   | O/G     | n/a    |
+| Nut/Sky         | N1/C9/C23  | Milky Way         | 3    | ALL   | C/G     | n/a    |
+| Ankh            | S34        | Sirius            | 1    | ALL   | ALL     | ✓      |
+| Eye of Horus    | D10        | Vega              | 1    | ALL   | ALL     | ✓      |
+| Sun/Ra          | N5         | Sol               | 1    | ALL   | ALL     | ✓      |
+| Horizon/Akhet   | N27        | Spica             | 1    | ALL   | ALL     | ✓      |
+| Anubis          | E16/E17    | Polaris           | 1    | ALL   | C/A     | 5%     |
+| Bastet/Cat      | B1/E13     | Regulus           | 1    | ALL   | C/A     | ✓      |
+| Cobra/Uraeus    | I10/I12    | Thuban            | 1    | ALL   | G       | ✓      |
+| Crocodile/Sobek | I3/I4      | Fomalhaut         | 1    | ALL   | C       | ✓      |
+| Falcon/Horus    | G5         | Altair            | 1    | ALL   | C/A     | 5%     |
+| Heart           | F34        | Antares           | 1    | ALL   | C/A/T   | ✓      |
+| Ibis/Thoth      | G26/C3     | Deneb             | 1    | ALL   | O       | ✓      |
+| Isis            | C2/C10/C20 | Canopus           | 1    | ALL   | O       | ✓      |
+| Jackal          | E16/E17    | Procyon           | 1    | ALL   | O       | ✓      |
+| Lion            | E1/E23     | Aldebaran         | 1    | ALL   | O       | ✓      |
+| Lotus           | M1/M9      | Capella           | 1    | ALL   | C/A     | ✓      |
+| Moon            | N11/N30    | Sheliak           | 1    | ALL   | O       | ✓      |
+| Osiris          | A40/C1/C12 | Betelgeuse        | 1    | ALL   | O       | 5%     |
+| Scarab/Khepri   | L1         | Rigel             | 1    | ALL   | O       | 5%     |
+| Shen Ring       | V9         | Alpha Centauri    | 1    | ALL   | C/A     | ✓      |
+| Vulture         | G1/G14     | Acrux             | 1    | ALL   | A       |        |
+| Was Scepter     | S39/S40    | Arcturus          | 1    | ALL   | C       | ✓      |
+| Water/Waves     | N35        | Achernar          | 1    | ALL   | C/T     |        |
+| Star            | N14        | Bellatrix         | 1    | ALL   | C/A     | 5%     |
+| Ba Bird         | G29/G53    | Mira              | 1    | T/C/G | C       |        |
+| Bee             | L2         | Delta Cancri      | 1    | T/G/A | O       |        |
+| Crook           | S38/S42    | Alnilam           | 1    | T/G/A | C/T     |        |
+| Double Crown    | S4/S5      | Albireo           | 1    | T/G/A | O       | ✓      |
+| Feather/Maat    | H6         | Algol             | 1    | T/G/A | A       | ✓      |
+| Flail           | S45        | Mizar             | 1    | T/G/A | C       | ✓      |
+| Hathor/Cow      | E1/E4/C9   | Pleiades          | 1    | T/C/A | G       | ✓      |
+| Hippopotamus    | E24/E25    | Hadar             | 1    | T/G/A | O       | ✓      |
+| Ka              | D28        | Van Maanen's Star | 1    | T/C/G | O       | ✓      |
+| Offering Table  | R3/R4/R7   | Epsilon Indi      | 0    | T/G/A | A       | 5%     |
+| White Crown     | S1         | Rasalhague        | 0    | T/G/A | A       |        |
+| Cartouche       | V10        | Schedar           | 0    | T/G   | A       |        |
+| Pyramid         | O24        | Adhara            | 0    | C/A   | A       |        |
+| Obelisk         | O25        | Shaula            | 0    | C     | C/A     |        |
+| Shadow          | D63        | Scheat            | 0    | A     | A       |        |
+| Solar Barque    | P1/P4      | Nunki             | 0    | C     | C       |        |
+| Owl             | G17        | Alpheratz         | 0    | T/G/A | A       |        |
+| Papyrus         | M16/M17    | Castor            | 0    | T/C/A | O       |        |
+| Ram             | E10        | Hamal             | 0    | T/G/A | O       |        |
+| Red Crown       | S3         | Elnath            | 0    | T/G/A | O       |        |
+| Sekhmet/Lioness | E22/E23    | Almach            | 0    | T/C/G | O       | 5%     |
+| Seth/Set        | E20/C7     | Kaus Media        | 0    | C/G/A | O       |        |
+| Throne          | Q1/Q3      | Rastaban          | 0    | T/G/A | O       |        |
+| Tyet/Isis Knot  | V36/V39    | Kochab            | 0    | C/G/A | O       |        |
+
+**Summary:**
+- **✓** = Within 1% tolerance (22 stars)
+- **5%** = Within 5% tolerance but not 1% (7 stars)
+- **Blank** = Beyond 5% tolerance (18 stars)
+
+Total passing at 5% or better: **29 stars out of 47**
 
 
 # Stellar Mappings choices 1
