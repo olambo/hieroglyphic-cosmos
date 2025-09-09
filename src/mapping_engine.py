@@ -93,6 +93,67 @@ def categorize_x_plot(perpendicular_distance):
         return sign * 2.3
 
 
+def calculate_cross_sol_fudge(star_data, all_stars):
+    """
+    Calculate cumulative fudge offset based on Sol crossings when ordered by y_plot distance coordinate.
+    Stars get progressively offset as the visualization flows across the galactic center.
+    """
+    target_star_name = star_data['name']
+
+    # Get all regular stars with their coordinates
+    stars_with_coords = []
+    for star in all_stars:
+        if star['name'] not in ["Sagittarius A*", "Sol"]:
+            coords = galactic_to_cartesian(star['distance'], star['longitude'], star['latitude'])
+            stars_with_coords.append({'name': star['name'], 'y_plot': coords.y_plot, 'x_plot': coords.x_plot})
+
+    # Sort by distance-based y-coordinate (highest to lowest)
+    stars_with_coords.sort(key=lambda x: x['y_plot'], reverse=True)
+
+    # Track cumulative fudge as we encounter Sol crossings
+    cumulative_fudge = 0
+    previous_x_side = None
+    fudge_increment = 0.002  # Adjust this value to control spacing
+
+    for star_info in stars_with_coords:
+        current_x_side = "left" if star_info['x_plot'] < 0 else "right"
+
+        # Add fudge when crossing Sol (left ↔ right transition)
+        if previous_x_side and previous_x_side != current_x_side:
+            cumulative_fudge += fudge_increment
+            print(
+                f"Sol crossing detected: {previous_x_side} → {current_x_side}, cumulative fudge now: {cumulative_fudge:.3f}"
+            )
+
+        # Return fudge for our target star
+        if star_info['name'] == target_star_name:
+            print(f"Star {target_star_name}: base fudge = {cumulative_fudge:.3f}")
+            return cumulative_fudge
+
+        previous_x_side = current_x_side
+
+    # Fallback if star not found
+    return 0
+
+
+def rank_y_plot_with_fudge(star_data, all_stars, use_cross_sol_fudge=False):
+    """
+    Wrapper for existing rank_y_plot with optional cross-Sol fudge.
+    Just add this to your existing code - don't replace rank_y_plot!
+    """
+    # Get normal position from your existing rank_y_plot function
+    normal_y = rank_y_plot(star_data, all_stars)  # Your existing function
+
+    # Apply cross-Sol fudge if enabled
+    if use_cross_sol_fudge:
+        fudge_offset = calculate_cross_sol_fudge(star_data, all_stars)
+        final_y = normal_y + fudge_offset
+        print(f"Star {star_data['name']}: normal_y = {normal_y:.3f}, fudge = {fudge_offset:.3f}, final = {final_y:.3f}")
+        return final_y
+
+    return normal_y
+
+
 def rank_y_plot(star_data, all_stars):
     """Calculate y-position based on ordinal ranking (adapted from Cygni Arcana)"""
     star_name = star_data['name']
@@ -114,21 +175,23 @@ def rank_y_plot(star_data, all_stars):
     star_coords = galactic_to_cartesian(star_data['distance'], star_data['longitude'], star_data['latitude'])
     current_y_plot = star_coords.y_plot
 
+    normal_y = 0
     if current_y_plot > 0:
         positive_stars = [s for s in regular_stars if s['y_plot'] > 0]
         if star_name in [s['name'] for s in positive_stars]:
             rank = [s['name'] for s in positive_stars].index(star_name)
             total_positive = len(positive_stars)
             reversed_rank = total_positive - 1 - rank
-            return 0.09 + (reversed_rank / (total_positive - 1)) * 0.47 if total_positive > 1 else 0.35
+            normal_y = 0.09 + (reversed_rank / (total_positive - 1)) * 0.47 if total_positive > 1 else 0.35
     else:
         negative_stars = [s for s in regular_stars if s['y_plot'] <= 0]
         if star_name in [s['name'] for s in negative_stars]:
             rank = [s['name'] for s in negative_stars].index(star_name)
             total_negative = len(negative_stars)
-            return -0.09 - (rank / (total_negative - 1)) * 0.47 if total_negative > 1 else -0.35
+            normal_y = -0.09 - (rank / (total_negative - 1)) * 0.47 if total_negative > 1 else -0.35
 
-    return 0
+    fudge_offset = calculate_cross_sol_fudge(star_data, all_stars)
+    return normal_y + fudge_offset
 
 
 # mark-s
@@ -293,6 +356,7 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
 def setup_hieroglyphic_plot(ax, theme):
     """Configure plot appearance with Egyptian astronomical theme"""
     ax.set_xlim(-2.6, 3.2)  # Slightly wider for hieroglyphic labels
+    # ax.set_ylim(bottom, top) - Sets the y-axis viewing window
     ax.set_ylim(-0.65, 0.65)
 
     # Grid lines
