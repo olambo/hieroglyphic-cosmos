@@ -85,9 +85,9 @@ def categorize_x_plot(perpendicular_distance):
         return 0
     elif abs_distance < 12:
         return sign * 0.5
-    elif abs_distance < 50:
+    elif abs_distance < 40:
         return sign * 1
-    elif abs_distance < 160:
+    elif abs_distance < 190:
         return sign * 1.7
     else:
         return sign * 2.3
@@ -182,13 +182,13 @@ def rank_y_plot(star_data, all_stars):
             rank = [s['name'] for s in positive_stars].index(star_name)
             total_positive = len(positive_stars)
             reversed_rank = total_positive - 1 - rank
-            normal_y = 0.09 + (reversed_rank / (total_positive - 1)) * 0.47 if total_positive > 1 else 0.35
+            normal_y = 0.04 + (reversed_rank / (total_positive - 1)) * 0.47 if total_positive > 1 else 0.35
     else:
         negative_stars = [s for s in regular_stars if s['y_plot'] <= 0]
         if star_name in [s['name'] for s in negative_stars]:
             rank = [s['name'] for s in negative_stars].index(star_name)
             total_negative = len(negative_stars)
-            normal_y = -0.09 - (rank / (total_negative - 1)) * 0.47 if total_negative > 1 else -0.35
+            normal_y = -0.1 - (rank / (total_negative - 1)) * 0.47 if total_negative > 1 else -0.35
 
     fudge_offset = calculate_cross_sol_fudge(star_data, all_stars)
     return normal_y + fudge_offset
