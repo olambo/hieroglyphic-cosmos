@@ -13,60 +13,124 @@ Output markdown file with your name at the top and the markdown table must be no
 Analysis of hieroglyph selections from ChatGPT, Claude, Gemini, and Grok for the Hieroglyphic Cosmos project.
 With input from xAI Ani
 
-Perfect! Here's the table with separate markings for 1% and 5% tolerance:
+# Top Glyphs
+| Glyph Name          | Gardiner   | Stellar Object    | Conf | Glyph | Stellar | Coords |
+| ------------------- | ---------- | ----------------- | ---- | ----- | ------- | ------ |
+| Magic/Heka          | U6/A2      | Dark Energy       | 3    | C     | O/G     | n/a    |
+| Djed Pillar         | R11        | Dark Matter       | 3    | ALL   | O/G     | n/a    |
+| Nut/Sky             | N1/C9/C23  | Milky Way         | 3    | ALL   | C/G     | n/a    |
+| Sopdet/Ankh         | S34        | Sirius            | 1    | ALL   | ALL     | ✓      |
+| Eye of Horus        | D10        | Vega              | 1    | ALL   | ALL     | ✓      |
+| Sun/Ra              | N5         | Sol               | 1    | ALL   | ALL     | ✓      |
+| Horizon/Akhet       | N27        | Spica             | 1    | ALL   | ALL     | ✓      |
+| Anubis              | E16/E17    | Polaris           | 1    | ALL   | C/A     | 5%     |
+| Bastet/Cat          | B1/E13     | Regulus           | 1    | ALL   | C/A     | ✓      |
+| Cobra/Uraeus        | I10/I12    | Thuban            | 1    | ALL   | G       | ✓      |
+| Crocodile/Sobek     | I3/I4      | Fomalhaut         | 1    | ALL   | C       | ✓      |
+| Falcon/Horus        | G5         | Altair            | 1    | ALL   | C/A     | 5%     |
+| Heart               | F34        | Antares           | 1    | ALL   | C/A/T   | ✓      |
+| Ibis/Thoth          | G26/C3     | Deneb             | 1    | ALL   | O       | ✓      |
+| Isis                | C2/C10/C20 | Canopus           | 1    | ALL   | O       | ✓      |
+| Jackal              | E16/E17    | Procyon           | 1    | ALL   | O       | ✓      |
+| Bes/Lion            | E1/E23     | Aldebaran         | 1    | ALL   | O       | ✓      |
+| Lotus               | M1/M9      | Sigma Draconis    | 1    | ALL   | C/A     | ✓      |
+| Moon                | N11/N30    | Sheliak           | 1    | ALL   | O       | ✓      |
+| Osiris              | A40/C1/C12 | Betelgeuse        | 1    | ALL   | O       | 5%     |
+| Scarab/Khepri       | L1         | Rigel             | 1    | ALL   | O       | 5%     |
+| Shen Ring           | V9         | Alpha Centauri    | 1    | ALL   | C/A     | ✓      |
+| Vulture             | G1/G14     | Acrux             | 1    | ALL   | A       |        |
+| Was Scepter         | S39/S40    | Arcturus          | 1    | ALL   | C       | ✓      |
+| Water/Waves         | N35        | Achernar          | 1    | ALL   | C/T     |        |
+| Star                | N14        | Bellatrix         | 1    | ALL   | C/A     | 5%     |
+| Ba Bird             | G29/G53    | Mira              | 1    | T/C/G | C       |        |
+| Bee                 | L2         | Delta Cancri      | 1    | T/G/A | O       |        |
+| Crook               | S38/S42    | Delta Pavonis     | 1    | T/G/A | C/T     |        |
+| Double Crown        | S4/S5      | Albireo           | 1    | T/G/A | O       | ✓      |
+| Feather/Maat        | H6         | Algol             | 1    | T/G/A | A       | ✓      |
+| Flail               | S45        | Mizar             | 1    | T/G/A | C       | ✓      |
+| Hathor/Cow          | E1/E4/C9   | Pleiades          | 1    | T/C/A | G       | ✓      |
+| Tawret/Hippopotamus | E24/E25    | Hadar             | 1    | T/G/A | O       | ✓      |
+| Ka                  | D28        | Van Maanen's Star | 1    | T/C/G | O       | ✓      |
+| Offering Table      | R3/R4/R7   | Epsilon Indi      | 0    | T/G/A | A       | 5%     |
+| White Crown         | S1         | Rasalhague        | 0    | T/G/A | A       |        |
+| Cartouche           | V10        | Schedar           | 0    | T/G   | A       |        |
+| Pyramid             | O24        | Adhara            | 0    | C/A   | A       |        |
+| Obelisk             | O25        | Shaula            | 0    | C     | C/A     |        |
+| Shadow              | D63        | Scheat            | 0    | A     | A       |        |
+| Solar Barque        | P1/P4      | Nunki             | 0    | C     | A       |        |
+| Owl                 | G17        | Eta Cassiopeiae   | 0    | T/G/A | A       |        |
+| Papyrus             | M16/M17    | Castor            | 0    | T/C/A | O       |        |
+| Ram                 | E10        | Hamal             | 0    | T/G/A | O       |        |
+| Red Crown           | S3         | Elnath            | 0    | T/G/A | O       |        |
+| Sekhmet/Lioness     | E22/E23    | Almach            | 0    | T/C/G | O       | 5%     |
+| Seth/Set            | E20/C7     | Beta Serpentis    | 0    | C/G/A | O       |        |
+| Throne              | Q1/Q3      | Rastaban          | 0    | T/G/A | O       |        |
+| Tyet/Isis Knot      | V36/V39    | Kochab            | 0    | C/G/A | O       |        |
 
-| Glyph Name      | Gardiner   | Stellar Object    | Conf | Glyph | Stellar | Coords |
-| --------------- | ---------- | ----------------- | ---- | ----- | ------- | ------ |
-| Magic/Heka      | U6/A2      | Dark Energy       | 3    | C     | O/G     | n/a    |
-| Djed Pillar     | R11        | Dark Matter       | 3    | ALL   | O/G     | n/a    |
-| Nut/Sky         | N1/C9/C23  | Milky Way         | 3    | ALL   | C/G     | n/a    |
-| Ankh            | S34        | Sirius            | 1    | ALL   | ALL     | ✓      |
-| Eye of Horus    | D10        | Vega              | 1    | ALL   | ALL     | ✓      |
-| Sun/Ra          | N5         | Sol               | 1    | ALL   | ALL     | ✓      |
-| Horizon/Akhet   | N27        | Spica             | 1    | ALL   | ALL     | ✓      |
-| Anubis          | E16/E17    | Polaris           | 1    | ALL   | C/A     | 5%     |
-| Bastet/Cat      | B1/E13     | Regulus           | 1    | ALL   | C/A     | ✓      |
-| Cobra/Uraeus    | I10/I12    | Thuban            | 1    | ALL   | G       | ✓      |
-| Crocodile/Sobek | I3/I4      | Fomalhaut         | 1    | ALL   | C       | ✓      |
-| Falcon/Horus    | G5         | Altair            | 1    | ALL   | C/A     | 5%     |
-| Heart           | F34        | Antares           | 1    | ALL   | C/A/T   | ✓      |
-| Ibis/Thoth      | G26/C3     | Deneb             | 1    | ALL   | O       | ✓      |
-| Isis            | C2/C10/C20 | Canopus           | 1    | ALL   | O       | ✓      |
-| Jackal          | E16/E17    | Procyon           | 1    | ALL   | O       | ✓      |
-| Lion            | E1/E23     | Aldebaran         | 1    | ALL   | O       | ✓      |
-| Lotus           | M1/M9      | Sigma Draconis    | 1    | ALL   | C/A     | ✓      |
-| Moon            | N11/N30    | Sheliak           | 1    | ALL   | O       | ✓      |
-| Osiris          | A40/C1/C12 | Betelgeuse        | 1    | ALL   | O       | 5%     |
-| Scarab/Khepri   | L1         | Rigel             | 1    | ALL   | O       | 5%     |
-| Shen Ring       | V9         | Alpha Centauri    | 1    | ALL   | C/A     | ✓      |
-| Vulture         | G1/G14     | Acrux             | 1    | ALL   | A       |        |
-| Was Scepter     | S39/S40    | Arcturus          | 1    | ALL   | C       | ✓      |
-| Water/Waves     | N35        | Achernar          | 1    | ALL   | C/T     |        |
-| Star            | N14        | Bellatrix         | 1    | ALL   | C/A     | 5%     |
-| Ba Bird         | G29/G53    | Mira              | 1    | T/C/G | C       |        |
-| Bee             | L2         | Delta Cancri      | 1    | T/G/A | O       |        |
-| Crook           | S38/S42    | Delta Pavonis     | 1    | T/G/A | C/T     |        |
-| Double Crown    | S4/S5      | Albireo           | 1    | T/G/A | O       | ✓      |
-| Feather/Maat    | H6         | Algol             | 1    | T/G/A | A       | ✓      |
-| Flail           | S45        | Mizar             | 1    | T/G/A | C       | ✓      |
-| Hathor/Cow      | E1/E4/C9   | Pleiades          | 1    | T/C/A | G       | ✓      |
-| Hippopotamus    | E24/E25    | Hadar             | 1    | T/G/A | O       | ✓      |
-| Ka              | D28        | Van Maanen's Star | 1    | T/C/G | O       | ✓      |
-| Offering Table  | R3/R4/R7   | Epsilon Indi      | 0    | T/G/A | A       | 5%     |
-| White Crown     | S1         | Rasalhague        | 0    | T/G/A | A       |        |
-| Cartouche       | V10        | Schedar           | 0    | T/G   | A       |        |
-| Pyramid         | O24        | Adhara            | 0    | C/A   | A       |        |
-| Obelisk         | O25        | Shaula            | 0    | C     | C/A     |        |
-| Shadow          | D63        | Scheat            | 0    | A     | A       |        |
-| Solar Barque    | P1/P4      | Nunki             | 0    | C     | A       |        |
-| Owl             | G17        | Eta Cassiopeiae   | 0    | T/G/A | A       |        |
-| Papyrus         | M16/M17    | Castor            | 0    | T/C/A | O       |        |
-| Ram             | E10        | Hamal             | 0    | T/G/A | O       |        |
-| Red Crown       | S3         | Elnath            | 0    | T/G/A | O       |        |
-| Sekhmet/Lioness | E22/E23    | Almach            | 0    | T/C/G | O       | 5%     |
-| Seth/Set        | E20/C7     | Beta Serpentis    | 0    | C/G/A | O       |        |
-| Throne          | Q1/Q3      | Rastaban          | 0    | T/G/A | O       |        |
-| Tyet/Isis Knot  | V36/V39    | Kochab            | 0    | C/G/A | O       |        |
+
+# Key
+| Color | Tier   | Description                                                                                 |
+| ----- | ------ | ------------------------------------------------------------------------------------------- |
+| 🟥    | Tier 1 | Sacred / Cosmological (core cosmic or power glyphs: ankh, sun, heart, djed, etc.)           |
+| 🟧    | Tier 2 | Gods & Divine Animals (major deities and sacred beasts: Anubis, Bastet, Horus, Thoth, etc.) |
+| 🟨    | Tier 3 | Celestial / Cosmic Features (sky, stars, moon, horizon, Shen Ring, etc.)                    |
+| 🟩    | Tier 4 | Royal / Ritual Symbols (crowns, thrones, regalia, offerings, Ka, flail, crook, etc.)        |
+| 🟦    | Tier 5 | Natural / Everyday (animals, plants, tools, supporting determinatives: lion, bee, etc.)     |
+
+### Color Glyphs
+| #  | Glyph Name                  | Gardiner   | Stellar Object        | Conf | Glyph | Stellar | Coords |
+|----|----------------------------|------------|-----------------------|------|-------|---------|--------|
+| 1  | 🟥 Djed Pillar              | R11        | Dark Matter           | 3    | ALL   | O/G     | n/a    |
+| 2  | 🟥 Eye of Horus             | D10        | Vega                  | 1    | ALL   | ALL     | ✓      |
+| 3  | 🟥 Heart                    | F34        | Antares               | 1    | ALL   | C/A/T   | ✓      |
+| 4  | 🟥 Magic/Heka               | U6/A2      | Dark Energy           | 3    | C     | O/G     | n/a    |
+| 5  | 🟥 Scarab/Khepri            | L1         | Rigel                 | 1    | ALL   | O       | 5%     |
+| 6  | 🟥 Sopdet/Ankh              | S34        | Sirius                | 1    | ALL   | ALL     | ✓      |
+| 7  | 🟧 Anubis                   | E16/E17    | Polaris               | 1    | ALL   | C/A     | 5%     |
+| 8  | 🟧 Bastet/Cat               | B1/E13     | Regulus               | 1    | ALL   | C/A     | ✓      |
+| 9  | 🟧 Bes/Lion                 | E1/E23     | Aldebaran             | 1    | ALL   | O       | ✓      |
+| 10 | 🟧 Cobra/Uraeus             | I10/I12    | Thuban                | 1    | ALL   | G       | ✓      |
+| 11 | 🟧 Crocodile/Sobek          | I3/I4      | Fomalhaut             | 1    | ALL   | C       | ✓      |
+| 12 | 🟧 Falcon/Horus             | G5         | Altair                | 1    | ALL   | C/A     | 5%     |
+| 13 | 🟧 Hathor/Cow               | E1/E4/C9   | Pleiades              | 1    | T/C/A | G       | ✓      |
+| 14 | 🟧 Ibis/Thoth               | G26/C3     | Deneb                 | 1    | ALL   | O       | ✓      |
+| 15 | 🟧 Isis                     | C2/C10/C20 | Canopus               | 1    | ALL   | O       | ✓      |
+| 16 | 🟧 Jackal                   | E16/E17    | Procyon               | 1    | ALL   | O       | ✓      |
+| 17 | 🟧 Osiris                   | A40/C1/C12 | Betelgeuse            | 1    | ALL   | O       | 5%     |
+| 18 | 🟧 Sekhmet/Lioness          | E22/E23    | Almach                | 0    | T/C/G | O       | 5%     |
+| 19 | 🟧 Seth/Set                 | E20/C7     | Beta Serpentis        | 0    | C/G/A | O       |        |
+| 20 | 🟧 Tawret/Hippopotamus      | E24/E25    | Pollux                | 1    | T/G/A | O       | ✓      |
+| 21 | 🟧 Vulture                  | G1/G14     | Acrux                 | 1    | ALL   | A       |        |
+| 22 | 🟨 Feather/Maat             | H6         | Algol                 | 1    | T/G/A | A       | ✓      |
+| 23 | 🟨 Horizon/Akhet            | N27        | Spica                 | 1    | ALL   | ALL     | ✓      |
+| 24 | 🟨 Moon                     | N11/N30    | Sheliak               | 1    | ALL   | O       | ✓      |
+| 25 | 🟨 Nut/Sky                  | N1/C9/C23  | Milky Way             | 3    | ALL   | C/G     | n/a    |
+| 26 | 🟨 Shen Ring                | V9         | Alpha Centauri        | 1    | ALL   | C/A     | ✓      |
+| 27 | 🟨 Star                     | N14        | Bellatrix             | 1    | ALL   | C/A     | 5%     |
+| 28 | 🟩 Ba Bird                  | G29/G53    | Mira                  | 1    | T/C/G | C       |        |
+| 29 | 🟩 Cartouche                | V10        | Schedar               | 0    | T/G   | A       |        |
+| 30 | 🟩 Crook                    | S38/S42    | Delta Pavonis         | 1    | T/G/A | C/T     |        |
+| 31 | 🟩 Double Crown             | S4/S5      | Albireo               | 1    | T/G/A | O       | ✓      |
+| 32 | 🟩 Flail                    | S45        | Mizar                 | 1    | T/G/A | C       | ✓      |
+| 33 | 🟩 Ka                       | D28        | Van Maanen's Star     | 1    | T/C/G | O       | ✓      |
+| 34 | 🟩 Obelisk                  | O25        | Shaula                | 0    | C     | C/A     |        |
+| 35 | 🟩 Offering Table           | R3/R4/R7   | Epsilon Indi          | 0    | T/G/A | A       | 5%     |
+| 36 | 🟩 Pyramid                  | O24        | Adhara                | 0    | C/A   | A       |        |
+| 37 | 🟩 Red Crown                | S3         | Elnath                | 0    | T/G/A | O       |        |
+| 38 | 🟩 Solar Barque             | P1/P4      | Nunki                 | 0    | C     | A       |        |
+| 39 | 🟩 Throne                   | Q1/Q3      | Rastaban              | 0    | T/G/A | O       |        |
+| 40 | 🟩 Tyet/Isis Knot           | V36/V39    | Kochab                | 0    | C/G/A | O       |        |
+| 41 | 🟩 Was Scepter              | S39/S40    | Arcturus              | 1    | ALL   | C       | ✓      |
+| 42 | 🟩 White Crown              | S1         | Rasalhague            | 0    | T/G/A | A       |        |
+| 43 | 🟦 Bee                      | L2         | Delta Cancri          | 1    | T/G/A | O       |        |
+| 44 | 🟦 Lotus                    | M1/M9      | Sigma Draconis        | 1    | ALL   | C/A     | ✓      |
+| 45 | 🟦 Owl                      | G17        | Eta Cassiopeiae       | 0    | T/G/A | A       |        |
+| 46 | 🟦 Papyrus                  | M16/M17    | Castor                | 0    | T/C/A | O       |        |
+| 47 | 🟦 Ram                      | E10        | Hamal                 | 0    | T/G/A | O       |        |
+| 48 | 🟦 Reed Leaf                | M17        | Hadar                 | 1    | T/G/A | O       | ✓      |
+| 49 | 🟦 Shadow                   | D63        | Scheat                | 0    | A     | A       |        |
+| 50 | 🟦 Water/Waves              | N35        | Achernar              | 1    | ALL   | C/T     |        |
+
 
 **Summary:**
 - **✓** = Within 1% tolerance (22 stars)
