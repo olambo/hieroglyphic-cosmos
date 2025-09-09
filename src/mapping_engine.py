@@ -59,6 +59,61 @@ THEMES = {
 }
 
 STAR_HIEROGLYPHS = [
+        {"name": "Castor", "distance": 51.53, "longitude": 113.5, "latitude": 31.88, "size": 35,
+         "hieroglyph": "𓇅", "egyptian_name": "Papyrus", "gardiner": "M16/M17",
+         "description": "Sacred Writing", "color": "#90EE90"},
+
+        {"name": "Hamal", "distance": 65.89, "longitude": 31.78, "latitude": 23.46, "size": 40,
+         "hieroglyph": "𓄿", "egyptian_name": "Ram", "gardiner": "E10",
+         "description": "Divine Power", "color": "#F4A460"},
+
+        {"name": "Elnath", "distance": 134, "longitude": 81.57, "latitude": 28.61, "size": 35,
+         "hieroglyph": "𓋔", "egyptian_name": "Red Crown", "gardiner": "S3",
+         "description": "Lower Egypt", "color": "#DC143C"},
+
+{"name": "70 Aquilae", "distance": 940, "longitude": 90.3, "latitude": 15.5,
+ "size": 35, "hieroglyph": "𓂀", "egyptian_name": "Sekhmet", "gardiner": "A1",
+ "description": "Fiery Guardian", "color": "#FF6347"},
+
+        {"name": "Kaus Media", "distance": 170, "longitude": 274.19, "latitude": -26.46, "size": 35,
+         "hieroglyph": "𓄡", "egyptian_name": "Seth", "gardiner": "E20/C7",
+         "description": "Storm Bringer", "color": "#8B0000"},
+
+        {"name": "Rastaban", "distance": 380, "longitude": 268.31, "latitude": 52.93, "size": 35,
+         "hieroglyph": "𓊨", "egyptian_name": "Throne", "gardiner": "Q1/Q3",
+         "description": "Royal Seat", "color": "#4169E1"},
+
+        {"name": "Kochab", "distance": 130, "longitude": 222.59, "latitude": 74.18, "size": 35,
+         "hieroglyph": "𓍢", "egyptian_name": "Tyet", "gardiner": "V36/V39",
+         "description": "Isis Knot", "color": "#9370DB"},
+
+
+    {"name": "Alcyone", "distance": 440, "longitude": 173.1, "latitude": -23.7, "size": 35,
+     "hieroglyph": "𓍱", "egyptian_name": "Offering Table", "gardiner": "R3/R4/R7",
+     "description": "Abundance Offering", "color": "#ADD8E6"},
+     {"name": "Rasalhague", "distance": 48, "longitude": 96.7, "latitude": 12.3, "size": 35,
+         "hieroglyph": "𓋚", "egyptian_name": "White Crown", "gardiner": "S1",
+         "description": "Royal Authority", "color": "#F0E68C"},
+    {"name": "Schedar", "distance": 228, "longitude": 10.1, "latitude": -2.5, "size": 35,
+     "hieroglyph": "𓍯", "egyptian_name": "Cartouche", "gardiner": "V10",
+     "description": "Royal Enclosure", "color": "#B0E0E6"},
+    {"name": "Adhara", "distance": 405, "longitude": 76.2, "latitude": -11.3, "size": 35,
+     "hieroglyph": "𓊶", "egyptian_name": "Pyramid", "gardiner": "O24",
+     "description": "Eternal Monument", "color": "#FFB6C1"},
+    {"name": "Shaula", "distance": 570, "longitude": 247.6, "latitude": -37.1, "size": 35,
+     "hieroglyph": "𓊵", "egyptian_name": "Obelisk", "gardiner": "O25",
+     "description": "Skyward Pillar", "color": "#ADD8E6"},
+    {"name": "Scheat", "distance": 196, "longitude": 351.2, "latitude": 29.0, "size": 25,
+"hieroglyph": "𓐍", "egyptian_name": "Shadow", "gardiner": "D63",
+"description": "Variable Dimming", "color": "#D3D3D3"},
+    {"name": "Nunki", "distance": 228, "longitude": 279.2, "latitude": -26.3, "size": 35,
+     "hieroglyph": "𓊛", "egyptian_name": "Solar Barque", "gardiner": "P1/P4",
+     "description": "Ra's Journey", "color": "#ADD8E6"},
+    {"name": "Alpheratz", "distance": 97, "longitude": 112.3, "latitude": -15.2, "size": 35,
+     "hieroglyph": "𓅍", "egyptian_name": "Owl", "gardiner": "G17",
+     "description": "Wisdom Guide", "color": "#E0FFFF"},
+
+
     # Special cases - check gardiner for magic/heka
     {"name": "Dark Energy", "distance": 26000, "longitude": 0, "latitude": 0, "size": 30,
      "hieroglyph": "𓌻", "egyptian_name": "Magic/Heka", "gardiner": "U6/A2",
@@ -202,9 +257,6 @@ STAR_HIEROGLYPHS = [
      "hieroglyph": "𓂓", "egyptian_name": "Ka", "gardiner": "D28",
      "description": "Vital Essence", "color": "#FFFFFF"},
 
-    {"name": "Saiph", "distance": 720, "longitude": 200, "latitude": -18, "size": 25,
-     "hieroglyph": "𓏠", "egyptian_name": "Offering Table", "gardiner": "R3/R4/R7",
-     "description": "Sacred Offering", "color": "#D8BFD8"},
 ]
 
 # Coordinate system preserved from Cygni Arcana (proven effective)
@@ -262,13 +314,13 @@ def rank_y_plot(star_data, all_stars):
             rank = [s['name'] for s in positive_stars].index(star_name)
             total_positive = len(positive_stars)
             reversed_rank = total_positive - 1 - rank
-            return 0.1 + (reversed_rank / (total_positive - 1)) * 0.47 if total_positive > 1 else 0.35
+            return 0.09 + (reversed_rank / (total_positive - 1)) * 0.47 if total_positive > 1 else 0.35
     else:
         negative_stars = [s for s in regular_stars if s['y_plot'] <= 0]
         if star_name in [s['name'] for s in negative_stars]:
             rank = [s['name'] for s in negative_stars].index(star_name)
             total_negative = len(negative_stars)
-            return -0.1 - (rank / (total_negative - 1)) * 0.47 if total_negative > 1 else -0.35
+            return -0.09 - (rank / (total_negative - 1)) * 0.47 if total_negative > 1 else -0.35
 
     return 0
 
@@ -348,7 +400,7 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
             ax.add_artist(ab)
 
             glyph_loaded = True
-            label_x = glyph_x + 0.12  # More spacing for larger glyphs
+            label_x = glyph_x + 0.08  # More spacing for larger glyphs
             print(f"✓ PNG rendered for {star['name']} {star['hieroglyph']} {glyph_name} at zoom {base_zoom}")
 
     except Exception as e:
