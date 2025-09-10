@@ -1,9 +1,21 @@
 STAR_HIEROGLYPHS = [
     {
-        "name": "Fomalhaut",
-        "distance": 25,
-        "longitude": 20.67,
-        "latitude": -29.62,
+        "name": "Peacock",
+        "distance": 179,
+        "longitude": 318.61,
+        "latitude": -36.92,
+        "size": 25,
+        "hieroglyph": "𓋔",
+        "egyptian_name": "Red Crown",
+        "gardiner": "S3",
+        "description": "Lower Egypt crown",
+        "color": "#00FF00",  # 🟩 Tier 4
+    },
+    {
+        "name": "Ras Algethi",
+        "distance": 360,
+        "longitude": 60.14,
+        "latitude": 36.96,
         "size": 25,
         "hieroglyph": "𓆣",
         "egyptian_name": "Scarab/Khepri",
@@ -214,18 +226,6 @@ STAR_HIEROGLYPHS = [
         "gardiner": "F36",
         "description": "Unification of Egypt",
         "color": "#00FF00",
-    },
-    {
-        "name": "Beta Serpentis",
-        "distance": 153,
-        "longitude": 61.23,
-        "latitude": 21.07,
-        "size": 25,
-        "hieroglyph": "𓋔",
-        "egyptian_name": "Red Crown",
-        "gardiner": "S3",
-        "description": "Lower Egypt crown",
-        "color": "#00FF00",  # 🟩 Tier 4
     },
     {
         "name": "Kochab",
