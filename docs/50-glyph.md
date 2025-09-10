@@ -13,7 +13,7 @@ Output markdown file with your name at the top and the markdown table must be no
 Analysis of hieroglyph selections from ChatGPT, Claude, Gemini, and Grok for the Hieroglyphic Cosmos project.
 With input from xAI Ani
 
-# Color Glyph Key
+### Stellar Glyph Color Key
 | Color | Tier   | Description                                                                                 |
 | ----- | ------ | ------------------------------------------------------------------------------------------- |
 | 🟥    | Tier 1 | Sacred / Cosmological (core cosmic or power glyphs: ankh, sun, heart, djed, etc.)           |
@@ -21,32 +21,6 @@ With input from xAI Ani
 | 🟨    | Tier 3 | Celestial / Cosmic Features (sky, stars, moon, horizon, Shen Ring, etc.)                    |
 | 🟩    | Tier 4 | Royal / Ritual Symbols (crowns, thrones, regalia, offerings, Ka, flail, crook, etc.)        |
 | 🟦    | Tier 5 | Natural / Everyday (animals, plants, tools, supporting determinatives: lion, bee, etc.)     |
-
-### Stellar Glyph
-# Color Glyph Key
-| Color | Tier   | Description                                                                                 |
-| ----- | ------ | ------------------------------------------------------------------------------------------- |
-| 🟥    | Tier 1 | Sacred / Cosmological (core cosmic or power glyphs: ankh, sun, heart, djed, etc.)           |
-| 🟧    | Tier 2 | Gods & Divine Animals (major deities and sacred beasts: Anubis, Bastet, Horus, Thoth, etc.) |
-| 🟨    | Tier 3 | Celestial / Cosmic Features (sky, stars, moon, horizon, Shen Ring, etc.)                    |
-| 🟩    | Tier 4 | Royal / Ritual Symbols (crowns, thrones, regalia, offerings, Ka, flail, crook, etc.)        |
-| 🟦    | Tier 5 | Natural / Everyday (animals, plants, tools, supporting determinatives: lion, bee, etc.)     |
-
-# Stellar-Glyph Mapping Evaluation
-Please evaluate each Egyptian hieroglyph to stellar object mapping below on a scale of 1-5:
-
-1 = Strongly Agree (excellent symbolic/mythological correspondence)
-2 = Agree (good match, makes sense)
-3 = Neutral (acceptable, not obviously wrong)
-4 = Disagree (questionable connection)
-5 = Strongly Disagree (poor fit, contradicts symbolism)
-
-Rate based on symbolic meaning, mythological associations, astronomical properties, and overall conceptual fit. Provide your response as a markdown table with your model name as a header.
-Format your response exactly like this:
-[Your Model Name Here]
-#Glyph NameStellar ObjectRatingBrief Reason1Djed PillarDark Matter[1-5][brief explanation]2Eye of HorusVega[1-5][brief explanation][continue for all entries...]
-Mappings to evaluate:
-[Insert your current stellar glyph table here - just the entries that have stellar objects assigned]
 
 ### Stellar Glyph
 | #  | Glyph Name              | Gardiner   | Stellar Object    | Conf | Glyph | Stellar | Coords |
