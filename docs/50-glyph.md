@@ -52,7 +52,7 @@ i## Stellar Glyph Color Key
 | 39 | 🟩 Obelisk              | O25        | Rastaban          |
 | 40 | 🟩 Offering Table       | R3/R4/R7   | Alkes             |
 | 41 | 🟩 Pyramid              | O24        | Alnilam           |
-| 42 | 🟩 Red Crown            | S3         | Beta Serpentis    |
+| 42 | 🟩 Red Crown            | S3         | Peacock           |
 | 43 | 🟩 Sa Sign              | V31/V37    | Bellatrix         |
 | 44 | 🟩 Sema Tawy            | F36        | Dubhe             |
 | 45 | 🟩 Solar Barque         | P1/P4      | Miaplacidus       |

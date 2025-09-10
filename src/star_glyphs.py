@@ -1,5 +1,17 @@
 STAR_HIEROGLYPHS = [
     {
+        "name": "Fomalhaut",
+        "distance": 25,
+        "longitude": 20.67,
+        "latitude": -29.62,
+        "size": 25,
+        "hieroglyph": "𓆣",
+        "egyptian_name": "Scarab/Khepri",
+        "gardiner": "L1",
+        "description": "Khepri, rebirth deity",
+        "color": "#FFA500",  # 🟧 Tier 2
+    },
+    {
         "name": "Atria",
         "distance": 416,
         "longitude": 322.91,
@@ -480,18 +492,6 @@ STAR_HIEROGLYPHS = [
         "gardiner": "A40/C1/C12",
         "description": "Dying and Rising God",
         "color": "#FF0000",
-    },
-    {
-        "name": "Rigel",
-        "distance": 860,
-        "longitude": 209.24,
-        "latitude": -25.12,
-        "size": 30,
-        "hieroglyph": "𓆣",
-        "egyptian_name": "Scarab/Khepri",
-        "gardiner": "L1",
-        "description": "Becoming, Renewal",
-        "color": "#87CEFA",
     },
     {
         "name": "Alpha Centauri",
