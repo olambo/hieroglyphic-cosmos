@@ -47,33 +47,33 @@ With input from xAI Ani
 | 19 | 🟧 Isis                 | C2/C10/C20 | Canopus           | 1    | ALL   | O       | ✓      |
 | 20 | 🟧 Jackal               | E16/E17    | Procyon           | 1    | ALL   | O       | ✓      |
 | 21 | 🟧 Osiris               | A40/C1/C12 | Betelgeuse        | 1    | ALL   | O       | 5%     |
-| 22 | 🟧 Ptah                 | C20        | Castor            | 1    | ALL   | O       | ✓      |
-| 23 | 🟧 Sekhmet/Lioness      | E22/E23    | Almach            | 0    | T/C/G | O       | 5%     |
-| 24 | 🟧 Seth/Set             | E20/C7     | Beta Serpentis    | 0    | C/G/A | O       |        |
+| 22 | 🟧 Ptah                 | C20        | Almach            | 1    | ALL   | O       | ✓      |
+| 23 | 🟧 Sekhmet/Lioness      | E22/E23    | Denebola          | 0    | T/C/G | O       | 5%     |
+| 24 | 🟧 Seth/Set             | E20/C7     | Elnath            | 0    | C/G/A | O       |        |
 | 25 | 🟧 Tawret/Hippopotamus  | E24/E25    | Hadar             | 1    | T/G/A | O       | ✓      |
-| 26 | 🟧 Vulture              | G1/G14     | Acrux             | 1    | ALL   | A       |        |
+| 26 | 🟧 Vulture              | G1/G14     | Epsilon Indi      | 1    | ALL   | A       |        |
 | 27 | 🟨 Feather/Maat         | H6         | Algol             | 1    | T/G/A | A       | ✓      |
 | 28 | 🟨 Horizon/Akhet        | N27        | Spica             | 1    | ALL   | ALL     | ✓      |
 | 29 | 🟨 Moon                 | N11/N30    | Delta Cephei      | 1    | ALL   | O       | ✓      |
 | 30 | 🟨 Nut/Sky              | N1/C9/C23  | Milky Way         | 3    | ALL   | C/G     | n/a    |
 | 31 | 🟨 Shen Ring            | V9         | Alpha Centauri    | 1    | ALL   | C/A     | ✓      |
-| 32 | 🟨 Star                 | N14        | Gienah            | 1    | ALL   | C/A     | ✓      |
+| 32 | 🟨 Star                 | N14        | Atria             | 1    | ALL   | C/A     | ✓      |
 | 33 | 🟩 Ba Bird              | G29/G53    | Mira              | 1    | T/C/G | C       |        |
-| 34 | 🟩 Cartouche            | V10        | Schedar           | 0    | T/G   | A       |        |
+| 34 | 🟩 Cartouche            | V10        | Adhara            | 0    | T/G   | A       |        |
 | 35 | 🟩 Crook                | S38/S42    | Delta Pavonis     | 1    | T/G/A | C/T     |        |
 | 36 | 🟩 Double Crown         | S4/S5      | Albireo           | 1    | T/G/A | O       | ✓      |
-| 37 | 🟩 Flail                | S45        | Mizar             | 1    | T/G/A | C       | ✓      |
+| 37 | 🟩 Flail                | S45        | Unukalhai         | 1    | T/G/A | C       | ✓      |
 | 38 | 🟩 Ka                   | D28        | Van Maanen's Star | 1    | T/C/G | O       | ✓      |
-| 39 | 🟩 Obelisk              | O25        | Shaula            | 0    | C     | C/A     |        |
-| 40 | 🟩 Offering Table       | R3/R4/R7   | Epsilon Indi      | 0    | T/G/A | A       | 5%     |
+| 39 | 🟩 Obelisk              | O25        | Rastaban          | 0    | C     | C/A     |        |
+| 40 | 🟩 Offering Table       | R3/R4/R7   | Alkes             | 0    | T/G/A | A       | 5%     |
 | 41 | 🟩 Pyramid              | O24        | Alnilam           | 0    | C/A   | A       |        |
-| 42 | 🟩 Red Crown            | S3         | Elnath            | 0    | T/G/A | O       |        |
+| 42 | 🟩 Red Crown            | S3         | Beta Serpentis    | 0    | T/G/A | O       |        |
 | 43 | 🟩 Sa Sign              | V31/V37    | Bellatrix         | 0    | T/G/A | C/A     | ✓      |
 | 44 | 🟩 Sema Tawy            | F36        | Dubhe             | 0    | T/G/A | A       | ✓      |
-| 45 | 🟩 Solar Barque         | P1/P4      | Nunki             | 0    | C     | A       |        |
-| 46 | 🟩 Throne               | Q1/Q3      | Rastaban          | 0    | T/G/A | O       |        |
+| 45 | 🟩 Solar Barque         | P1/P4      | Miaplacidus       | 0    | C     | A       |        |
+| 46 | 🟩 Throne               | Q1/Q3      | Alphecca          | 0    | T/G/A | O       |        |
 | 47 | 🟩 Tyet/Isis Knot       | V36/V39    | Kochab            | 0    | C/G/A | O       |        |
-| 48 | 🟩 Was Scepter          | S39/S40    | Arcturus          | 1    | ALL   | C       | ✓      |
+| 48 | 🟩 Was Scepter          | S39/S40    | Acrux             | 1    | ALL   | C       | ✓      |
 | 49 | 🟩 White Crown          | S1         | Rasalhague        | 0    | T/G/A | A       |        |
 | 50 | 🟦 Lotus                | M1/M9      | Sigma Draconis    | 1    | ALL   | C/A     | ✓      |
 | 51 | 🟦 Water/Waves          | N35        | Achernar          | 1    | ALL   | C/T     |        |
@@ -232,7 +232,7 @@ No problem. Here is the table without bolding.
 | Jackal          | Procyon        | 2      | 3        | Neutral. "Before the dog" (Sirius) fits, but the link is weak.           |
 | Osiris          | Betelgeuse     | 2      | 1        | Excellent. Dying/rebirth cycle of variable star.                         |
 | Ptah            | Castor         | 3      | 4 *      | Poor. Twin symbolism is a weak fit for a creator god.                    |
-| Sekhmet         | Almach         | 4      | 3 *      | Neutral. Distant double star, no clear lioness link.                     |
+| Sekhmet         | Denebola       | 4      | 3 *      | Neutral. Distant double star, no clear lioness link.                     |
 | Seth/Set        | Beta Serpentis | 2      | 4        | Poor. No strong mythological link to Seth.                               |
 | Tawret          | Hadar          | 3      | 3        | Neutral. Southern star, no clear hippo link.                             |
 | Vulture         | Acrux          | 3      | 3        | Neutral. Southern Cross star, no specific vulture link.                  |
@@ -278,11 +278,11 @@ Based on my analysis, the average rating for all the matches is 2.3, putting the
 
 | Glyph          | Star        | Reason                                                                                                            |
 | -------------- | ----------- | ----------------------------------------------------------------------------------------------------------------- |
-| Seth/Set       | Elnath      | Known as the "butting one," symbolizes aggression and violence, a perfect fit for the chaotic god Seth.           |
-| Offering Table* | Alkes      | Star in Crater (the cup), direct symbolic link to vessels used for offerings.                                     |
-| Solar Barque*  | Miaplacidus | Star in Carina (the keel of a ship), literal celestial boat connection.                                           |
-| Flail          | Unukalhai   | Star in Serpens, “the serpent’s head,” visually and symbolically fits the whip/flail.                             |
+| Seth/Set Y       | Elnath      | Known as the "butting one," symbolizes aggression and violence, a perfect fit for the chaotic god Seth.           |
+| Offering Table Y | Alkes      | Star in Crater (the cup), direct symbolic link to vessels used for offerings.                                     |
+| Solar Barque Y  | Miaplacidus | Star in Carina (the keel of a ship), literal celestial boat connection.                                           |
+| Flail Y        | Unukalhai   | Star in Serpens, “the serpent’s head,” visually and symbolically fits the whip/flail.                             |
 | Scarab/Khepri  | Dubhe       | Pointer star in Ursa Major; linked to the “foreleg of the bull” sky figure; cycles fit scarab’s sun-pushing role. |
-| Ptah*          | Almach      | Complex multi-star system with varied colors, symbolizing Ptah as cosmic architect of complexity.                 |
-| Obelisk*       | Rastaban    | “Head of the serpent” in Draco; constellation has pillar-like form, visually tied to obelisks.                    |
-| Cartouche*     | Adhara      | Name means “virgins,” stretched but symbolic tie to protection/eternity of cartouche.                             |
+| Ptah Y          | Almach      | Complex multi-star system with varied colors, symbolizing Ptah as cosmic architect of complexity.                 |
+| Obelisk Y       | Rastaban    | “Head of the serpent” in Draco; constellation has pillar-like form, visually tied to obelisks.                    |
+| Cartouche  Y     | Adhara      | Name means “virgins,” stretched but symbolic tie to protection/eternity of cartouche.                             |
