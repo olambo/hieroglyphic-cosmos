@@ -81,7 +81,7 @@ def categorize_x_plot(perpendicular_distance):
     abs_distance = abs(perpendicular_distance)
     sign = -1 if perpendicular_distance >= 0 else 1
 
-    if abs_distance < 1:
+    if abs_distance < 0.4:
         return 0
     elif abs_distance < 12:
         return sign * 0.5
