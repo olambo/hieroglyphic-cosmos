@@ -267,9 +267,13 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
     glyph_loaded = False
     file_type_used = "None"
 
-    # Now only try to load PNG files
-    glyph_name = star['egyptian_name'].lower().replace(' ', '_').replace('/', '_')
-    glyph_path = PROJECT_ROOT / 'glyph' / f"{glyph_name}.png"
+    # --- START OF MODIFIED SECTION ---
+    # Now use the hieroglyph code and point to the data directory
+    glyph_code = star['hieroglyph']
+    gardiner_code = star['gardiner']
+    # The PNG files have a 'US22' prefix, so we will use the full code
+    glyph_path = PROJECT_ROOT / 'data' / 'stellar_pngs' / f"US22{gardiner_code}.png"
+    print(glyph_path)
 
     try:
         if glyph_path.exists():
@@ -284,7 +288,7 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
                 is_background = np.all(img >= white_threshold, axis=2)
                 alpha = np.where(is_background, 0, 1)
                 img = np.dstack((img, alpha))
-                print(f"  Added transparency to PNG")
+                print(f"   Added transparency to PNG")
 
             # Much larger, adaptive zoom
             base_zoom = 0.06 if star['name'] in ["Sol", "Sirius", "Alpha Centauri"] else 0.035
@@ -304,14 +308,15 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
 
             glyph_loaded = True
             label_x = glyph_x + 0.08  # More spacing for larger glyphs
-            print(f"✓ PNG rendered for {star['name']} {star['hieroglyph']} {glyph_name} at zoom {base_zoom}")
+            print(f"✓ PNG rendered for {star['name']} {star['hieroglyph']} at zoom {base_zoom}")
 
     except Exception as e:
         print(f"✗ Failed to load {glyph_path}: {e}")
+    # --- END OF MODIFIED SECTION ---
 
     # Fallback to Unicode hieroglyph if no image loaded
     if not glyph_loaded:
-        print(f"→ Using Unicode fallback for {star['name']}: {star['hieroglyph']}  {glyph_name}")
+        print(f"→ Using Unicode fallback for {star['name']}: {star['hieroglyph']}")
         # Enhanced Unicode rendering with better positioning
         font_size = 14 if star['name'] in ["Sol", "Sirius", "Alpha Centauri"] else 12
         ax.text(
@@ -348,8 +353,6 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
     )
 
     return glyph_loaded, file_type_used  # Return success status and file type used
-
-
 # mark-d
 
 
