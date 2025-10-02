@@ -108,6 +108,11 @@ def galactic_to_cartesian(distance, longitude_deg, latitude_deg):
     return CartesianCoords(x_plot, y_plot)
 
 
+# Grid lines
+x_ticks = [-2.5, -1.9, -1.2, -0.6, 0, 0.6, 1.2, 1.9, 2.5]
+# x_ticks= [-2.0, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2.0]
+
+
 def categorize_x_plot(perpendicular_distance):
     """Categorize perpendicular distance for plotting (preserved from Cygni Arcana)"""
     abs_distance = abs(perpendicular_distance)
@@ -116,13 +121,13 @@ def categorize_x_plot(perpendicular_distance):
     if abs_distance < 0.4:
         return 0
     elif abs_distance < 12:
-        return sign * 0.5
+        return sign * 0.6
     elif abs_distance < 40:
-        return sign * 1
+        return sign * 1.2
     elif abs_distance < 190:
-        return sign * 1.7
+        return sign * 1.9
     else:
-        return sign * 2.3
+        return sign * 2.5
 
 
 def calculate_cross_sol_fudge(star_data, all_stars):
@@ -302,13 +307,13 @@ GLYPH_ZOOM_OVERRIDES = {
 
 
 def plot_star_hieroglyph(ax, star, all_stars, theme):
-    """Enhanced star-hieroglyph plotting with PNG and Unicode side-by-side for comparison"""
+    """Enhanced star-hieroglyph plotting with two-line label layout"""
     coords = galactic_to_cartesian(
         star["distance"], star["longitude"], star["latitude"]
     )
     x_pos = categorize_x_plot(coords.x_plot)
 
-    # ⭐️ UPDATED: Use the pre-calculated final Y position ⭐️
+    # Use the pre-calculated final Y position
     y_pos = star.get("y_plot_position", rank_y_plot(star, all_stars))
 
     size_mapping = {
@@ -323,7 +328,18 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
     size = size_mapping.get(star["name"], 35)
 
     # Star background rendering
-    if star["name"] == "Sagittarius A*" or "Dark" in star["name"]:
+    if (
+        star["name"] == "Sagittarius A*"
+        or "Dark" in star["name"]
+        or star["egyptian_name"] == "Nut/Sky"
+    ):
+        # 1. Define Nut's specific color
+        inner_edge_color = (
+            "#87CEEB"  #  light sky blue
+            if star["egyptian_name"] == "Nut/Sky"
+            else theme["black_hole_edge"]
+        )
+
         ax.scatter(
             x_pos,
             y_pos,
@@ -348,7 +364,7 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
             s=size * 6,
             c=theme["background"],
             marker="o",
-            edgecolors=theme["black_hole_edge"],
+            edgecolors=inner_edge_color,
             linewidth=1,
             zorder=4,
         )
@@ -381,9 +397,9 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
 
     glyph_x = x_pos + 0.12
 
-    # Try to render PNG
-    glyph_path = find_stellar_png(star["gardiner"])
-    if glyph_path:
+    # Render PNG only (no Unicode)
+    glyph_rendered = False
+    if glyph_path := find_stellar_png(star["gardiner"]):
         try:
             img = plt.imread(str(glyph_path))
             height, width = img.shape[0], img.shape[1]
@@ -423,48 +439,47 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
                 zorder=5,
             )
             ax.add_artist(ab)
-            glyph_x += 0.08  # Shift unicode to the right
+            glyph_rendered = True
         except Exception as e:
             print(f"✗ PNG failed for {star['name']}: {e}")
 
-    # Always render Unicode
+    # Two-line label layout (closer to glyph now that Unicode is removed)
+    label_x = glyph_x + 0.06  # Moved closer from 0.08
+
+    # Line 1: Egyptian name in white (less raised)
+    egyptian_y = y_pos + 0.007  # Reduced from 0.01
     ax.text(
-        glyph_x,
-        y_pos,
-        star["hieroglyph"],
-        ha="center",
+        label_x,
+        egyptian_y,
+        star["egyptian_name"],
+        ha="left",
         va="center",
-        fontsize=12,
-        color=theme["text"],
+        fontsize=9,
+        color="white",
         zorder=5,
-        fontfamily=["Noto Sans Egyptian Hieroglyphs", "DejaVu Sans"],
     )
 
-    # Label
-    label_x = glyph_x + 0.08
+    # Line 2: Star name + distance in theme color (less lowered)
     distance_str = (
         f"{star['distance']}"
         if star["distance"] != int(star["distance"])
         else f"{int(star['distance'])}"
     )
-    combined_label = f"{star['name']} ({distance_str} ly) • {star['egyptian_name']}"
+    star_label = f"{star['name']} ({distance_str} ly)"
+    star_y = y_pos - 0.01  # Reduced from 0.02
 
-    font_size = max(6, 8 - len(combined_label) // 20)
     ax.text(
         label_x,
-        y_pos,
-        combined_label,
+        star_y,
+        star_label,
         ha="left",
         va="center",
-        fontsize=font_size,
+        fontsize=8,
         color=theme["text"],
         zorder=5,
     )
 
-    return True
-
-
-# mark-d
+    return glyph_rendered
 
 
 def setup_hieroglyphic_plot(ax, theme):
@@ -473,8 +488,7 @@ def setup_hieroglyphic_plot(ax, theme):
     # ax.set_ylim(bottom, top) - Sets the y-axis viewing window
     ax.set_ylim(-0.65, 0.65)
 
-    # Grid lines
-    x_ticks = [-2.3, -1.7, -1, -0.5, 0, 0.5, 1, 1.7, 2.3]
+    # xticks Grid lines
     ax.set_xticks([])
     ax.set_yticks([])
 
