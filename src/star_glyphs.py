@@ -381,7 +381,7 @@ STAR_HIEROGLYPHS = [
         "size": 25,
         "hieroglyph": "𓆄",
         "egyptian_name": "Crocodile/Sobek",
-        "gardiner": "I3/I4",
+        "gardiner": "I4/I3",
         "description": "Nile Crocodile",
         "color": "#00CED1",
     },
