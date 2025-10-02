@@ -121,13 +121,13 @@ def calculate_cross_sol_fudge(star_data, all_stars):
         # Add fudge when crossing Sol (left ↔ right transition)
         if previous_x_side and previous_x_side != current_x_side:
             cumulative_fudge += fudge_increment
-            print(
-                f"Sol crossing detected: {previous_x_side} → {current_x_side}, cumulative fudge now: {cumulative_fudge:.3f}"
-            )
+            # print(
+            #     f"Sol crossing detected: {previous_x_side} → {current_x_side}, cumulative fudge now: {cumulative_fudge:.3f}"
+            # )
 
         # Return fudge for our target star
         if star_info['name'] == target_star_name:
-            print(f"Star {target_star_name}: base fudge = {cumulative_fudge:.3f}")
+            # print(f"Star {target_star_name}: base fudge = {cumulative_fudge:.3f}")
             return cumulative_fudge
 
         previous_x_side = current_x_side
@@ -195,164 +195,118 @@ def rank_y_plot(star_data, all_stars):
 
 
 # mark-s
+# Gardiner code to actual PNG filename mapping (for variants)
+GARDINER_PNG_MAP = {
+    'O24': 'US22O24A.png',
+    'S34': 'US22S34A.png',
+    'S42': 'US22S42A.png',
+    # Add others as you discover them
+}
+
+def find_stellar_png(gardiner_code):
+    """Try each Gardiner code variant with explicit mapping"""
+    for code in gardiner_code.split('/'):
+        code = code.strip()
+
+        # Check explicit mapping first
+        if code in GARDINER_PNG_MAP:
+            glyph_path = PROJECT_ROOT / 'data' / 'stellar_pngs' / GARDINER_PNG_MAP[code]
+            if glyph_path.exists():
+                return glyph_path
+
+        # Try standard naming
+        glyph_path = PROJECT_ROOT / 'data' / 'stellar_pngs' / f"US22{code}.png"
+        if glyph_path.exists():
+            return glyph_path
+
+    return None
+
+# Manual overrides for specific problem glyphs
+GLYPH_ZOOM_OVERRIDES = {
+    'S34A': 0.03,  # Ankh/Sirius - intrinsically large
+    'S4': 0.025,   # Albireo - also too big at default
+    # Add others as you find them
+}
+
 def plot_star_hieroglyph(ax, star, all_stars, theme):
-    """Enhanced star-hieroglyph plotting with better image handling and layout"""
+    """Enhanced star-hieroglyph plotting with PNG and Unicode side-by-side for comparison"""
     coords = galactic_to_cartesian(star['distance'], star['longitude'], star['latitude'])
     x_pos = categorize_x_plot(coords.x_plot)
     y_pos = rank_y_plot(star, all_stars)
 
-    # Dynamic sizing based on star importance and type
     size_mapping = {
-        "Sol": 50,
-        "Sirius": 45,
-        "Alpha Centauri": 45,
-        "Dark Energy": 40,
-        "Dark Matter": 40,
-        "Milky Way Rotation": 40,
+        "Sol": 50, "Sirius": 45, "Alpha Centauri": 45,
+        "Dark Energy": 40, "Dark Matter": 40, "Milky Way Rotation": 40,
         "Sagittarius A*": 35,
     }
     size = size_mapping.get(star['name'], 35)
 
-    # Enhanced special handling for different star types
+    # Star background rendering
     if star['name'] == "Sagittarius A*" or "Dark" in star['name']:
-        # Black hole / dark matter visualization
         ax.scatter(x_pos, y_pos, s=size * 12, c=theme['black_hole_glow'], marker='o', alpha=0.4, zorder=2)
-        ax.scatter(
-            x_pos, y_pos, s=size * 10, facecolors='none', edgecolors=theme['black_hole_edge'], linewidth=2, zorder=3
-        )
-        ax.scatter(
-            x_pos,
-            y_pos,
-            s=size * 6,
-            c=theme['background'],
-            marker='o',
-            edgecolors=theme['black_hole_edge'],
-            linewidth=1,
-            zorder=4,
-        )
-        edgecolor = theme['black_hole_edge']
+        ax.scatter(x_pos, y_pos, s=size * 10, facecolors='none', edgecolors=theme['black_hole_edge'], linewidth=2, zorder=3)
+        ax.scatter(x_pos, y_pos, s=size * 6, c=theme['background'], marker='o', edgecolors=theme['black_hole_edge'], linewidth=1, zorder=4)
     elif star['name'] == "Sol":
-        # Solar disc with enhanced glow
         ax.scatter(x_pos, y_pos, s=size * 12, c='#FFD700', alpha=0.3, zorder=2)
-        ax.scatter(
-            x_pos,
-            y_pos,
-            s=size * 10,
-            c=star['color'],
-            marker='o',
-            edgecolors=theme['sol_edge'],
-            linewidth=2,
-            zorder=3,
-            alpha=0.9,
-        )
-        edgecolor = theme['sol_edge']
+        ax.scatter(x_pos, y_pos, s=size * 10, c=star['color'], marker='o', edgecolors=theme['sol_edge'], linewidth=2, zorder=3, alpha=0.9)
     else:
-        # Regular stars with subtle glow
         ax.scatter(x_pos, y_pos, s=size * 11, c=star['color'], alpha=0.2, zorder=2)
-        ax.scatter(
-            x_pos,
-            y_pos,
-            s=size * 10,
-            c=star['color'],
-            marker='o',
-            edgecolors=theme['star_edge'],
-            linewidth=1,
-            zorder=3,
-            alpha=0.8,
-        )
-        edgecolor = theme['star_edge']
+        ax.scatter(x_pos, y_pos, s=size * 10, c=star['color'], marker='o', edgecolors=theme['star_edge'], linewidth=1, zorder=3, alpha=0.8)
 
-    # Improved hieroglyph positioning and handling
     glyph_x = x_pos + 0.12
-    glyph_loaded = False
-    file_type_used = "None"
 
-    # --- START OF MODIFIED SECTION ---
-    # Now use the hieroglyph code and point to the data directory
-    glyph_code = star['hieroglyph']
-    gardiner_code = star['gardiner']
-    # The PNG files have a 'US22' prefix, so we will use the full code
-    glyph_path = PROJECT_ROOT / 'data' / 'stellar_pngs' / f"US22{gardiner_code}.png"
-    print(glyph_path)
-
-    try:
-        if glyph_path.exists():
+    # Try to render PNG
+    glyph_path = find_stellar_png(star['gardiner'])
+    if glyph_path:
+        try:
             img = plt.imread(str(glyph_path))
-            file_type_used = "PNG"
+            height, width = img.shape[0], img.shape[1]
+            aspect_ratio = height / width
 
-            # Enhanced transparency handling
-            if len(img.shape) == 3 and img.shape[-1] == 3:  # RGB image, add alpha
+            if len(img.shape) == 3 and img.shape[-1] == 3:
                 import numpy as np
-
                 white_threshold = 0.95
                 is_background = np.all(img >= white_threshold, axis=2)
                 alpha = np.where(is_background, 0, 1)
                 img = np.dstack((img, alpha))
-                print(f"   Added transparency to PNG")
 
-            # Much larger, adaptive zoom
-            base_zoom = 0.06 if star['name'] in ["Sol", "Sirius", "Alpha Centauri"] else 0.035
+            glyph_filename = glyph_path.name.replace('US22', '').replace('.png', '')
+            if glyph_filename in GLYPH_ZOOM_OVERRIDES:
+                base_zoom = GLYPH_ZOOM_OVERRIDES[glyph_filename]
+            else:
+                base_zoom = 0.035
+                if aspect_ratio > 2.5:
+                    base_zoom *= 0.4
+                elif aspect_ratio > 2.0:
+                    base_zoom *= 0.5
+                elif aspect_ratio > 1.5:
+                    base_zoom *= 0.65
+                elif aspect_ratio > 1.3:
+                    base_zoom *= 0.8
 
             imagebox = OffsetImage(img, zoom=base_zoom)
-            ab = AnnotationBbox(
-                imagebox,
-                (glyph_x, y_pos),
-                xybox=(0, 0),
-                xycoords='data',
-                boxcoords="offset points",
-                pad=0,
-                frameon=False,
-                zorder=5,
-            )
+            ab = AnnotationBbox(imagebox, (glyph_x, y_pos), xybox=(0, 0), xycoords='data',
+                              boxcoords="offset points", pad=0, frameon=False, zorder=5)
             ax.add_artist(ab)
+            glyph_x += 0.08  # Shift unicode to the right
+        except Exception as e:
+            print(f"✗ PNG failed for {star['name']}: {e}")
 
-            glyph_loaded = True
-            label_x = glyph_x + 0.08  # More spacing for larger glyphs
-            print(f"✓ PNG rendered for {star['name']} {star['hieroglyph']} at zoom {base_zoom}")
+    # Always render Unicode
+    ax.text(glyph_x, y_pos, star['hieroglyph'], ha='center', va='center',
+           fontsize=12, color=theme['text'], zorder=5,
+           fontfamily=['Noto Sans Egyptian Hieroglyphs', 'DejaVu Sans'])
 
-    except Exception as e:
-        print(f"✗ Failed to load {glyph_path}: {e}")
-    # --- END OF MODIFIED SECTION ---
-
-    # Fallback to Unicode hieroglyph if no image loaded
-    if not glyph_loaded:
-        print(f"→ Using Unicode fallback for {star['name']}: {star['hieroglyph']}")
-        # Enhanced Unicode rendering with better positioning
-        font_size = 14 if star['name'] in ["Sol", "Sirius", "Alpha Centauri"] else 12
-        ax.text(
-            glyph_x,
-            y_pos,
-            star['hieroglyph'],
-            ha='center',
-            va='center',
-            fontsize=font_size,
-            color=theme['text'],
-            zorder=5,
-            fontfamily=['Noto Sans Egyptian Hieroglyphs', 'DejaVu Sans'],
-        )
-        label_x = glyph_x + 0.06
-
-    # Enhanced label formatting with better typography
+    # Label
+    label_x = glyph_x + 0.08
     distance_str = f"{star['distance']}" if star['distance'] != int(star['distance']) else f"{int(star['distance'])}"
     combined_label = f"{star['name']} ({distance_str} ly) • {star['egyptian_name']}"
 
-    # Adaptive font sizing based on label length and star importance
-    base_font_size = 9 if star['name'] in ["Sol", "Sirius", "Alpha Centauri"] else 8
-    font_size = max(6, base_font_size - len(combined_label) // 20)  # Scale down for long labels
+    font_size = max(6, 8 - len(combined_label) // 20)
+    ax.text(label_x, y_pos, combined_label, ha='left', va='center',
+           fontsize=font_size, color=theme['text'], zorder=5)
 
-    ax.text(
-        label_x,
-        y_pos,
-        combined_label,
-        ha='left',
-        va='center',
-        fontsize=font_size,
-        color=theme['text'],
-        zorder=5,
-        fontweight='bold' if star['name'] in ["Sol", "Sirius"] else 'normal',
-    )
-
-    return glyph_loaded, file_type_used  # Return success status and file type used
+    return True
 # mark-d
 
 
@@ -434,7 +388,7 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size='A3'):
     print(f"Paper size: {paper_size} ({figsize[0]:.1f}\" x {figsize[1]:.1f}\")")
 
 
-# Generate test plots for density evaluation
+# Generate
 if __name__ == "__main__":
     # Create A3 versions for density testing (current 15 pairs)
     create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size='A3')
