@@ -41,25 +41,34 @@ plt.rcParams["font.family"] = ["Noto Sans Egyptian Hieroglyphs", "DejaVu Sans"]
 # Add an entry here, re-run the script, and check the new plot.
 MANUAL_NUDGES = {
     # Galactic Center (GC) Adjustments
-    "Dark Energy": 0.08,
-    "Dark Matter": 0.07,
+    "Dark Energy": 0.065,
+    "Dark Matter": 0.084,
     # Quadrant 1 Adjustments
-    "Deneb": 0.016,
-    "Delta Cephei": 0.015,
+    "Deneb": 0.05,
+    "Albireo": 0.025,
+    "Ras Algethi": 0.015,
+    "Delta Cephei": 0.028,
     "Unukalhai": 0.005,
     "Alphecca": -0.005,
     "Fomalhaut": 0.009,
     # Quadrant 2 Adjustments
     "Dubhe": -0.009,
+    "Capella": 0.01,
+    "Mira": -0.01,
     # Quadrant 3 Adjustments
-    "Procyon": -0.005,
+    "Procyon": -0.012,
     "Denebola": 0.015,
-    "Bellatrix": 0.013,
-    "Betelgeuse": 0.01,
+    "Adhara": 0.01,
+    "Alphard": 0.022,
+    "Bellatrix": 0.029,
+    "Betelgeuse": 0.018,
     # Quadrant 4 Adjustments
     "Antares": 0.009,
-    "Hadar": -0.015,
-    "Peacock": -0.017,
+    "Atria": 0.008,
+    "Hadar": -0.017,
+    "Acrux": -0.005,
+    "Peacock": -0.03,
+    "Epsilon Indi": 0.01,
     "Sigma Draconis": 0.009,
     # Galactic Anti-Center (GAC) Adjustments
     "Milky Way Rotation": -0.08,
@@ -306,6 +315,7 @@ GLYPH_ZOOM_OVERRIDES = {
 }
 
 
+# mark
 def plot_star_hieroglyph(ax, star, all_stars, theme):
     """Enhanced star-hieroglyph plotting with two-line label layout"""
     coords = galactic_to_cartesian(
@@ -328,7 +338,9 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
     size = size_mapping.get(star["name"], 35)
 
     # Star background rendering
-    if (
+    if star["name"] == "Dark Energy":
+        pass
+    elif (
         star["name"] == "Sagittarius A*"
         or "Dark" in star["name"]
         or star["egyptian_name"] == "Nut/Sky"
@@ -395,7 +407,11 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
             alpha=0.8,
         )
 
-    glyph_x = x_pos + 0.12
+    # NEW: Dark Energy goes to the LEFT
+    if star["name"] == "Dark Energy":
+        glyph_x = x_pos - 0.13  # Flip to left side
+    else:
+        glyph_x = x_pos + 0.12
 
     # Render PNG only (no Unicode)
     glyph_rendered = False
@@ -443,36 +459,47 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
         except Exception as e:
             print(f"✗ PNG failed for {star['name']}: {e}")
 
-    # Two-line label layout (closer to glyph now that Unicode is removed)
-    label_x = glyph_x + 0.06  # Moved closer from 0.08
+    # Two-line label layout
+    # NEW: Dark Energy labels go to the LEFT
+    if star["name"] == "Dark Energy":
+        label_x = glyph_x - 0.33  # Flip label to left side
+        label_ha = "left"
+    else:
+        label_x = glyph_x + 0.06
+        label_ha = "left"
 
-    # Line 1: Egyptian name in white (less raised)
-    egyptian_y = y_pos + 0.007  # Reduced from 0.01
+    # Line 1: Egyptian name in white
+    egyptian_y = y_pos + 0.007
     ax.text(
         label_x,
         egyptian_y,
         star["egyptian_name"],
-        ha="left",
+        ha=label_ha,
         va="center",
         fontsize=9,
         color="white",
         zorder=5,
     )
 
-    # Line 2: Star name + distance in theme color (less lowered)
-    distance_str = (
-        f"{star['distance']}"
-        if star["distance"] != int(star["distance"])
-        else f"{int(star['distance'])}"
-    )
-    star_label = f"{star['name']} ({distance_str} ly)"
-    star_y = y_pos - 0.01  # Reduced from 0.02
+    # Line 2: Star name + distance in theme color
+    # NEW: Skip distance for Dark Matter and Dark Energy
+    if star["name"] in ["Dark Matter", "Dark Energy"]:
+        star_label = star["name"]
+    else:
+        distance_str = (
+            f"{star['distance']}"
+            if star["distance"] != int(star["distance"])
+            else f"{int(star['distance'])}"
+        )
+        star_label = f"{star['name']} ({distance_str} ly)"
+
+    star_y = y_pos - 0.01
 
     ax.text(
         label_x,
         star_y,
         star_label,
-        ha="left",
+        ha=label_ha,
         va="center",
         fontsize=8,
         color=theme["text"],
@@ -480,6 +507,9 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
     )
 
     return glyph_rendered
+
+
+# mark
 
 
 def setup_hieroglyphic_plot(ax, theme):
@@ -544,6 +574,20 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
     for star in plot_ready_stars:
         # Pass the original list (STAR_HIEROGLYPHS) for rank_y_plot to maintain context/compatibility
         plot_star_hieroglyph(ax, star, STAR_HIEROGLYPHS, current_theme)
+
+    # NEW: Add Galactic Center label above Dark Matter/Dark Energy cluster
+    gc_y_position = 0.62  # Adjust this to position above the cluster
+    ax.text(
+        0,  # Centered at x=0
+        gc_y_position,
+        "Galactic Center (26000 ly)",
+        ha="center",
+        va="center",
+        fontsize=10,
+        color="#FFD700",  # Golden color
+        weight="bold",
+        zorder=5,
+    )
 
     setup_hieroglyphic_plot(ax, current_theme)
 
