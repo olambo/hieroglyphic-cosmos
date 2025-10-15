@@ -493,6 +493,14 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
         )
         star_label = f"{star['name']} ({distance_str} ly)"
 
+    # colors for Dark Matter/Energy labels
+    if star["name"] == "Dark Energy":
+        label_color = "#FF6B6B"  # Lighter warm red
+    elif star["name"] == "Dark Matter":
+        label_color = "#66D9EF"  # Bright cyan
+    else:
+        label_color = theme["text"]
+
     star_y = y_pos - 0.01
 
     ax.text(
@@ -502,7 +510,7 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
         ha=label_ha,
         va="center",
         fontsize=8,
-        color=theme["text"],
+        color=label_color,
         zorder=5,
     )
 
