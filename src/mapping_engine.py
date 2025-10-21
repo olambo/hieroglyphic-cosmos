@@ -575,6 +575,24 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
     fig, ax = plt.subplots(figsize=figsize, facecolor=current_theme["background"])
     ax.set_facecolor(current_theme["background"])
 
+
+    # Watermark - diagonal across center
+    ax.text(
+        0,  # Centered
+        0,  # Centered vertically
+        "        PREVIEW COPY • NOT FOR DISTRIBUTION",
+        ha="center",
+        va="center",
+        fontsize=18,
+        color="#FFFFFF",
+        alpha=0.25,
+        rotation=55,
+        weight="bold",
+        zorder=10,
+        family="monospace"
+    )
+
+
     # ⭐️ UPDATED: Prepare the data with all calculated positions and manual nudges ⭐️
     plot_ready_stars = prepare_plot_data(STAR_HIEROGLYPHS, MANUAL_NUDGES)
 
