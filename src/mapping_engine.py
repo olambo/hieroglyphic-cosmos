@@ -1,7 +1,7 @@
 # AI Development Partners:
-#    - Claude (Anthropic): Code adaptation from Cygni Arcana, coordinate system preservation,
+#     - Claude (Anthropic): Code adaptation from Cygni Arcana, coordinate system preservation,
 #       Egyptian astronomical research integration, and hieroglyphic mapping framework
-#    - Previous Cygni Arcana contributors: Grok (xAI), ChatGPT (OpenAI), Gemini (Google)
+#     - Previous Cygni Arcana contributors: Grok (xAI), ChatGPT (OpenAI), Gemini (Google)
 #
 # This project represents the evolution from tarot-stellar mapping to historically-grounded
 # Egyptian hieroglyphic-stellar connections, maintaining astronomical precision while
@@ -31,7 +31,15 @@ from pathlib import Path
 from PIL import UnidentifiedImageError
 
 sys.path.append(str(Path(__file__).parent))
-from star_glyphs import STAR_HIEROGLYPHS
+# Assuming star_glyphs.py exists and contains STAR_HIEROGLYPHS
+# NOTE: The provided code snippet did not include STAR_HIEROGLYPHS definition,
+# but I'm keeping the import statement as it was in your original code.
+try:
+    from star_glyphs import STAR_HIEROGLYPHS
+except ImportError:
+    print("WARNING: Could not import STAR_HIEROGLYPHS. Using a dummy list for compilation.")
+    STAR_HIEROGLYPHS = []
+
 
 plt.rcParams["font.family"] = ["Noto Sans Egyptian Hieroglyphs", "DejaVu Sans"]
 
@@ -282,8 +290,9 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
     )
     x_pos = categorize_x_plot(coords.x_plot)
 
-    # Use the pre-calculated final Y position
-    y_pos = star.get("y_plot_position", rank_y_plot(star, all_stars))
+    # MODIFICATION: Use the pre-calculated final Y position directly.
+    # The redundant fallback call to rank_y_plot is removed.
+    y_pos = star["y_plot_position"]
 
     size_mapping = {
         "Sol": 50,
@@ -539,7 +548,7 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
     ax.text(
         0,  # Centered
         0,  # Centered vertically
-        "        PREVIEW COPY • NOT FOR DISTRIBUTION",
+        "         PREVIEW COPY • NOT FOR DISTRIBUTION",
         ha="center",
         va="center",
         fontsize=18,
