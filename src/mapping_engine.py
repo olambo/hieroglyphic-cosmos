@@ -146,53 +146,6 @@ def categorize_x_plot(perpendicular_distance):
         return sign * 2.5
 
 
-def calculate_cross_sol_fudge(star_data, all_stars):
-    """
-    Calculate cumulative fudge offset based on Sol crossings when ordered by y_plot distance coordinate.
-    Stars get progressively offset as the visualization flows across the galactic center.
-    """
-    target_star_name = star_data["name"]
-
-    # Get all regular stars with their coordinates
-    stars_with_coords = []
-    for star in all_stars:
-        if star["name"] not in ["Sagittarius A*", "Sol"]:
-            coords = galactic_to_cartesian(
-                star["distance"], star["longitude"], star["latitude"]
-            )
-            stars_with_coords.append(
-                {"name": star["name"], "y_plot": coords.y_plot, "x_plot": coords.x_plot}
-            )
-
-    # Sort by distance-based y-coordinate (highest to lowest)
-    stars_with_coords.sort(key=lambda x: x["y_plot"], reverse=True)
-
-    # Track cumulative fudge as we encounter Sol crossings
-    cumulative_fudge = 0
-    previous_x_side = None
-    fudge_increment = 0.002  # Adjust this value to control spacing
-
-    for star_info in stars_with_coords:
-        current_x_side = "left" if star_info["x_plot"] < 0 else "right"
-
-        # Add fudge when crossing Sol (left ↔ right transition)
-        if previous_x_side and previous_x_side != current_x_side:
-            cumulative_fudge += fudge_increment
-            # print(
-            #       f"Sol crossing detected: {previous_x_side} → {current_x_side}, cumulative fudge now: {cumulative_fudge:.3f}"
-            # )
-
-        # Return fudge for our target star
-        if star_info["name"] == target_star_name:
-            # print(f"Star {target_star_name}: base fudge = {cumulative_fudge:.3f}")
-            return cumulative_fudge
-
-        previous_x_side = current_x_side
-
-    # Fallback if star not found
-    return 0
-
-
 def rank_y_plot(star_data, all_stars):
     """Calculate y-position based on ordinal ranking (adapted from Cygni Arcana)"""
     star_name = star_data["name"]
@@ -241,8 +194,7 @@ def rank_y_plot(star_data, all_stars):
                 else -0.35
             )
 
-    fudge_offset = calculate_cross_sol_fudge(star_data, all_stars)
-    return normal_y + fudge_offset
+    return normal_y
 
 
 # ----------------------------------------------------
