@@ -68,15 +68,15 @@ MANUAL_NUDGES = {
     "Almach": -0.025,
 
     # Quadrant 3 Adjustments
-    "Sirius": 0.03,
-    "Procyon": 0.012,
+    "Sirius": 0.05,
+    "Procyon": 0.02,
     "Aldebaran": -0.05,
     "Alnilam": 0.055,
     "Betelgeuse": 0.03,
 
     # Quadrant 4 Adjustments
     "Kaus Australis": 0.1,
-    "Delta Pavonis": -0.02,
+    "Delta Pavonis": -0.05,
     "Miaplacidus": -0.015,
     "Epsilon Indi": -0.06,
     "Alpha Centauri": -0.06,
@@ -446,7 +446,7 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
     # Two-line label layout
     # NEW: Dark Energy labels go to the LEFT
     if star["name"] == "Dark Energy":
-        label_x = glyph_x - 0.33  # Flip label to left side
+        label_x = glyph_x - 0.35  # Flip label to left side
         label_ha = "left"
     else:
         label_x = glyph_x + 0.06
