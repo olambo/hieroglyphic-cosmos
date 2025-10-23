@@ -7,18 +7,10 @@
 # Egyptian hieroglyphic-stellar connections, maintaining astronomical precision while
 # embracing authentic ancient Egyptian cosmic symbolism.
 #
-# *** COORDINATE DATA WARNING ***
-# STELLAR COORDINATES ARE ROUGH ESTIMATES - MUST BE VERIFIED WITH SIMBAD QUERIES
-# Current coordinates are approximations for layout testing only.
-# For publication quality: Query SIMBAD directly for precise RA/Dec coordinates,
-# then convert to galactic coordinates using standard transformations.
-# 33 stars require SIMBAD verification before final publication.
-#
 # DATA SOURCES & COORDINATE SYSTEM:
-# - Star positions: [TO BE VERIFIED] SIMBAD, Gaia DR3, Hipparcos Catalogue
+# - STELLAR COORDINATES HAVE BEEN VERIFIED BY SIMBAD QUERIES
 # - Egyptian stellar references: Neugebauer & Parker, Lull & Belmonte, ancient star maps
 # - Hieroglyphic sources: Gardiner sign list, Budge hieroglyphic dictionary
-# - Coordinates: Galactic longitude/latitude system (proven effective from Cygni Arcna)
 
 import matplotlib.pyplot as plt
 import math
@@ -141,12 +133,6 @@ BUCKET_LY_DISTANCES = {
     1.9: 150,   # Far
     2.5: 250    # Very Far (All remaining distant stars)
 }
-# BUCKET_LY_DISTANCES = {
-#     0.6: 75,    # Very Near (Increased from 10 to 75)
-#     1.2: 150,   # Near (Increased from 50 to 150)
-#     1.9: 225,   # Far (Increased from 150 to 225)
-#     2.5: 300    # Very Far (Increased from 250 to 300 to hit max spread)
-# }
 MAX_Y_PLOT_SPREAD = 0.55 # Represents the maximum vertical spread (half the total y-plot range)
 
 
@@ -467,7 +453,7 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
 
     # Line 2: Star name + Longitude + distance in theme color
 
-    if star["name"] in ["Dark Matter", "Dark Energy"]:
+    if star["name"] in ["Dark Matter", "Dark Energy", "Milky Way Rotation"]:
         star_label = star["name"]
     else:
         # ⭐️ MODIFICATION: Add Galactic Longitude (l) ⭐️
@@ -481,7 +467,8 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
             else f"{int(star['distance'])}"
         )
         # star_label = f"{star['name']} ({longitude_str}, {distance_str} ly)" # Updated label format
-        star_label = f"{star['name']} ({distance_str} ly)"
+        # star_label = f"{star['name']} ({distance_str} ly)"
+        star_label = star["name"]
 
     # colors for Dark Matter/Energy labels
     if star["name"] == "Dark Energy":
@@ -595,7 +582,7 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
     ax.text(
         0,  # Centered at x=0
         gc_y_position,
-        "Galactic Center (26000 ly)",
+        "Galactic Center",
         ha="center",
         va="center",
         fontsize=10,
@@ -633,6 +620,4 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
 
 # Generate
 if __name__ == "__main__":
-    # Create A3 versions for density testing (current 15 pairs)
     create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3")
-    # create_hieroglyphic_cosmos_plot(dark_mode=False, paper_size='A3')
