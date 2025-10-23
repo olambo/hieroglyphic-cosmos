@@ -3,7 +3,7 @@
 #       Egyptian astronomical research integration, and hieroglyphic mapping framework
 #     - Previous Cygni Arcana contributors: Grok (xAI), ChatGPT (OpenAI), Gemini (Google)
 #
-# This project represents the evolution from tarot-stellar mapping to historically-grounded
+# This project represents the evolution from tarot-stellar mapping to historically-graunded
 # Egyptian hieroglyphic-stellar connections, maintaining astronomical precision while
 # embracing authentic ancient Egyptian cosmic symbolism.
 #
@@ -47,38 +47,43 @@ plt.rcParams["font.family"] = ["Noto Sans Egyptian Hieroglyphs", "DejaVu Sans"]
 # Add an entry here, re-run the script, and check the new plot.
 MANUAL_NUDGES = {
     # Galactic Center (GC) Adjustments
-    "Dark Energy": 0.065,
-    "Dark Matter": 0.084,
+    "Dark Energy": 0.58,
+    "Dark Matter": 0.58,
 
-    # Quadrant 1 Adjustments
-    "Altair": 0.02,
-    "Albireo": -0.025,
-    "Ras Algethi": 0.025,
-    "Unukalhai": 0.020,
-    "Alphecca": -0.020,
-    "Fomalhaut": -0.009,
+    # # Quadrant 1 Adjustments
+    "Ras Algethi": -0.02,
+    "Sabik": 0.02,
+    "Fomalhaut": -0.02,
+    "Altair": -0.025,
+    "Alphecca": -0.03,
+    "Unukalhai": 0.005,
 
-    # Quadrant 2 Adjustments
-    "Polaris": 0.03,
+    # # Quadrant 2 Adjustments
     "Delta Cephei": 0.017,
-    "Almach": -0.009,
+    "Kochab": -0.009,
+    "Dubhe": 0.03,
+    "Capella": 0.02,
+    "Elnath": -0.15,
+    "Mira": -0.12,
+    "Almach": -0.025,
 
     # Quadrant 3 Adjustments
-    "Sirius": 0.01,
-    "Procyon": -0.012,
-    "Betelgeuse": 0.035,
-    "Alnilam": 0.012,
+    "Sirius": 0.03,
+    "Procyon": 0.012,
+    "Aldebaran": -0.05,
+    "Alnilam": 0.055,
+    "Betelgeuse": 0.03,
 
     # Quadrant 4 Adjustments
-    "Antares": -0.005,
-    "Epsilon Indi": 0.02,
-    "Kaus Australis": 0.02,
-    "Miaplacidus": 0.015,
-    "Achernar": -0.008,
-    "Hadar": -0.02,
+    "Kaus Australis": 0.1,
+    "Delta Pavonis": -0.02,
+    "Miaplacidus": -0.015,
+    "Epsilon Indi": -0.06,
+    "Alpha Centauri": -0.06,
+    # "Peacock": 0.005,
 
     # Galactic Anti-Center (GAC) Adjustments
-    "Milky Way Rotation": -0.08,
+    "Milky Way Rotation": -0.59,
 }
 # -------------------------------
 
@@ -124,13 +129,32 @@ def galactic_to_cartesian(distance, longitude_deg, latitude_deg):
     return CartesianCoords(x_plot, y_plot)
 
 
-# Grid lines
+# Grid lines - Restricted to 0.6, 1.2, 1.9, 2.5
 x_ticks = [-2.5, -1.9, -1.2, -0.6, 0, 0.6, 1.2, 1.9, 2.5]
-# x_ticks= [-2.0, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2.0]
+
+
+# --- NEW CONSTANTS FOR Y-AXIS SCALING (User-specified) ---
+# Assigned Light-Year distances for each X-Plot bucket, used only for Y-axis normalization.
+BUCKET_LY_DISTANCES = {
+    0.6: 10,    # Very Near
+    1.2: 50,    # Near
+    1.9: 150,   # Far
+    2.5: 250    # Very Far (All remaining distant stars)
+}
+# BUCKET_LY_DISTANCES = {
+#     0.6: 75,    # Very Near (Increased from 10 to 75)
+#     1.2: 150,   # Near (Increased from 50 to 150)
+#     1.9: 225,   # Far (Increased from 150 to 225)
+#     2.5: 300    # Very Far (Increased from 250 to 300 to hit max spread)
+# }
+MAX_Y_PLOT_SPREAD = 0.55 # Represents the maximum vertical spread (half the total y-plot range)
 
 
 def categorize_x_plot(perpendicular_distance):
-    """Categorize perpendicular distance for plotting (preserved from Cygni Arcana)"""
+    """
+    Categorize perpendicular distance for plotting.
+    All stars falling outside the 'far' threshold are now mapped to the 2.5 bucket.
+    """
     abs_distance = abs(perpendicular_distance)
     sign = -1 if perpendicular_distance >= 0 else 1
 
@@ -148,107 +172,62 @@ def categorize_x_plot(perpendicular_distance):
         return sign * 1.9
     elif sign == 1 and abs_distance < 160: # far
         return sign * 1.9
-    else: # very far
+    else: # All other stars (including Deneb, Delta Cephei) are mapped to the final 2.5 bucket
         return sign * 2.5
 
 
-def rank_y_plot(star_data, all_stars):
-    """Calculate y-position based on ordinal ranking (adapted from Cygni Arcana)"""
-    star_name = star_data["name"]
+# ----------------------------------------------------
+# ⭐️ FINAL: Function to calculate Y-position using fixed Bucket LY Distance ⭐️
+# ----------------------------------------------------
 
-    # Special reference points
-    if star_name == "Sagittarius A*":
-        return 0.7
-    elif star_name == "Sol":
+def calc_y_plot(star_data, x_plot_position):
+    """
+    Calculates y-position using Longitude (l) for the sign and scales the result
+    such that distant buckets have a greater vertical spread, compensating for
+    the overall negative bias in the star set's Longitude distribution.
+    """
+    star_name = star_data["name"]
+    longitude_deg = star_data["longitude"]
+
+    # 1. SPECIAL CASE HANDLING (remains the same)
+    if star_name in ["Sagittarius A*", "Sol", "Dark Energy", "Dark Matter", "Milky Way Rotation"]:
+        if star_name == "Sagittarius A*":
+            return 0.7
         return 0
 
-    # Regular star ranking logic (preserved)
-    regular_stars = []
-    for star in all_stars:
-        if star["name"] not in ["Sagittarius A*", "Sol"]:
-            coords = galactic_to_cartesian(
-                star["distance"], star["longitude"], star["latitude"]
-            )
-            # Use the calculated y_plot (Galactic Y-coordinate) for ranking
-            regular_stars.append({"name": star["name"], "y_plot": coords.y_plot})
+    # 2. Get the assigned BUCKET DISTANCE (in Light Years)
+    bucket_key = round(abs(x_plot_position), 1)
+    assigned_ly_distance = BUCKET_LY_DISTANCES.get(bucket_key, 300.0)
 
-    regular_stars.sort(key=lambda x: x["y_plot"], reverse=True)
-    star_coords = galactic_to_cartesian(
-        star_data["distance"], star_data["longitude"], star_data["latitude"]
-    )
-    current_y_plot = star_coords.y_plot
+    # 3. Calculate Base Y-Position using Longitude (l)
+    longitude_rad = math.radians(longitude_deg)
+    base_y_coord = math.cos(longitude_rad) # Range: [-1.0, 1.0]
 
-    normal_y = 0
-    if current_y_plot > 0:
-        positive_stars = [s for s in regular_stars if s["y_plot"] > 0]
-        if star_name in [s["name"] for s in positive_stars]:
-            rank = [s["name"] for s in positive_stars].index(star_name)
-            total_positive = len(positive_stars)
-            reversed_rank = total_positive - 1 - rank
-            normal_y = (
-                0.04 + (reversed_rank / (total_positive - 1)) * 0.47
-                if total_positive > 1
-                else 0.35
-            )
-    else:
-        negative_stars = [s for s in regular_stars if s["y_plot"] <= 0]
-        if star_name in [s["name"] for s in negative_stars]:
-            rank = [s["name"] for s in negative_stars].index(star_name)
-            total_negative = len(negative_stars)
-            normal_y = (
-                -0.1 - (rank / (total_negative - 1)) * 0.47
-                if total_negative > 1
-                else -0.35
-            )
+    # 4. Apply Scaling Factor for Correct Spread and Utilization
 
-    return normal_y
+    MAX_BUCKET_LY_DISTANCE = 300.0
 
+    # Spread Factor: Scales the assigned distance against the max distance (0.05 to 1.0)
+    spread_factor = assigned_ly_distance / MAX_BUCKET_LY_DISTANCE
 
-# ----------------------------------------------------
-# ⭐️ MODIFIED: Function to prepare data with centralized coordinate calculation ⭐️
-# ----------------------------------------------------
+    # ⭐️ FIX: Increase the MAX_Y_SPREAD_MULTIPLIER to push the max Y-value closer to the limit. ⭐️
+    # This compensates for the negative bias in the cos(l) distribution of your star set.
+    # Increasing by 10% (0.55 * 1.1 = 0.605) should push the upper limit out.
+    MAX_Y_PLOT_LIMIT = 0.55
+    MAX_Y_SPREAD_MULTIPLIER = MAX_Y_PLOT_LIMIT * 1.1
+    MIN_Y_SPREAD_MULTIPLIER = 0.20
 
+    # Range that spread_factor modulates: MAX_Y_SPREAD_MULTIPLIER - MIN_Y_SPREAD_MULTIPLIER
+    range_modulation = MAX_Y_SPREAD_MULTIPLIER - MIN_Y_SPREAD_MULTIPLIER
 
-def prepare_plot_data(star_list, nudge_dict):
-    """
-    Calculates both X (distance bucket) and Y (ranked position + nudge)
-    coordinates for all stars, centralizing all logic here.
+    # Final Spread Multiplier: Linearly interpolates the spread.
+    final_spread_multiplier = (range_modulation * spread_factor) + MIN_Y_SPREAD_MULTIPLIER
 
-    Args:
-        star_list (list): The original STAR_HIEROGLYPHS list.
-        nudge_dict (dict): The MANUAL_NUDGES dictionary (StarName: NudgeValue).
+    # Final Y Position
+    final_y_position = base_y_coord * final_spread_multiplier
 
-    Returns:
-        list: A new list of dictionaries with the final 'x_plot_position'
-              and 'y_plot_position' calculated.
-    """
-    plot_data = []
-
-    for star in star_list:
-        new_star = star.copy()
-        star_name = new_star.get("name")
-
-        # 1. Calculate Cartesian Coordinates
-        coords = galactic_to_cartesian(
-            star["distance"], star["longitude"], star["latitude"]
-        )
-
-        # 2. Calculate X-axis position (Categorize based on X_plot)
-        final_x = categorize_x_plot(coords.x_plot)
-        new_star["x_plot_position"] = final_x
-
-        # 3. Calculate Y-position (Ranking is independent of X, so order doesn't matter)
-        # We pass the original star_list so rank_y_plot can get coordinates for ALL stars.
-        base_y_position = rank_y_plot(star, star_list)
-
-        # 4. Apply Nudge and store final Y-position
-        nudge_amount = nudge_dict.get(star_name, 0.0)
-        final_y = base_y_position + nudge_amount
-        new_star["y_plot_position"] = final_y
-
-        plot_data.append(new_star)
-
-    return plot_data
+    # Ensure the final result is strictly within the original fixed plot limits (0.55)
+    return min(MAX_Y_PLOT_LIMIT, max(-MAX_Y_PLOT_LIMIT, final_y_position))
 
 
 # mark-s
@@ -289,10 +268,44 @@ GLYPH_ZOOM_OVERRIDES = {
 
 
 # mark
+def prepare_plot_data(star_list, nudge_dict):
+    """
+    Calculates both X (distance bucket) and Y (physical spread + nudge)
+    coordinates for all stars, centralizing all logic here.
+    """
+    plot_data = []
+
+    for star in star_list:
+        new_star = star.copy()
+        star_name = new_star.get("name")
+
+        # 1. Calculate Cartesian Coordinates
+        coords = galactic_to_cartesian(
+            star["distance"], star["longitude"], star["latitude"]
+        )
+
+        # 2. Calculate X-axis position (Categorize based on X_plot)
+        final_x = categorize_x_plot(coords.x_plot)
+        new_star["x_plot_position"] = final_x
+
+        # 3. Calculate Y-position (using the new bucket-scaled function)
+        base_y_position = calc_y_plot(star, final_x)
+
+        # 4. Apply Nudge and store final Y-position
+        nudge_amount = nudge_dict.get(star_name, 0.0)
+        final_y = base_y_position + nudge_amount
+        new_star["y_plot_position"] = final_y
+
+        plot_data.append(new_star)
+
+    return plot_data
+
+
+# mark
 def plot_star_hieroglyph(ax, star, all_stars, theme):
     """Enhanced star-hieroglyph plotting with two-line label layout"""
 
-    # ⭐️ MODIFIED: Use the pre-calculated positions directly ⭐️
+    # ⭐️ Use the pre-calculated positions directly ⭐️
     x_pos = star["x_plot_position"]
     y_pos = star["y_plot_position"]
 
@@ -389,6 +402,7 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
         try:
             img = plt.imread(str(glyph_path))
             height, width = img.shape[0], img.shape[1]
+            # Aspect ratio logic (remains the same)
             aspect_ratio = height / width
 
             if len(img.shape) == 3 and img.shape[-1] == 3:
@@ -451,16 +465,22 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
         zorder=5,
     )
 
-    # Line 2: Star name + distance in theme color
-    # NEW: Skip distance for Dark Matter and Dark Energy
+    # Line 2: Star name + Longitude + distance in theme color
+
     if star["name"] in ["Dark Matter", "Dark Energy"]:
         star_label = star["name"]
     else:
+        # ⭐️ MODIFICATION: Add Galactic Longitude (l) ⭐️
+        longitude_deg = star["longitude"]
+        # Format longitude to one decimal place
+        longitude_str = f"l={longitude_deg:.1f}°"
+
         distance_str = (
             f"{star['distance']}"
             if star["distance"] != int(star["distance"])
             else f"{int(star['distance'])}"
         )
+        # star_label = f"{star['name']} ({longitude_str}, {distance_str} ly)" # Updated label format
         star_label = f"{star['name']} ({distance_str} ly)"
 
     # colors for Dark Matter/Energy labels
@@ -485,15 +505,13 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
     )
 
     return glyph_rendered
-
-
 # mark
 
 
 def setup_hieroglyphic_plot(ax, theme):
     """Configure plot appearance with Egyptian astronomical theme"""
-    ax.set_xlim(-2.6, 3.2)  # Slightly wider for hieroglyphic labels
-    # ax.set_ylim(bottom, top) - Sets the y-axis viewing window
+    # X-limit adjusted to the max bucket of 2.5
+    ax.set_xlim(-3.2, 3.2)
     ax.set_ylim(-0.65, 0.65)
 
     # xticks Grid lines
@@ -563,12 +581,13 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
     )
 
 
-    # ⭐️ UPDATED: Prepare the data with all calculated positions and manual nudges ⭐️
+    # ⭐️ UPDATED: Prepare the data with all calculated positions ⭐️
     plot_ready_stars = prepare_plot_data(STAR_HIEROGLYPHS, MANUAL_NUDGES)
 
     # Plot all star-hieroglyph pairs
     for star in plot_ready_stars:
-        # Pass the original list (STAR_HIEROGLYPHS) for rank_y_plot to maintain context/compatibility
+        # NOTE: all_stars parameter is technically unused in the current plot_star_hieroglyph
+        # but kept for API compatibility with legacy code/future extensions.
         plot_star_hieroglyph(ax, star, STAR_HIEROGLYPHS, current_theme)
 
     # NEW: Add Galactic Center label above Dark Matter/Dark Energy cluster
