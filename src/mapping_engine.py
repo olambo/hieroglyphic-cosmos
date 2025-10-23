@@ -43,33 +43,34 @@ MANUAL_NUDGES = {
     # Galactic Center (GC) Adjustments
     "Dark Energy": 0.065,
     "Dark Matter": 0.084,
+
     # Quadrant 1 Adjustments
-    "Deneb": 0.05,
-    "Albireo": 0.025,
-    "Ras Algethi": 0.015,
-    "Delta Cephei": 0.028,
-    "Unukalhai": 0.005,
-    "Alphecca": -0.005,
-    "Fomalhaut": 0.009,
+    "Altair": 0.02,
+    "Albireo": -0.025,
+    "Ras Algethi": 0.025,
+    "Unukalhai": 0.020,
+    "Alphecca": -0.020,
+    "Fomalhaut": -0.009,
+
     # Quadrant 2 Adjustments
-    "Dubhe": -0.009,
-    "Capella": 0.01,
-    "Mira": -0.01,
+    "Polaris": 0.03,
+    "Delta Cephei": 0.017,
+    "Almach": -0.009,
+
     # Quadrant 3 Adjustments
+    "Sirius": 0.01,
     "Procyon": -0.012,
-    "Denebola": 0.015,
-    "Adhara": 0.01,
-    "Alphard": 0.022,
-    "Bellatrix": 0.029,
-    "Betelgeuse": 0.018,
+    "Betelgeuse": 0.035,
+    "Alnilam": 0.012,
+
     # Quadrant 4 Adjustments
-    "Antares": 0.009,
-    "Atria": 0.008,
-    "Hadar": -0.017,
-    "Acrux": -0.005,
-    "Peacock": -0.03,
-    "Epsilon Indi": 0.01,
-    "Sigma Draconis": 0.009,
+    "Antares": -0.005,
+    "Epsilon Indi": 0.02,
+    "Kaus Australis": 0.02,
+    "Miaplacidus": 0.015,
+    "Achernar": -0.008,
+    "Hadar": -0.02,
+
     # Galactic Anti-Center (GAC) Adjustments
     "Milky Way Rotation": -0.08,
 }
@@ -127,15 +128,21 @@ def categorize_x_plot(perpendicular_distance):
     abs_distance = abs(perpendicular_distance)
     sign = -1 if perpendicular_distance >= 0 else 1
 
-    if abs_distance < 0.4:
+    if abs_distance < 0.4: # GC-Sol
         return 0
-    elif abs_distance < 12:
+    elif sign == -1 and abs_distance < 13: # very near
         return sign * 0.6
-    elif abs_distance < 40:
+    elif sign == 1 and abs_distance < 8: # very near
+        return sign * 0.6
+    elif sign == -1 and abs_distance < 45: # near
         return sign * 1.2
-    elif abs_distance < 190:
+    elif sign == 1 and abs_distance < 50: # near
+        return sign * 1.2
+    elif sign == -1 and abs_distance < 175: # far
         return sign * 1.9
-    else:
+    elif sign == 1 and abs_distance < 160: # far
+        return sign * 1.9
+    else: # very far
         return sign * 2.5
 
 
@@ -328,12 +335,12 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
 
     size_mapping = {
         "Sol": 50,
-        "Sirius": 45,
-        "Alpha Centauri": 45,
+        # "Sirius": 45,
+        # "Alpha Centauri": 45,
         "Dark Energy": 40,
         "Dark Matter": 40,
         "Milky Way Rotation": 40,
-        "Sagittarius A*": 35,
+        # "Sagittarius A*": 35,
     }
     size = size_mapping.get(star["name"], 35)
 
@@ -586,7 +593,7 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
         fontsize=18,
         color="#FFFFFF",
         alpha=0.25,
-        rotation=55,
+        rotation=45,
         weight="bold",
         zorder=10,
         family="monospace"
