@@ -32,8 +32,6 @@ from PIL import UnidentifiedImageError
 
 sys.path.append(str(Path(__file__).parent))
 # Assuming star_glyphs.py exists and contains STAR_HIEROGLYPHS
-# NOTE: The provided code snippet did not include STAR_HIEROGLYPHS definition,
-# but I'm keeping the import statement as it was in your original code.
 try:
     from star_glyphs import STAR_HIEROGLYPHS
 except ImportError:
@@ -171,6 +169,7 @@ def rank_y_plot(star_data, all_stars):
             coords = galactic_to_cartesian(
                 star["distance"], star["longitude"], star["latitude"]
             )
+            # Use the calculated y_plot (Galactic Y-coordinate) for ranking
             regular_stars.append({"name": star["name"], "y_plot": coords.y_plot})
 
     regular_stars.sort(key=lambda x: x["y_plot"], reverse=True)
@@ -206,20 +205,22 @@ def rank_y_plot(star_data, all_stars):
 
 
 # ----------------------------------------------------
-# ⭐️ NEW: Function to prepare data with manual nudges ⭐️
+# ⭐️ MODIFIED: Function to prepare data with centralized coordinate calculation ⭐️
 # ----------------------------------------------------
 
 
 def prepare_plot_data(star_list, nudge_dict):
     """
-    Applies manual y-nudges to star latitudes and creates a new plot-ready list.
+    Calculates both X (distance bucket) and Y (ranked position + nudge)
+    coordinates for all stars, centralizing all logic here.
 
     Args:
         star_list (list): The original STAR_HIEROGLYPHS list.
         nudge_dict (dict): The MANUAL_NUDGES dictionary (StarName: NudgeValue).
 
     Returns:
-        list: A new list of dictionaries with the final 'y_plot_position' calculated.
+        list: A new list of dictionaries with the final 'x_plot_position'
+              and 'y_plot_position' calculated.
     """
     plot_data = []
 
@@ -227,17 +228,22 @@ def prepare_plot_data(star_list, nudge_dict):
         new_star = star.copy()
         star_name = new_star.get("name")
 
-        # 1. Get the Y-position based on your existing complex ranking/fudge logic
-        # NOTE: We MUST pass the original list for the ranking to work correctly.
+        # 1. Calculate Cartesian Coordinates
+        coords = galactic_to_cartesian(
+            star["distance"], star["longitude"], star["latitude"]
+        )
+
+        # 2. Calculate X-axis position (Categorize based on X_plot)
+        final_x = categorize_x_plot(coords.x_plot)
+        new_star["x_plot_position"] = final_x
+
+        # 3. Calculate Y-position (Ranking is independent of X, so order doesn't matter)
+        # We pass the original star_list so rank_y_plot can get coordinates for ALL stars.
         base_y_position = rank_y_plot(star, star_list)
 
-        # 2. Apply the manual override nudge (0.0 if not found in the dictionary)
+        # 4. Apply Nudge and store final Y-position
         nudge_amount = nudge_dict.get(star_name, 0.0)
-
-        # 3. Calculate the final plot position
         final_y = base_y_position + nudge_amount
-
-        # Add the final value to the dictionary (the one you will plot)
         new_star["y_plot_position"] = final_y
 
         plot_data.append(new_star)
@@ -285,13 +291,9 @@ GLYPH_ZOOM_OVERRIDES = {
 # mark
 def plot_star_hieroglyph(ax, star, all_stars, theme):
     """Enhanced star-hieroglyph plotting with two-line label layout"""
-    coords = galactic_to_cartesian(
-        star["distance"], star["longitude"], star["latitude"]
-    )
-    x_pos = categorize_x_plot(coords.x_plot)
 
-    # MODIFICATION: Use the pre-calculated final Y position directly.
-    # The redundant fallback call to rank_y_plot is removed.
+    # ⭐️ MODIFIED: Use the pre-calculated positions directly ⭐️
+    x_pos = star["x_plot_position"]
     y_pos = star["y_plot_position"]
 
     size_mapping = {
