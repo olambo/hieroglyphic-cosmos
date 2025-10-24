@@ -11,6 +11,8 @@ dependencies = [
     "numpy>=2.3.2",
     "pandas>=2.3.1",
 ]
-[tool.black]
+[tool.ruff]
 line-length = 120
-skip-string-normalization = true
+
+[tool.ruff.format]
+quote-style = "preserve"

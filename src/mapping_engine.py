@@ -41,7 +41,6 @@ MANUAL_NUDGES = {
     # Galactic Center (GC) Adjustments
     "Dark Energy": 0.58,
     "Dark Matter": 0.58,
-
     # # Quadrant 1 Adjustments
     "Ras Algethi": -0.02,
     "Sabik": 0.02,
@@ -49,8 +48,7 @@ MANUAL_NUDGES = {
     "Altair": -0.025,
     "Alphecca": -0.03,
     "Unukalhai": 0.005,
-
-    # # Quadrant 2 Adjustments
+    # Quadrant 2 Adjustments
     "Delta Cephei": 0.017,
     "Kochab": -0.009,
     "Dubhe": 0.03,
@@ -58,22 +56,18 @@ MANUAL_NUDGES = {
     "Elnath": -0.15,
     "Mira": -0.12,
     "Almach": -0.025,
-
     # Quadrant 3 Adjustments
     "Sirius": 0.05,
     "Procyon": 0.02,
     "Aldebaran": -0.05,
     "Alnilam": 0.055,
     "Betelgeuse": 0.03,
-
     # Quadrant 4 Adjustments
     "Kaus Australis": 0.1,
     "Delta Pavonis": -0.05,
     "Miaplacidus": -0.015,
     "Epsilon Indi": -0.06,
     "Alpha Centauri": -0.06,
-    # "Peacock": 0.005,
-
     # Galactic Anti-Center (GAC) Adjustments
     "Milky Way Rotation": -0.59,
 }
@@ -128,12 +122,12 @@ x_ticks = [-2.5, -1.9, -1.2, -0.6, 0, 0.6, 1.2, 1.9, 2.5]
 # --- NEW CONSTANTS FOR Y-AXIS SCALING (User-specified) ---
 # Assigned Light-Year distances for each X-Plot bucket, used only for Y-axis normalization.
 BUCKET_LY_DISTANCES = {
-    0.6: 10,    # Very Near
-    1.2: 50,    # Near
-    1.9: 150,   # Far
-    2.5: 250    # Very Far (All remaining distant stars)
+    0.6: 10,  # Very Near
+    1.2: 50,  # Near
+    1.9: 150,  # Far
+    2.5: 250,  # Very Far (All remaining distant stars)
 }
-MAX_Y_PLOT_SPREAD = 0.55 # Represents the maximum vertical spread (half the total y-plot range)
+MAX_Y_PLOT_SPREAD = 0.55  # Represents the maximum vertical spread (half the total y-plot range)
 
 
 def categorize_x_plot(perpendicular_distance):
@@ -144,27 +138,28 @@ def categorize_x_plot(perpendicular_distance):
     abs_distance = abs(perpendicular_distance)
     sign = -1 if perpendicular_distance >= 0 else 1
 
-    if abs_distance < 0.4: # GC-Sol
+    if abs_distance < 0.4:  # GC-Sol
         return 0
-    elif sign == -1 and abs_distance < 13: # very near
+    elif sign == -1 and abs_distance < 13:  # very near
         return sign * 0.6
-    elif sign == 1 and abs_distance < 8: # very near
+    elif sign == 1 and abs_distance < 8:  # very near
         return sign * 0.6
-    elif sign == -1 and abs_distance < 45: # near
+    elif sign == -1 and abs_distance < 45:  # near
         return sign * 1.2
-    elif sign == 1 and abs_distance < 50: # near
+    elif sign == 1 and abs_distance < 50:  # near
         return sign * 1.2
-    elif sign == -1 and abs_distance < 175: # far
+    elif sign == -1 and abs_distance < 175:  # far
         return sign * 1.9
-    elif sign == 1 and abs_distance < 160: # far
+    elif sign == 1 and abs_distance < 160:  # far
         return sign * 1.9
-    else: # All other stars (including Deneb, Delta Cephei) are mapped to the final 2.5 bucket
+    else:  # All other stars (including Deneb, Delta Cephei) are mapped to the final 2.5 bucket
         return sign * 2.5
 
 
 # ----------------------------------------------------
 # ⭐️ FINAL: Function to calculate Y-position using fixed Bucket LY Distance ⭐️
 # ----------------------------------------------------
+
 
 def calc_y_plot(star_data, x_plot_position):
     """
@@ -187,7 +182,7 @@ def calc_y_plot(star_data, x_plot_position):
 
     # 3. Calculate Base Y-Position using Longitude (l)
     longitude_rad = math.radians(longitude_deg)
-    base_y_coord = math.cos(longitude_rad) # Range: [-1.0, 1.0]
+    base_y_coord = math.cos(longitude_rad)  # Range: [-1.0, 1.0]
 
     # 4. Apply Scaling Factor for Correct Spread and Utilization
 
@@ -266,9 +261,7 @@ def prepare_plot_data(star_list, nudge_dict):
         star_name = new_star.get("name")
 
         # 1. Calculate Cartesian Coordinates
-        coords = galactic_to_cartesian(
-            star["distance"], star["longitude"], star["latitude"]
-        )
+        coords = galactic_to_cartesian(star["distance"], star["longitude"], star["latitude"])
 
         # 2. Calculate X-axis position (Categorize based on X_plot)
         final_x = categorize_x_plot(coords.x_plot)
@@ -309,11 +302,7 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
     # Star background rendering
     if star["name"] == "Dark Energy":
         pass
-    elif (
-        star["name"] == "Sagittarius A*"
-        or "Dark" in star["name"]
-        or star["egyptian_name"] == "Nut/Sky"
-    ):
+    elif star["name"] == "Sagittarius A*" or "Dark" in star["name"] or star["egyptian_name"] == "Nut/Sky":
         # 1. Define Nut's specific color
         inner_edge_color = (
             "#87CEEB"  #  light sky blue
@@ -462,9 +451,7 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
         longitude_str = f"l={longitude_deg:.1f}°"
 
         distance_str = (
-            f"{star['distance']}"
-            if star["distance"] != int(star["distance"])
-            else f"{int(star['distance'])}"
+            f"{star['distance']}" if star["distance"] != int(star["distance"]) else f"{int(star['distance'])}"
         )
         # star_label = f"{star['name']} ({longitude_str}, {distance_str} ly)" # Updated label format
         # star_label = f"{star['name']} ({distance_str} ly)"
@@ -492,6 +479,8 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
     )
 
     return glyph_rendered
+
+
 # mark
 
 
@@ -507,13 +496,9 @@ def setup_hieroglyphic_plot(ax, theme):
 
     for x_val in x_ticks:
         if x_val == 0:
-            ax.axvline(
-                x=x_val, color="#FFD700", alpha=0.8, linestyle="--", linewidth=0.75
-            )
+            ax.axvline(x=x_val, color="#FFD700", alpha=0.8, linestyle="--", linewidth=0.75)
         else:
-            ax.axvline(
-                x=x_val, color=theme["grid"], alpha=0.45, linestyle="--", linewidth=0.45
-            )
+            ax.axvline(x=x_val, color=theme["grid"], alpha=0.45, linestyle="--", linewidth=0.45)
 
     # Curved arrow for cosmic navigation
     from matplotlib.patches import FancyArrowPatch
@@ -550,7 +535,6 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
     fig, ax = plt.subplots(figsize=figsize, facecolor=current_theme["background"])
     ax.set_facecolor(current_theme["background"])
 
-
     # Watermark - diagonal across center
     ax.text(
         0,  # Centered
@@ -564,9 +548,8 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
         rotation=45,
         weight="bold",
         zorder=10,
-        family="monospace"
+        family="monospace",
     )
-
 
     # ⭐️ UPDATED: Prepare the data with all calculated positions ⭐️
     plot_ready_stars = prepare_plot_data(STAR_HIEROGLYPHS, MANUAL_NUDGES)
@@ -603,14 +586,9 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
     # Save with descriptive filename
     mode_suffix = "_dark" if dark_mode else "_light"
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    output_file = (
-        OUTPUT_DIR
-        / f"hieroglyphic_cosmos_{paper_size.lower()}_landscape{mode_suffix}.pdf"
-    )
+    output_file = OUTPUT_DIR / f"hieroglyphic_cosmos_{paper_size.lower()}_landscape{mode_suffix}.pdf"
 
-    plt.savefig(
-        output_file, dpi=300, bbox_inches="tight", facecolor=current_theme["background"]
-    )
+    plt.savefig(output_file, dpi=300, bbox_inches="tight", facecolor=current_theme["background"])
     plt.close()
 
     print(f"Generated: {output_file}")
