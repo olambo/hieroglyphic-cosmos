@@ -12,19 +12,6 @@ STAR_HIEROGLYPHS = [
         "description": "Khepri, rebirth deity",
         "color": "#FFA500",
     },
-    # {
-    #     "name": "Sabik",
-    #     "simbad_name": "",
-    #     "distance": 88,
-    #     "longitude": 6.72,
-    #     "latitude": 14.01,
-    #     "size": 25,
-    #     "hieroglyph": "𓆣",
-    #     "egyptian_name": "Scarab/Khepri",
-    #     "gardiner": "L1",
-    #     "description": "Khepri, rebirth deity",
-    #     "color": "#FFA500"
-    # },
     {
         "name": "Kaus Australis",
         "simbad_name": "",
@@ -36,7 +23,7 @@ STAR_HIEROGLYPHS = [
         "egyptian_name": "Ka",
         "gardiner": "D28",
         "description": "Southern Bow, Blue Giant (Vital Essence)",
-        "color": "#9bb3ff"
+        "color": "#9bb3ff",
     },
     {
         "name": "Peacock",
@@ -192,7 +179,7 @@ STAR_HIEROGLYPHS = [
         "egyptian_name": "Cobra/Uraeus",
         "gardiner": "I10/I12",
         "description": "Serpent of Kingship",
-        "color": "#00FF00"
+        "color": "#00FF00",
     },
     {
         "name": "Thuban",
@@ -205,7 +192,7 @@ STAR_HIEROGLYPHS = [
         "egyptian_name": "Flail",
         "gardiner": "S45",
         "description": "Royal harvest symbol",
-        "color": "#228B22"
+        "color": "#228B22",
     },
     {
         "name": "Alnilam",
@@ -674,5 +661,5 @@ STAR_HIEROGLYPHS = [
         "gardiner": "E25/E24",
         "description": "River Beast",
         "color": "#A9A9A9",
-    }
+    },
 ]
