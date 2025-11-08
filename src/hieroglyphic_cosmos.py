@@ -14,12 +14,18 @@
 
 import math
 from collections import namedtuple
+from datetime import datetime
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 from matplotlib.patches import FancyArrowPatch
-from star_glyphs import STAR_HIEROGLYPHS
+
+try:
+    from star_glyphs import STAR_HIEROGLYPHS
+except ImportError:
+    print("WARNING: Could not import STAR_HIEROGLYPHS. Using a dummy list for compilation.")
+    STAR_HIEROGLYPHS = []
 
 
 plt.rcParams["font.family"] = ["Noto Sans Egyptian Hieroglyphs", "DejaVu Sans"]
@@ -554,22 +560,6 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
     fig, ax = plt.subplots(figsize=figsize, facecolor=current_theme["background"])
     ax.set_facecolor(current_theme["background"])
 
-    # Watermark - diagonal across center
-    ax.text(
-        0,
-        0,  # Centered
-        "         PREVIEW COPY • NOT FOR DISTRIBUTION",
-        ha="center",
-        va="center",
-        fontsize=18,
-        color="#FFFFFF",
-        alpha=0.25,
-        rotation=45,
-        weight="bold",
-        zorder=10,
-        family="monospace",
-    )
-
     # Prepare the data with all calculated positions
     plot_ready_stars = prepare_plot_data(STAR_HIEROGLYPHS, MANUAL_NUDGES)
 
@@ -599,15 +589,34 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
 
     plt.tight_layout()
 
-    # Save with descriptive filename
-    mode_suffix = "_dark" if dark_mode else "_light"
+    # Save with descriptive filename and metadata
+    mode_suffix = "" if dark_mode else "_light"
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    output_file = OUTPUT_DIR / f"hieroglyphic_cosmos_{paper_size.lower()}_landscape{mode_suffix}.pdf"
+    date_str = datetime.now().strftime("%Y%m%d")
+    base_filename = f"hieroglyphic_cosmos_{paper_size.lower()}_oli_staats_{date_str}{mode_suffix}"
 
-    plt.savefig(output_file, dpi=300, bbox_inches="tight", facecolor=current_theme["background"])
+    # PDF metadata
+    pdf_metadata = {
+        'Author': 'Oli Staats',
+        'Title': 'Hieroglyphic Cosmos',
+        'Subject': 'Stellar cartography with Egyptian hieroglyphs mapped to galactic coordinates',
+        'Keywords': 'astronomy, Egyptian, hieroglyphs, galactic coordinates, SIMBAD',
+        'Creator': 'Oli Staats',
+        'Producer': 'Python/Matplotlib',
+    }
+
+    # Save PDF (with metadata)
+    output_pdf = OUTPUT_DIR / f"{base_filename}.pdf"
+    plt.savefig(output_pdf, dpi=300, bbox_inches="tight", facecolor=current_theme["background"], metadata=pdf_metadata)
+
+    # Save PNG (for easy viewing/sharing)
+    output_png = OUTPUT_DIR / f"{base_filename}.png"
+    plt.savefig(output_png, dpi=300, bbox_inches="tight", facecolor=current_theme["background"])
+
     plt.close()
 
-    print(f"Generated: {output_file}")
+    print(f"Generated PDF: {output_pdf}")
+    print(f"Generated PNG: {output_png}")
     print(f"Star-Hieroglyph pairs: {len(STAR_HIEROGLYPHS)}")
     print(f'Paper size: {paper_size} ({figsize[0]:.1f}" x {figsize[1]:.1f}")')
 
@@ -615,5 +624,6 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
 # ============================================================================
 # MAIN
 # ============================================================================
+
 if __name__ == "__main__":
     create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A2")
