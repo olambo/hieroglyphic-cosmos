@@ -615,6 +615,5 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
 # ============================================================================
 # MAIN
 # ============================================================================
-
 if __name__ == "__main__":
-    create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3")
+    create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A2")
