@@ -370,6 +370,100 @@ def find_stellar_png(gardiner_code):
 # ============================================================================
 
 
+def add_dark_matter_energy_arrows(ax):
+    """Add subtle arrows showing Dark Energy (outward) and Dark Matter (inward) forces"""
+    from matplotlib.patches import FancyArrowPatch
+    import math
+
+    center_x, center_y = 0, 0.55  # Just below the yellow GC circles
+    arrow_length = 0.05
+    angle_deg = 30
+    angle_rad = math.radians(angle_deg)
+    arrow_offset = 0.025  # Offset cyan arrows to the right of red arrows
+
+    # Calculate offset for positioning
+    cos_angle = math.cos(angle_rad)
+    sin_angle = math.sin(angle_rad)
+
+    # LEFT PAIR (down-left from GC-Sol line)
+    # Red arrow - pointing down-left (outward)
+    red_left_start_x = center_x - 0.08  # Wider apart (was -0.05)
+    red_left_start_y = center_y
+    red_left_end_x = red_left_start_x - arrow_length * cos_angle
+    red_left_end_y = red_left_start_y - arrow_length * sin_angle
+
+    ax.add_patch(
+        FancyArrowPatch(
+            (red_left_start_x, red_left_start_y),
+            (red_left_end_x, red_left_end_y),
+            arrowstyle='->',
+            color='#FF6B6B',  # Red - Dark Energy
+            alpha=0.5,
+            linewidth=1.5,
+            mutation_scale=10,
+            zorder=4,
+        )
+    )
+
+    # Cyan arrow - offset to the right, pointing up-right (inward)
+    cyan_left_start_x = red_left_end_x + arrow_offset
+    cyan_left_start_y = red_left_end_y
+    cyan_left_end_x = red_left_start_x + arrow_offset
+    cyan_left_end_y = red_left_start_y
+
+    ax.add_patch(
+        FancyArrowPatch(
+            (cyan_left_start_x, cyan_left_start_y),
+            (cyan_left_end_x, cyan_left_end_y),
+            arrowstyle='->',
+            color='#66D9EF',  # Cyan - Dark Matter
+            alpha=0.5,
+            linewidth=1.5,
+            mutation_scale=10,
+            zorder=4,
+        )
+    )
+
+    # RIGHT PAIR down-right from GC-Sol line)
+    # Red arrow - pointing down-right (outward)
+    red_right_start_x = center_x + 0.08  # Wider apart (was +0.05)
+    red_right_start_y = center_y
+    red_right_end_x = red_right_start_x + arrow_length * cos_angle
+    red_right_end_y = red_right_start_y - arrow_length * sin_angle
+
+    ax.add_patch(
+        FancyArrowPatch(
+            (red_right_start_x, red_right_start_y),
+            (red_right_end_x, red_right_end_y),
+            arrowstyle='->',
+            color='#FF6B6B',  # Red - Dark Energy
+            alpha=0.5,
+            linewidth=1.5,
+            mutation_scale=10,
+            zorder=4,
+        )
+    )
+
+    # Cyan arrow - offset to the right, pointing up-left (inward)
+    cyan_right_start_x = red_right_end_x + arrow_offset
+    cyan_right_start_y = red_right_end_y
+    cyan_right_end_x = red_right_start_x + arrow_offset
+    cyan_right_end_y = red_right_start_y
+
+    ax.add_patch(
+        FancyArrowPatch(
+            (cyan_right_start_x, cyan_right_start_y),
+            (cyan_right_end_x, cyan_right_end_y),
+            arrowstyle='->',
+            color='#66D9EF',  # Cyan - Dark Matter
+            alpha=0.5,
+            linewidth=1.5,
+            mutation_scale=10,
+            zorder=4,
+        )
+    )
+
+
 def plot_star_hieroglyph(ax, star, all_stars, theme):
     """Enhanced star-hieroglyph plotting with two-line label layout"""
 
@@ -580,6 +674,8 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
         weight="bold",
         zorder=5,
     )
+
+    add_dark_matter_energy_arrows(ax)
 
     setup_hieroglyphic_plot(ax, current_theme)
 
