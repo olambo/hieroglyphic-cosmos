@@ -82,6 +82,7 @@ GARDINER_PNG_MAP = {
 GLYPH_ZOOM_OVERRIDES = {
     "S34A": 0.03,  # Ankh/Sirius - intrinsically large
     "S4": 0.025,  # Albireo - also too big at default
+    "U6": 0.045,  # Dark Energy - bigger
     # Add others as you find them
 }
 
@@ -97,7 +98,7 @@ STAR_SIZE_OVERRIDES = {
 GLYPH_X_OFFSET = 0.12
 DARK_ENERGY_GLYPH_X_OFFSET = -0.13
 LABEL_X_OFFSET = 0.06
-DARK_ENERGY_LABEL_X_OFFSET = -0.35
+DARK_ENERGY_LABEL_X_OFFSET = -0.29
 EGYPTIAN_NAME_Y_OFFSET = 0.007
 STAR_NAME_Y_OFFSET = -0.01
 
@@ -426,7 +427,7 @@ def add_dark_matter_energy_arrows(ax):
 
     # RIGHT PAIR down-right from GC-Sol line)
     # Red arrow - pointing down-right (outward)
-    red_right_start_x = center_x + 0.08  # Wider apart (was +0.05)
+    red_right_start_x = center_x + 0.06
     red_right_start_y = center_y
     red_right_end_x = red_right_start_x + arrow_length * cos_angle
     red_right_end_y = red_right_start_y - arrow_length * sin_angle
