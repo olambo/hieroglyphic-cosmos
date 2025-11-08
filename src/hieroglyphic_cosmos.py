@@ -3,7 +3,7 @@
 #       Egyptian astronomical research integration, and hieroglyphic mapping framework
 #     - Previous Cygni Arcana contributors: Grok (xAI), ChatGPT (OpenAI), Gemini (Google)
 #
-# This project represents the evolution from tarot-stellar mapping to historically-graunded
+# This project represents the evolution from tarot-stellar mapping to historically-grounded
 # Egyptian hieroglyphic-stellar connections, maintaining astronomical precision while
 # embracing authentic ancient Egyptian cosmic symbolism.
 #
@@ -12,36 +12,127 @@
 # - Egyptian stellar references: Neugebauer & Parker, Lull & Belmonte, ancient star maps
 # - Hieroglyphic sources: Gardiner sign list, Budge hieroglyphic dictionary
 
-import matplotlib.pyplot as plt
 import math
-import sys
 from collections import namedtuple
 from pathlib import Path
 
+import matplotlib.pyplot as plt
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
-from pathlib import Path
-from PIL import UnidentifiedImageError
-
-sys.path.append(str(Path(__file__).parent))
-# Assuming star_glyphs.py exists and contains STAR_HIEROGLYPHS
-try:
-    from star_glyphs import STAR_HIEROGLYPHS
-except ImportError:
-    print("WARNING: Could not import STAR_HIEROGLYPHS. Using a dummy list for compilation.")
-    STAR_HIEROGLYPHS = []
+from matplotlib.patches import FancyArrowPatch
+from star_glyphs import STAR_HIEROGLYPHS
 
 
 plt.rcParams["font.family"] = ["Noto Sans Egyptian Hieroglyphs", "DejaVu Sans"]
 
-# -------------------------------
-# ⭐️ MANUAL PLOT ADJUSTMENTS ⭐️
+
+# ============================================================================
+# CONFIGURATION
+# ============================================================================
+
+PROJECT_ROOT = Path(__file__).parent.parent
+OUTPUT_DIR = PROJECT_ROOT / "generated"
+
+# Paper size configurations (ISO 216)
+PAPER_DIMENSIONS = {
+    "A4": (11.7, 8.3),  # 26 stars baseline
+    "A3": (16.5, 11.7),  # 55-100 stars (testing range)
+    "A2": (23.4, 16.5),  # ~150 stars
+    "A1": (33.1, 23.4),  # ~200 stars
+    "A0": (46.8, 33.1),  # ~450 stars
+}
+
+
+# ============================================================================
+# COORDINATE SYSTEM CONSTANTS (from Cygni Arcana)
+# ============================================================================
+
+# Grid lines - Restricted to 0.6, 1.2, 1.9, 2.5
+X_TICKS = [-2.5, -1.9, -1.2, -0.6, 0, 0.6, 1.2, 1.9, 2.5]
+
+# Assigned Light-Year distances for each X-Plot bucket, used for Y-axis normalization
+BUCKET_LY_DISTANCES = {
+    0.6: 10,  # Very Near
+    1.2: 50,  # Near
+    1.9: 150,  # Far
+    2.5: 250,  # Very Far (All remaining distant stars)
+}
+
+MAX_Y_PLOT_SPREAD = 0.55  # Maximum vertical spread (half the total y-plot range)
+
+
+# ============================================================================
+# RENDERING CONSTANTS
+# ============================================================================
+
+# Gardiner code to actual PNG filename mapping (for variants)
+GARDINER_PNG_MAP = {
+    "O24": "US22O24A.png",
+    "S34": "US22S34A.png",
+    "S42": "US22S42A.png",
+    # Add others as you discover them
+}
+
+# Manual overrides for specific problem glyphs
+GLYPH_ZOOM_OVERRIDES = {
+    "S34A": 0.03,  # Ankh/Sirius - intrinsically large
+    "S4": 0.025,  # Albireo - also too big at default
+    # Add others as you find them
+}
+
+# Star size overrides
+STAR_SIZE_OVERRIDES = {
+    "Sol": 50,
+    "Dark Energy": 40,
+    "Dark Matter": 40,
+    "Milky Way Rotation": 40,
+}
+
+# Layout constants for glyph and label positioning
+GLYPH_X_OFFSET = 0.12
+DARK_ENERGY_GLYPH_X_OFFSET = -0.13
+LABEL_X_OFFSET = 0.06
+DARK_ENERGY_LABEL_X_OFFSET = -0.35
+EGYPTIAN_NAME_Y_OFFSET = 0.007
+STAR_NAME_Y_OFFSET = -0.01
+
+
+# ============================================================================
+# COLOR THEMES - Egyptian-inspired palette
+# ============================================================================
+
+THEMES = {
+    "light": {
+        "background": "#F5F5DC",  # Beige papyrus
+        "text": "#8B4513",  # Dark brown hieroglyphic ink
+        "grid": "#D2691E",  # Sandy brown grid
+        "black_hole_edge": "#8B4513",
+        "black_hole_glow": "#FFD700",  # Golden glow
+        "sol_edge": "#FF8C00",  # Egyptian solar disc
+        "star_edge": "#8B4513",
+    },
+    "dark": {
+        "background": "#1a1a2e",  # Deep night sky
+        "text": "#FFD700",  # Golden hieroglyphs
+        "grid": "#B8860B",  # Dark goldenrod
+        "black_hole_edge": "#FFD700",
+        "black_hole_glow": "#FF8C00",
+        "sol_edge": "#FF8C00",
+        "star_edge": "#FFD700",
+    },
+}
+
+
+# ============================================================================
+# MANUAL PLOT ADJUSTMENTS
+# ============================================================================
 # Use this dictionary to manually offset the Y-axis (latitude) of crowded stars.
 # Add an entry here, re-run the script, and check the new plot.
+
 MANUAL_NUDGES = {
     # Galactic Center (GC) Adjustments
     "Dark Energy": 0.58,
     "Dark Matter": 0.58,
-    # # Quadrant 1 Adjustments
+    # Quadrant 1 Adjustments
     "Ras Algethi": -0.02,
     "Sabik": 0.02,
     "Fomalhaut": -0.02,
@@ -71,37 +162,12 @@ MANUAL_NUDGES = {
     # Galactic Anti-Center (GAC) Adjustments
     "Milky Way Rotation": -0.59,
 }
-# -------------------------------
 
 
-# Configuration
-PROJECT_ROOT = Path(__file__).parent.parent
-OUTPUT_DIR = PROJECT_ROOT / "generated"
+# ============================================================================
+# COORDINATE SYSTEM (Preserved from Cygni Arcana - proven effective)
+# ============================================================================
 
-# Color themes - Egyptian-inspired palette
-THEMES = {
-    "light": {
-        "background": "#F5F5DC",  # Beige papyrus
-        "text": "#8B4513",  # Dark brown hieroglyphic ink
-        "grid": "#D2691E",  # Sandy brown grid
-        "black_hole_edge": "#8B4513",
-        "black_hole_glow": "#FFD700",  # Golden glow
-        "sol_edge": "#FF8C00",  # Egyptian solar disc
-        "star_edge": "#8B4513",
-    },
-    "dark": {
-        "background": "#1a1a2e",  # Deep night sky
-        "text": "#FFD700",  # Golden hieroglyphs
-        "grid": "#B8860B",  # Dark goldenrod
-        "black_hole_edge": "#FFD700",
-        "black_hole_glow": "#FF8C00",
-        "sol_edge": "#FF8C00",
-        "star_edge": "#FFD700",
-    },
-}
-
-
-# Coordinate system preserved from Cygni Arcana (proven effective)
 CartesianCoords = namedtuple("CartesianCoords", ["x_plot", "y_plot"])
 
 
@@ -113,21 +179,6 @@ def galactic_to_cartesian(distance, longitude_deg, latitude_deg):
     x_plot = planar_distance * math.sin(longitude_rad)
     y_plot = planar_distance * math.cos(longitude_rad)
     return CartesianCoords(x_plot, y_plot)
-
-
-# Grid lines - Restricted to 0.6, 1.2, 1.9, 2.5
-x_ticks = [-2.5, -1.9, -1.2, -0.6, 0, 0.6, 1.2, 1.9, 2.5]
-
-
-# --- NEW CONSTANTS FOR Y-AXIS SCALING (User-specified) ---
-# Assigned Light-Year distances for each X-Plot bucket, used only for Y-axis normalization.
-BUCKET_LY_DISTANCES = {
-    0.6: 10,  # Very Near
-    1.2: 50,  # Near
-    1.9: 150,  # Far
-    2.5: 250,  # Very Far (All remaining distant stars)
-}
-MAX_Y_PLOT_SPREAD = 0.55  # Represents the maximum vertical spread (half the total y-plot range)
 
 
 def categorize_x_plot(perpendicular_distance):
@@ -156,11 +207,6 @@ def categorize_x_plot(perpendicular_distance):
         return sign * 2.5
 
 
-# ----------------------------------------------------
-# ⭐️ FINAL: Function to calculate Y-position using fixed Bucket LY Distance ⭐️
-# ----------------------------------------------------
-
-
 def calc_y_plot(star_data, x_plot_position):
     """
     Calculates y-position using Longitude (l) for the sign and scales the result
@@ -170,55 +216,128 @@ def calc_y_plot(star_data, x_plot_position):
     star_name = star_data["name"]
     longitude_deg = star_data["longitude"]
 
-    # 1. SPECIAL CASE HANDLING (remains the same)
+    # Special case handling
     if star_name in ["Sagittarius A*", "Sol", "Dark Energy", "Dark Matter", "Milky Way Rotation"]:
         if star_name == "Sagittarius A*":
             return 0.7
         return 0
 
-    # 2. Get the assigned BUCKET DISTANCE (in Light Years)
+    # Get the assigned BUCKET DISTANCE (in Light Years)
     bucket_key = round(abs(x_plot_position), 1)
     assigned_ly_distance = BUCKET_LY_DISTANCES.get(bucket_key, 300.0)
 
-    # 3. Calculate Base Y-Position using Longitude (l)
+    # Calculate Base Y-Position using Longitude (l)
     longitude_rad = math.radians(longitude_deg)
     base_y_coord = math.cos(longitude_rad)  # Range: [-1.0, 1.0]
 
-    # 4. Apply Scaling Factor for Correct Spread and Utilization
-
+    # Apply Scaling Factor for Correct Spread and Utilization
     MAX_BUCKET_LY_DISTANCE = 300.0
-
-    # Spread Factor: Scales the assigned distance against the max distance (0.05 to 1.0)
     spread_factor = assigned_ly_distance / MAX_BUCKET_LY_DISTANCE
 
-    # ⭐️ FIX: Increase the MAX_Y_SPREAD_MULTIPLIER to push the max Y-value closer to the limit. ⭐️
-    # This compensates for the negative bias in the cos(l) distribution of your star set.
-    # Increasing by 10% (0.55 * 1.1 = 0.605) should push the upper limit out.
+    # Compensate for negative bias in cos(l) distribution
     MAX_Y_PLOT_LIMIT = 0.55
     MAX_Y_SPREAD_MULTIPLIER = MAX_Y_PLOT_LIMIT * 1.1
     MIN_Y_SPREAD_MULTIPLIER = 0.20
-
-    # Range that spread_factor modulates: MAX_Y_SPREAD_MULTIPLIER - MIN_Y_SPREAD_MULTIPLIER
     range_modulation = MAX_Y_SPREAD_MULTIPLIER - MIN_Y_SPREAD_MULTIPLIER
 
-    # Final Spread Multiplier: Linearly interpolates the spread.
+    # Final Spread Multiplier: Linearly interpolates the spread
     final_spread_multiplier = (range_modulation * spread_factor) + MIN_Y_SPREAD_MULTIPLIER
 
     # Final Y Position
     final_y_position = base_y_coord * final_spread_multiplier
 
-    # Ensure the final result is strictly within the original fixed plot limits (0.55)
+    # Ensure the final result is strictly within the original fixed plot limits
     return min(MAX_Y_PLOT_LIMIT, max(-MAX_Y_PLOT_LIMIT, final_y_position))
 
 
-# mark-s
-# Gardiner code to actual PNG filename mapping (for variants)
-GARDINER_PNG_MAP = {
-    "O24": "US22O24A.png",
-    "S34": "US22S34A.png",
-    "S42": "US22S42A.png",
-    # Add others as you discover them
-}
+def prepare_plot_data(star_list, nudge_dict):
+    """
+    Calculates both X (distance bucket) and Y (physical spread + nudge)
+    coordinates for all stars, centralizing all logic here.
+    """
+    plot_data = []
+
+    for star in star_list:
+        new_star = star.copy()
+        star_name = new_star.get("name")
+
+        # Calculate Cartesian Coordinates
+        coords = galactic_to_cartesian(star["distance"], star["longitude"], star["latitude"])
+
+        # Calculate X-axis position (Categorize based on X_plot)
+        final_x = categorize_x_plot(coords.x_plot)
+        new_star["x_plot_position"] = final_x
+
+        # Calculate Y-position (using the new bucket-scaled function)
+        base_y_position = calc_y_plot(star, final_x)
+
+        # Apply Nudge and store final Y-position
+        nudge_amount = nudge_dict.get(star_name, 0.0)
+        final_y = base_y_position + nudge_amount
+        new_star["y_plot_position"] = final_y
+
+        plot_data.append(new_star)
+
+    return plot_data
+
+
+# ============================================================================
+# HELPER FUNCTIONS
+# ============================================================================
+
+
+def is_dark_energy(star_name):
+    """Check if star is Dark Energy (for special positioning)"""
+    return star_name == "Dark Energy"
+
+
+def get_glyph_position(star_name, x_pos):
+    """Get X position for hieroglyphic glyph based on star name"""
+    if is_dark_energy(star_name):
+        return x_pos + DARK_ENERGY_GLYPH_X_OFFSET
+    return x_pos + GLYPH_X_OFFSET
+
+
+def get_label_position(star_name, glyph_x):
+    """Get X position and alignment for label based on star name"""
+    if is_dark_energy(star_name):
+        return glyph_x + DARK_ENERGY_LABEL_X_OFFSET, "left"
+    return glyph_x + LABEL_X_OFFSET, "left"
+
+
+def get_label_color(star_name, theme):
+    """Get label color for star name"""
+    if star_name == "Dark Energy":
+        return "#FF6B6B"  # Lighter warm red
+    elif star_name == "Dark Matter":
+        return "#66D9EF"  # Bright cyan
+    else:
+        return theme["text"]
+
+
+def make_white_transparent(img):
+    """Convert white background in image to transparent alpha channel"""
+    if len(img.shape) == 3 and img.shape[-1] == 3:
+        import numpy as np
+
+        white_threshold = 0.95
+        is_background = np.all(img >= white_threshold, axis=2)
+        alpha = np.where(is_background, 0, 1)
+        return np.dstack((img, alpha))
+    return img
+
+
+def calculate_glyph_zoom(aspect_ratio, base_zoom=0.035):
+    """Calculate zoom level based on glyph aspect ratio"""
+    if aspect_ratio > 2.5:
+        return base_zoom * 0.4
+    elif aspect_ratio > 2.0:
+        return base_zoom * 0.5
+    elif aspect_ratio > 1.5:
+        return base_zoom * 0.65
+    elif aspect_ratio > 1.3:
+        return base_zoom * 0.8
+    return base_zoom
 
 
 def find_stellar_png(gardiner_code):
@@ -240,72 +359,27 @@ def find_stellar_png(gardiner_code):
     return None
 
 
-# Manual overrides for specific problem glyphs
-GLYPH_ZOOM_OVERRIDES = {
-    "S34A": 0.03,  # Ankh/Sirius - intrinsically large
-    "S4": 0.025,  # Albireo - also too big at default
-    # Add others as you find them
-}
+# ============================================================================
+# PLOTTING FUNCTIONS
+# ============================================================================
 
 
-# mark
-def prepare_plot_data(star_list, nudge_dict):
-    """
-    Calculates both X (distance bucket) and Y (physical spread + nudge)
-    coordinates for all stars, centralizing all logic here.
-    """
-    plot_data = []
-
-    for star in star_list:
-        new_star = star.copy()
-        star_name = new_star.get("name")
-
-        # 1. Calculate Cartesian Coordinates
-        coords = galactic_to_cartesian(star["distance"], star["longitude"], star["latitude"])
-
-        # 2. Calculate X-axis position (Categorize based on X_plot)
-        final_x = categorize_x_plot(coords.x_plot)
-        new_star["x_plot_position"] = final_x
-
-        # 3. Calculate Y-position (using the new bucket-scaled function)
-        base_y_position = calc_y_plot(star, final_x)
-
-        # 4. Apply Nudge and store final Y-position
-        nudge_amount = nudge_dict.get(star_name, 0.0)
-        final_y = base_y_position + nudge_amount
-        new_star["y_plot_position"] = final_y
-
-        plot_data.append(new_star)
-
-    return plot_data
-
-
-# mark
 def plot_star_hieroglyph(ax, star, all_stars, theme):
     """Enhanced star-hieroglyph plotting with two-line label layout"""
 
-    # ⭐️ Use the pre-calculated positions directly ⭐️
+    # Use the pre-calculated positions directly
     x_pos = star["x_plot_position"]
     y_pos = star["y_plot_position"]
 
-    size_mapping = {
-        "Sol": 50,
-        # "Sirius": 45,
-        # "Alpha Centauri": 45,
-        "Dark Energy": 40,
-        "Dark Matter": 40,
-        "Milky Way Rotation": 40,
-        # "Sagittarius A*": 35,
-    }
-    size = size_mapping.get(star["name"], 35)
+    size = STAR_SIZE_OVERRIDES.get(star["name"], 35)
 
     # Star background rendering
     if star["name"] == "Dark Energy":
-        pass
+        pass  # Dark Energy has no background
     elif star["name"] == "Sagittarius A*" or "Dark" in star["name"] or star["egyptian_name"] == "Nut/Sky":
-        # 1. Define Nut's specific color
+        # Special rendering for black holes and cosmic entities
         inner_edge_color = (
-            "#87CEEB"  #  light sky blue
+            "#87CEEB"  # light sky blue for Nut
             if star["egyptian_name"] == "Nut/Sky"
             else theme["black_hole_edge"]
         )
@@ -339,6 +413,7 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
             zorder=4,
         )
     elif star["name"] == "Sol":
+        # Special rendering for Sun
         ax.scatter(x_pos, y_pos, s=size * 12, c="#FFD700", alpha=0.3, zorder=2)
         ax.scatter(
             x_pos,
@@ -352,6 +427,7 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
             alpha=0.9,
         )
     else:
+        # Standard star rendering
         ax.scatter(x_pos, y_pos, s=size * 11, c=star["color"], alpha=0.2, zorder=2)
         ax.scatter(
             x_pos,
@@ -365,42 +441,26 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
             alpha=0.8,
         )
 
-    # NEW: Dark Energy goes to the LEFT
-    if star["name"] == "Dark Energy":
-        glyph_x = x_pos - 0.13  # Flip to left side
-    else:
-        glyph_x = x_pos + 0.12
+    # Glyph positioning
+    glyph_x = get_glyph_position(star["name"], x_pos)
 
-    # Render PNG only (no Unicode)
+    # Render PNG hieroglyph
     glyph_rendered = False
     if glyph_path := find_stellar_png(star["gardiner"]):
         try:
             img = plt.imread(str(glyph_path))
             height, width = img.shape[0], img.shape[1]
-            # Aspect ratio logic (remains the same)
             aspect_ratio = height / width
 
-            if len(img.shape) == 3 and img.shape[-1] == 3:
-                import numpy as np
+            # Make white background transparent
+            img = make_white_transparent(img)
 
-                white_threshold = 0.95
-                is_background = np.all(img >= white_threshold, axis=2)
-                alpha = np.where(is_background, 0, 1)
-                img = np.dstack((img, alpha))
-
+            # Determine zoom level
             glyph_filename = glyph_path.name.replace("US22", "").replace(".png", "")
             if glyph_filename in GLYPH_ZOOM_OVERRIDES:
                 base_zoom = GLYPH_ZOOM_OVERRIDES[glyph_filename]
             else:
-                base_zoom = 0.035
-                if aspect_ratio > 2.5:
-                    base_zoom *= 0.4
-                elif aspect_ratio > 2.0:
-                    base_zoom *= 0.5
-                elif aspect_ratio > 1.5:
-                    base_zoom *= 0.65
-                elif aspect_ratio > 1.3:
-                    base_zoom *= 0.8
+                base_zoom = calculate_glyph_zoom(aspect_ratio)
 
             imagebox = OffsetImage(img, zoom=base_zoom)
             ab = AnnotationBbox(
@@ -419,16 +479,10 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
             print(f"✗ PNG failed for {star['name']}: {e}")
 
     # Two-line label layout
-    # NEW: Dark Energy labels go to the LEFT
-    if star["name"] == "Dark Energy":
-        label_x = glyph_x - 0.35  # Flip label to left side
-        label_ha = "left"
-    else:
-        label_x = glyph_x + 0.06
-        label_ha = "left"
+    label_x, label_ha = get_label_position(star["name"], glyph_x)
 
     # Line 1: Egyptian name in white
-    egyptian_y = y_pos + 0.007
+    egyptian_y = y_pos + EGYPTIAN_NAME_Y_OFFSET
     ax.text(
         label_x,
         egyptian_y,
@@ -440,32 +494,10 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
         zorder=5,
     )
 
-    # Line 2: Star name + Longitude + distance in theme color
-
-    if star["name"] in ["Dark Matter", "Dark Energy", "Milky Way Rotation"]:
-        star_label = star["name"]
-    else:
-        # ⭐️ MODIFICATION: Add Galactic Longitude (l) ⭐️
-        longitude_deg = star["longitude"]
-        # Format longitude to one decimal place
-        longitude_str = f"l={longitude_deg:.1f}°"
-
-        distance_str = (
-            f"{star['distance']}" if star["distance"] != int(star["distance"]) else f"{int(star['distance'])}"
-        )
-        # star_label = f"{star['name']} ({longitude_str}, {distance_str} ly)" # Updated label format
-        # star_label = f"{star['name']} ({distance_str} ly)"
-        star_label = star["name"]
-
-    # colors for Dark Matter/Energy labels
-    if star["name"] == "Dark Energy":
-        label_color = "#FF6B6B"  # Lighter warm red
-    elif star["name"] == "Dark Matter":
-        label_color = "#66D9EF"  # Bright cyan
-    else:
-        label_color = theme["text"]
-
-    star_y = y_pos - 0.01
+    # Line 2: Star name with special colors for Dark Matter/Energy
+    star_label = star["name"]
+    label_color = get_label_color(star["name"], theme)
+    star_y = y_pos + STAR_NAME_Y_OFFSET
 
     ax.text(
         label_x,
@@ -481,33 +513,29 @@ def plot_star_hieroglyph(ax, star, all_stars, theme):
     return glyph_rendered
 
 
-# mark
-
-
 def setup_hieroglyphic_plot(ax, theme):
     """Configure plot appearance with Egyptian astronomical theme"""
     # X-limit adjusted to the max bucket of 2.5
     ax.set_xlim(-3.2, 3.2)
     ax.set_ylim(-0.65, 0.65)
 
-    # xticks Grid lines
+    # Remove tick marks
     ax.set_xticks([])
     ax.set_yticks([])
 
-    for x_val in x_ticks:
+    # Add vertical grid lines
+    for x_val in X_TICKS:
         if x_val == 0:
             ax.axvline(x=x_val, color="#FFD700", alpha=0.8, linestyle="--", linewidth=0.75)
         else:
             ax.axvline(x=x_val, color=theme["grid"], alpha=0.45, linestyle="--", linewidth=0.45)
 
     # Curved arrow for cosmic navigation
-    from matplotlib.patches import FancyArrowPatch
-
     arrow = FancyArrowPatch(
         (-1.5, -0.60),
         (1.5, -0.60),
         connectionstyle="arc3,rad=0.05",
-        arrowstyle="<-",
+        arrowstyle="<->",
         mutation_scale=20,
         color="#FFD700",
         alpha=0.6,
@@ -520,25 +548,16 @@ def setup_hieroglyphic_plot(ax, theme):
 def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
     """Create Egyptian hieroglyphic star map with configurable paper sizes"""
 
-    # Paper size configurations (ISO 216)
-    paper_dimensions = {
-        "A4": (11.7, 8.3),  # 26 stars baseline
-        "A3": (16.5, 11.7),  # 55-100 stars (testing range)
-        "A2": (23.4, 16.5),  # ~150 stars
-        "A1": (33.1, 23.4),  # ~200 stars
-        "A0": (46.8, 33.1),  # ~450 stars
-    }
-
     current_theme = THEMES["dark" if dark_mode else "light"]
-    figsize = paper_dimensions.get(paper_size, paper_dimensions["A3"])
+    figsize = PAPER_DIMENSIONS.get(paper_size, PAPER_DIMENSIONS["A3"])
 
     fig, ax = plt.subplots(figsize=figsize, facecolor=current_theme["background"])
     ax.set_facecolor(current_theme["background"])
 
     # Watermark - diagonal across center
     ax.text(
+        0,
         0,  # Centered
-        0,  # Centered vertically
         "         PREVIEW COPY • NOT FOR DISTRIBUTION",
         ha="center",
         va="center",
@@ -551,25 +570,23 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
         family="monospace",
     )
 
-    # ⭐️ UPDATED: Prepare the data with all calculated positions ⭐️
+    # Prepare the data with all calculated positions
     plot_ready_stars = prepare_plot_data(STAR_HIEROGLYPHS, MANUAL_NUDGES)
 
     # Plot all star-hieroglyph pairs
     for star in plot_ready_stars:
-        # NOTE: all_stars parameter is technically unused in the current plot_star_hieroglyph
-        # but kept for API compatibility with legacy code/future extensions.
         plot_star_hieroglyph(ax, star, STAR_HIEROGLYPHS, current_theme)
 
-    # NEW: Add Galactic Center label above Dark Matter/Dark Energy cluster
-    gc_y_position = 0.62  # Adjust this to position above the cluster
+    # Add Galactic Center label above Dark Matter/Dark Energy cluster
+    gc_y_position = 0.62
     ax.text(
-        0,  # Centered at x=0
+        0,
         gc_y_position,
         "Galactic Center",
         ha="center",
         va="center",
         fontsize=10,
-        color="#FFD700",  # Golden color
+        color="#FFD700",
         weight="bold",
         zorder=5,
     )
@@ -580,7 +597,6 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
     for spine in ax.spines.values():
         spine.set_visible(False)
 
-    # Force matplotlib to use the hieroglyphic font
     plt.tight_layout()
 
     # Save with descriptive filename
@@ -596,6 +612,9 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
     print(f'Paper size: {paper_size} ({figsize[0]:.1f}" x {figsize[1]:.1f}")')
 
 
-# Generate
+# ============================================================================
+# MAIN
+# ============================================================================
+
 if __name__ == "__main__":
     create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3")
