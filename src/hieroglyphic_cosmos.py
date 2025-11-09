@@ -1,7 +1,7 @@
 # Egyptian astronomical research integration, and hieroglyphic mapping framework
 # AI Development Partners:
 #     - Claude (Anthropic): Code adaptation from Cygni Arcana, coordinate system preservation,
-#     - Contributors to mapping: Grok (xAI), ChatGPT (OpenAI), Gemini (Google)
+#     - Contributors to mapping: Grok (xAI), ChatGPT (OpenAI), Gemini (Google), Claude (Anthropic)
 #
 # This project represents the evolution from tarot-stellar mapping to historically-grounded
 # Egyptian hieroglyphic-stellar connections, maintaining astronomical precision while
@@ -309,7 +309,7 @@ def get_label_position(star_name, glyph_x):
 def get_label_color(star_name, theme):
     """Get label color for star name"""
     if star_name == "Dark Energy":
-        return "#FF6B6B"  # Lighter warm red
+        return "#FF7F66"  # Lighter warm red
     elif star_name == "Dark Matter":
         return "#66D9EF"  # Bright cyan
     else:
@@ -392,8 +392,8 @@ def add_dark_matter_energy_arrows(ax):
             (red_left_start_x, red_left_start_y),
             (red_left_end_x, red_left_end_y),
             arrowstyle='->',
-            color='#FF6B6B',  # Red - Dark Energy
-            alpha=0.5,
+            color='#FF7F66',  # Red - Dark Energy
+            alpha=0.6,
             linewidth=1.5,
             mutation_scale=10,
             zorder=4,
@@ -412,7 +412,7 @@ def add_dark_matter_energy_arrows(ax):
             (cyan_left_end_x, cyan_left_end_y),
             arrowstyle='->',
             color='#66D9EF',  # Cyan - Dark Matter
-            alpha=0.5,
+            alpha=0.6,
             linewidth=1.5,
             mutation_scale=10,
             zorder=4,
@@ -431,8 +431,8 @@ def add_dark_matter_energy_arrows(ax):
             (red_right_start_x, red_right_start_y),
             (red_right_end_x, red_right_end_y),
             arrowstyle='->',
-            color='#FF6B6B',  # Red - Dark Energy
-            alpha=0.5,
+            color='#FF7F66',  # Red - Dark Energy
+            alpha=0.6,
             linewidth=1.5,
             mutation_scale=10,
             zorder=4,
@@ -451,7 +451,7 @@ def add_dark_matter_energy_arrows(ax):
             (cyan_right_end_x, cyan_right_end_y),
             arrowstyle='->',
             color='#66D9EF',  # Cyan - Dark Matter
-            alpha=0.5,
+            alpha=0.6,
             linewidth=1.5,
             mutation_scale=10,
             zorder=4,
