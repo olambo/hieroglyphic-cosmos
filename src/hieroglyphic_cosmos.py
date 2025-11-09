@@ -69,6 +69,9 @@ GARDINER_PNG_MAP = {
     "O24": "US22O24A.png",
     "S34": "US22S34A.png",
     "S42": "US22S42A.png",
+    "S42": "US22S42A.png",
+    "D28": "US22D28A.png",
+    "N35": "US22N35OL.png",
     # Add others as you discover them
 }
 
@@ -76,8 +79,9 @@ GARDINER_PNG_MAP = {
 GLYPH_ZOOM_OVERRIDES = {
     "S34A": 0.03,  # Ankh/Sirius - intrinsically large
     "S4": 0.025,  # Albireo - also too big at default
-    "U6": 0.045,  # Dark Energy - bigger
-    # Add others as you find them
+    "U6": 0.050,  # Dark Energy - bigger
+    "P1": 0.053,  # Solar Barque
+    # Add others as you find the
 }
 
 # Star size overrides
