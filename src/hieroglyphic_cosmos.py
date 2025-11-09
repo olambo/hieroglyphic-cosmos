@@ -1,7 +1,7 @@
+# Egyptian astronomical research integration, and hieroglyphic mapping framework
 # AI Development Partners:
 #     - Claude (Anthropic): Code adaptation from Cygni Arcana, coordinate system preservation,
-#       Egyptian astronomical research integration, and hieroglyphic mapping framework
-#     - Previous Cygni Arcana contributors: Grok (xAI), ChatGPT (OpenAI), Gemini (Google)
+#     - Contributors to mapping: Grok (xAI), ChatGPT (OpenAI), Gemini (Google)
 #
 # This project represents the evolution from tarot-stellar mapping to historically-grounded
 # Egyptian hieroglyphic-stellar connections, maintaining astronomical precision while
@@ -20,13 +20,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 from matplotlib.patches import FancyArrowPatch
-
-try:
-    from star_glyphs import STAR_HIEROGLYPHS
-except ImportError:
-    print("WARNING: Could not import STAR_HIEROGLYPHS. Using a dummy list for compilation.")
-    STAR_HIEROGLYPHS = []
-
+from star_glyphs import STAR_HIEROGLYPHS
 
 plt.rcParams["font.family"] = ["Noto Sans Egyptian Hieroglyphs", "DejaVu Sans"]
 
