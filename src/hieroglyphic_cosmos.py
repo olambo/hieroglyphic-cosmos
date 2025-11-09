@@ -78,9 +78,18 @@ GARDINER_PNG_MAP = {
 # Manual overrides for specific problem glyphs
 GLYPH_ZOOM_OVERRIDES = {
     "S34A": 0.03,  # Ankh/Sirius - intrinsically large
-    "S4": 0.025,  # Albireo - also too big at default
     "U6": 0.050,  # Dark Energy - bigger
     "P1": 0.053,  # Solar Barque
+    "C2": 0.034,  #
+    "C20": 0.044,  #
+    "C23": 0.042,  #
+    "E1": 0.048,  #
+    "E16": 0.042,  #
+    "E17": 0.042,  #
+    "E22": 0.048,  #
+    "E23": 0.051,  #
+    "E25": 0.051,  #
+    "H6": 0.014,  #
     # Add others as you find the
 }
 
@@ -112,7 +121,7 @@ THEMES = {
         "grid": "#D2691E",  # Sandy brown grid
         "black_hole_edge": "#8B4513",
         "black_hole_glow": "#FFD700",  # Golden glow
-        "sol_edge": "#FF8C00",  # Egyptian solar disc
+        "sol_edge": "#FF9933",  # Egyptian solar disc
         "star_edge": "#8B4513",
     },
     "dark": {
@@ -120,8 +129,8 @@ THEMES = {
         "text": "#FFD700",  # Golden hieroglyphs
         "grid": "#B8860B",  # Dark goldenrod
         "black_hole_edge": "#FFD700",
-        "black_hole_glow": "#FF8C00",
-        "sol_edge": "#FF8C00",
+        "black_hole_glow": "#FF9933",
+        "sol_edge": "#FF9933",
         "star_edge": "#FFD700",
     },
 }
@@ -313,7 +322,7 @@ def get_label_position(star_name, glyph_x):
 def get_label_color(star_name, theme):
     """Get label color for star name"""
     if star_name == "Dark Energy":
-        return "#FF8C00"  # warm Orange
+        return "#FF9933"  # Lighter warm Orange
     elif star_name == "Dark Matter":
         return "#66D9EF"  # Bright Cyan
     else:
@@ -332,7 +341,7 @@ def make_white_transparent(img):
     return img
 
 
-def calculate_glyph_zoom(aspect_ratio, base_zoom=0.035):
+def calculate_glyph_zoom(aspect_ratio, base_zoom=0.038):
     """Calculate zoom level based on glyph aspect ratio"""
     if aspect_ratio > 2.5:
         return base_zoom * 0.4
@@ -396,7 +405,7 @@ def add_dark_matter_energy_arrows(ax):
             (red_left_start_x, red_left_start_y),
             (red_left_end_x, red_left_end_y),
             arrowstyle='->',
-            color='#FF8C00',  # Orange - Dark Energy
+            color='#FF9933',  # Orange - Dark Energy
             alpha=0.6,
             linewidth=1.5,
             mutation_scale=10,
@@ -435,7 +444,7 @@ def add_dark_matter_energy_arrows(ax):
             (red_right_start_x, red_right_start_y),
             (red_right_end_x, red_right_end_y),
             arrowstyle='->',
-            color='#FF8C00',  # Orange - Dark Energy
+            color='#FF9933',  # Orange - Dark Energy
             alpha=0.6,
             linewidth=1.5,
             mutation_scale=10,
@@ -661,7 +670,7 @@ def create_hieroglyphic_cosmos_plot(dark_mode=True, paper_size="A3"):
         plot_star_hieroglyph(ax, star, STAR_HIEROGLYPHS, current_theme)
 
     # Add Galactic Center label above Dark Matter/Dark Energy cluster
-    gc_y_position = 0.62
+    gc_y_position = 0.615
     ax.text(
         0,
         gc_y_position,
