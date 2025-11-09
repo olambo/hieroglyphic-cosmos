@@ -406,7 +406,7 @@ def add_dark_matter_energy_arrows(ax):
             (red_left_end_x, red_left_end_y),
             arrowstyle='->',
             color='#FF9933',  # Orange - Dark Energy
-            alpha=0.6,
+            alpha=0.7,
             linewidth=1.5,
             mutation_scale=10,
             zorder=4,
@@ -425,7 +425,7 @@ def add_dark_matter_energy_arrows(ax):
             (cyan_left_end_x, cyan_left_end_y),
             arrowstyle='->',
             color='#66D9EF',  # Cyan - Dark Matter
-            alpha=0.6,
+            alpha=0.7,
             linewidth=1.5,
             mutation_scale=10,
             zorder=4,
@@ -434,7 +434,7 @@ def add_dark_matter_energy_arrows(ax):
 
     # RIGHT PAIR down-right from GC-Sol line)
     # Orange arrow - pointing down-right (outward)
-    red_right_start_x = center_x + 0.06
+    red_right_start_x = center_x + 0.05
     red_right_start_y = center_y
     red_right_end_x = red_right_start_x + arrow_length * cos_angle
     red_right_end_y = red_right_start_y - arrow_length * sin_angle
@@ -445,7 +445,7 @@ def add_dark_matter_energy_arrows(ax):
             (red_right_end_x, red_right_end_y),
             arrowstyle='->',
             color='#FF9933',  # Orange - Dark Energy
-            alpha=0.6,
+            alpha=0.7,
             linewidth=1.5,
             mutation_scale=10,
             zorder=4,
@@ -464,7 +464,7 @@ def add_dark_matter_energy_arrows(ax):
             (cyan_right_end_x, cyan_right_end_y),
             arrowstyle='->',
             color='#66D9EF',  # Cyan - Dark Matter
-            alpha=0.6,
+            alpha=0.7,
             linewidth=1.5,
             mutation_scale=10,
             zorder=4,
