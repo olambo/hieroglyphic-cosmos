@@ -313,9 +313,9 @@ def get_label_position(star_name, glyph_x):
 def get_label_color(star_name, theme):
     """Get label color for star name"""
     if star_name == "Dark Energy":
-        return "#FF7F66"  # Lighter warm red
+        return "#FF8C00"  # warm Orange
     elif star_name == "Dark Matter":
-        return "#66D9EF"  # Bright cyan
+        return "#66D9EF"  # Bright Cyan
     else:
         return theme["text"]
 
@@ -385,7 +385,7 @@ def add_dark_matter_energy_arrows(ax):
     sin_angle = math.sin(angle_rad)
 
     # LEFT PAIR (down-left from GC-Sol line)
-    # Red arrow - pointing down-left (outward)
+    # Orange arrow - pointing down-left (outward)
     red_left_start_x = center_x - 0.08  # Wider apart (was -0.05)
     red_left_start_y = center_y
     red_left_end_x = red_left_start_x - arrow_length * cos_angle
@@ -396,7 +396,7 @@ def add_dark_matter_energy_arrows(ax):
             (red_left_start_x, red_left_start_y),
             (red_left_end_x, red_left_end_y),
             arrowstyle='->',
-            color='#FF7F66',  # Red - Dark Energy
+            color='#FF8C00',  # Orange - Dark Energy
             alpha=0.6,
             linewidth=1.5,
             mutation_scale=10,
@@ -424,7 +424,7 @@ def add_dark_matter_energy_arrows(ax):
     )
 
     # RIGHT PAIR down-right from GC-Sol line)
-    # Red arrow - pointing down-right (outward)
+    # Orange arrow - pointing down-right (outward)
     red_right_start_x = center_x + 0.06
     red_right_start_y = center_y
     red_right_end_x = red_right_start_x + arrow_length * cos_angle
@@ -435,7 +435,7 @@ def add_dark_matter_energy_arrows(ax):
             (red_right_start_x, red_right_start_y),
             (red_right_end_x, red_right_end_y),
             arrowstyle='->',
-            color='#FF7F66',  # Red - Dark Energy
+            color='#FF8C00',  # Orange - Dark Energy
             alpha=0.6,
             linewidth=1.5,
             mutation_scale=10,
