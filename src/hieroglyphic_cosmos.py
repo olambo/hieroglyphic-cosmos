@@ -434,7 +434,7 @@ def add_dark_matter_energy_arrows(ax):
 
     # RIGHT PAIR down-right from GC-Sol line)
     # Orange arrow - pointing down-right (outward)
-    red_right_start_x = center_x + 0.05
+    red_right_start_x = center_x + 0.055
     red_right_start_y = center_y
     red_right_end_x = red_right_start_x + arrow_length * cos_angle
     red_right_end_y = red_right_start_y - arrow_length * sin_angle
@@ -643,7 +643,7 @@ def setup_hieroglyphic_plot(ax, theme):
         (-1.5, -0.60),
         (1.5, -0.60),
         connectionstyle="arc3,rad=0.05",
-        arrowstyle="<->",
+        arrowstyle="<-",
         mutation_scale=20,
         color="#FFD700",
         alpha=0.6,
