@@ -137,3 +137,5 @@ hieroglyphic-cosmos/
 **"As above, so below" - now rendered in pixels, positioned by parsecs, and placed with precision the ancient masters could only dream of.**
 
 *This project stands as testament to humanity's eternal drive to find meaning in the stars, now amplified by artificial intelligence and guided by the wisdom of ages.*
+
+![Cygni Arcana](generated/cygni_arcana_plot.png)
