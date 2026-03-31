@@ -5,6 +5,9 @@
 - For commercial use inquiries, contact Oliver Staats at olambo@gmail.com.
  
 # Hieroglyphic Cosmos
+
+![Hieroglyphic Cosmos](hieroglyphic_cosmos_a2_oli_staats_20251109.png)
+
 ## Mapping Ancient Egyptian Sacred Symbols to Galactic Coordinates
 
 *A collaboration between human vision and artificial intelligence to bridge 4,000 years of cosmic understanding*
@@ -138,4 +141,3 @@ hieroglyphic-cosmos/
 
 *This project stands as testament to humanity's eternal drive to find meaning in the stars, now amplified by artificial intelligence and guided by the wisdom of ages.*
 
-![Cygni Arcana](generated/cygni_arcana_plot.png)
