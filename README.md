@@ -6,7 +6,7 @@
  
 # Hieroglyphic Cosmos
 
-![Hieroglyphic Cosmos](hieroglyphic_cosmos_a2_oli_staats_20251109.png)
+![Hieroglyphic Cosmos](generated/hieroglyphic_cosmos_a2_oli_staats_20251109.png)
 
 ## Mapping Ancient Egyptian Sacred Symbols to Galactic Coordinates
 
